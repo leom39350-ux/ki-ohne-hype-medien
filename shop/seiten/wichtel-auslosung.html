@@ -1,0 +1,217 @@
+<!-- Werkzeug „Wichtel-Auslosung“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kowi{--kowi-a:#b3261e;--kowi-g:#1f6f43;--kowi-t:#1d1d1f;--kowi-m:#5f6368;--kowi-r:#e2e2e2;--kowi-h:#faf7f2;max-width:760px;margin:0 auto;color:var(--kowi-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kowi *,.kowi *::before,.kowi *::after{box-sizing:border-box}
+.kowi-box{background:var(--kowi-h);border:1px solid var(--kowi-r);border-radius:14px;padding:18px;margin:16px 0}
+.kowi h2{font-size:1.35em;margin:0 0 8px}
+.kowi h3{font-size:1.1em;margin:18px 0 6px}
+.kowi label{display:block;font-weight:600;margin:12px 0 4px}
+.kowi .kowi-hint{font-size:.88em;color:var(--kowi-m);margin:2px 0 0}
+.kowi textarea{width:100%;min-height:150px;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;resize:vertical}
+.kowi textarea.kowi-klein{min-height:90px}
+.kowi-btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--kowi-a);color:#fff;margin:12px 8px 0 0}
+.kowi-btn:focus-visible,.kowi textarea:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.kowi-btn.kowi-zweit{background:#fff;color:var(--kowi-t);border:1px solid #bdbdbd}
+.kowi-btn.kowi-mini{padding:8px 12px;margin:0;font-size:.92em}
+.kowi-msg{margin-top:12px;padding:10px 12px;border-radius:10px;display:none}
+.kowi-msg.kowi-fehler{display:block;background:#fdecea;color:#7a1b14}
+.kowi-msg.kowi-ok{display:block;background:#e8f4ec;color:#174d31}
+.kowi-liste{list-style:none;padding:0;margin:10px 0 0}
+.kowi-liste li{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-top:1px solid var(--kowi-r)}
+.kowi-name{font-weight:700}
+.kowi-geheim{flex-basis:100%;background:#fff;border:2px dashed var(--kowi-g);border-radius:10px;padding:10px;font-size:1.1em}
+.kowi-geheim[hidden]{display:none}
+.kowi-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media (min-width:620px){.kowi-karten{grid-template-columns:1fr 1fr}}
+.kowi-karte{display:block;border:1px solid var(--kowi-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.kowi-karte:hover{border-color:var(--kowi-a)}
+.kowi-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--kowi-m)}
+.kowi-karte strong{display:block;margin:4px 0}
+.kowi-faq details{border-top:1px solid var(--kowi-r);padding:10px 0}
+.kowi-faq summary{cursor:pointer;font-weight:600}
+.kowi-fuss{font-size:.85em;color:var(--kowi-m);margin-top:20px}
+</style>
+
+<div class="kowi" id="kowi">
+  <h2>Wichtel-Auslosung – kostenlos, ohne Anmeldung</h2>
+  <p>Namen eintragen, auslosen, fertig: Jede Person zieht genau eine andere Person. Niemand zieht sich selbst, und Paare oder Geschwister könnt ihr ausschließen. Danach deckt jede Person ihr Ergebnis einzeln auf – die anderen sehen es nicht. Alles läuft nur in eurem Browser: <strong>nichts wird gespeichert oder verschickt</strong>.</p>
+
+  <div class="kowi-box">
+    <label for="kowi-namen">1. Wer macht mit? (ein Name pro Zeile, mindestens 3)</label>
+    <textarea id="kowi-namen" placeholder="Anna&#10;Ben&#10;Clara&#10;David"></textarea>
+
+    <label for="kowi-aus">2. Wer darf sich nicht gegenseitig ziehen? (freiwillig)</label>
+    <textarea id="kowi-aus" class="kowi-klein" placeholder="Anna - Ben&#10;Clara - David"></textarea>
+    <p class="kowi-hint">Ein Paar pro Zeile, z. B. „Anna - Ben“. Dann zieht weder Anna Ben noch Ben Anna.</p>
+
+    <button type="button" class="kowi-btn" id="kowi-los">Jetzt auslosen</button>
+    <div class="kowi-msg" id="kowi-msg" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="kowi-box" id="kowi-erg" hidden>
+    <h3 style="margin-top:0">3. Ergebnis einzeln aufdecken</h3>
+    <p class="kowi-hint">Gebt das Handy oder den Laptop reihum weiter. Jede Person tippt auf ihren eigenen Namen, merkt sich das Ergebnis und verdeckt es wieder.</p>
+    <ul class="kowi-liste" id="kowi-liste"></ul>
+    <button type="button" class="kowi-btn kowi-zweit" id="kowi-neu">Neu auslosen</button>
+    <p class="kowi-hint">Achtung: „Neu auslosen“ erzeugt eine komplett neue Verteilung. Beim Neuladen der Seite ist das Ergebnis weg.</p>
+
+    <h3>Passend zum Wichteln</h3>
+    <div class="kowi-karten">
+      <a class="kowi-karte" href="/products/wichtelspiel">
+        <span class="kowi-werb">Eigenwerbung</span>
+        <strong>Wichtel-Spieleset (PDF)</strong>
+        Würfelwichteln, Schrottwichteln und mehr – ausdrucken und losspielen. Für Feier, Familie und Verein.
+      </a>
+      <a class="kowi-karte" href="/products/team-adventskalender">
+        <span class="kowi-werb">Eigenwerbung</span>
+        <strong>Team-Adventskalender fürs Büro (PDF)</strong>
+        24 Karten mit Mini-Aktionen, Rätseln und Gesprächsfragen – fünf Minuten am Tag fürs Team.
+      </a>
+    </div>
+  </div>
+
+  <div class="kowi-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Wird irgendetwas gespeichert?</summary><p>Nein. Die Namen bleiben nur in diesem Browserfenster. Es gibt keine Anmeldung, keine Cookies für dieses Werkzeug und keine Übertragung an einen Server.</p></details>
+    <details><summary>Ist die Auslosung wirklich zufällig?</summary><p>Ja. Der Browser mischt mit seinem eingebauten Zufallsgenerator so lange, bis eine Verteilung alle Regeln erfüllt. Jede erlaubte Verteilung ist dabei gleich wahrscheinlich.</p></details>
+    <details><summary>Was, wenn es keine Lösung gibt?</summary><p>Bei zu vielen Ausschlüssen kann es sein, dass keine Verteilung möglich ist (z. B. drei Personen, die sich alle gegenseitig ausschließen). Dann sagt das Werkzeug es euch – streicht einen Ausschluss und lost neu.</p></details>
+    <details><summary>Wie viele Personen gehen?</summary><p>Von 3 bis 100 Personen. Jeder Name darf nur einmal vorkommen – bei zwei gleichen Vornamen einfach einen Buchstaben anhängen („Lisa M.“, „Lisa K.“).</p></details>
+    <details><summary>Wir wichteln online – geht das auch?</summary><p>Ja: Eine Person lost aus und schickt jedem sein eigenes Ergebnis privat. Wer selbst mitspielt, sieht dabei natürlich alle Ergebnisse – dann lieber das Gerät reihum geben oder jemanden auslosen lassen, der nicht mitspielt.</p></details>
+  </div>
+
+  <p class="kowi-fuss">Stand: Oktober 2026 · Ein kostenloses Werkzeug von KI ohne Hype. Für Spiel und Spaß – ohne Gewähr.</p>
+</div>
+
+<script>
+(function(){
+  var wurzel=document.getElementById('kowi');
+  if(!wurzel||wurzel.getAttribute('data-kowi-an'))return;
+  wurzel.setAttribute('data-kowi-an','1');
+  function $(id){return document.getElementById(id);}
+  var MAX=100;
+
+  function zufall(n){ // gleichverteilte Ganzzahl 0..n-1
+    var c=window.crypto||window.msCrypto;
+    if(c&&c.getRandomValues){
+      var a=new Uint32Array(1),grenze=Math.floor(4294967296/n)*n;
+      do{c.getRandomValues(a);}while(a[0]>=grenze);
+      return a[0]%n;
+    }
+    return Math.floor(Math.random()*n);
+  }
+  function schluessel(s){return s.trim().replace(/\s+/g,' ').toLowerCase();}
+
+  function leseNamen(text){
+    var zeilen=text.split(/\r?\n/),namen=[],gesehen={},doppelt=[];
+    for(var i=0;i<zeilen.length;i++){
+      var n=zeilen[i].trim().replace(/\s+/g,' ');
+      if(!n)continue;
+      var k=schluessel(n);
+      if(gesehen[k]){doppelt.push(n);continue;}
+      gesehen[k]=true;namen.push(n);
+    }
+    return {namen:namen,doppelt:doppelt};
+  }
+
+  function leseAusschluesse(text,namen){
+    var idx={},paare=[],fehler=[];
+    namen.forEach(function(n,i){idx[schluessel(n)]=i;});
+    text.split(/\r?\n/).forEach(function(z){
+      z=z.trim();if(!z)return;
+      // jede Trennstelle ausprobieren – so bleiben Doppelnamen wie „Anna-Lena“ ganz
+      var re=/\s*(?:–|—|-|,|;|\/|&|\+|\bund\b)\s*/gi,m,a,b,gefunden=false,trenner=false;
+      while((m=re.exec(z))!==null){
+        if(m[0].length===0){re.lastIndex++;continue;}
+        trenner=true;
+        var l=idx[schluessel(z.slice(0,m.index))],r=idx[schluessel(z.slice(m.index+m[0].length))];
+        if(l!==undefined&&r!==undefined){a=l;b=r;gefunden=true;break;}
+      }
+      if(!gefunden){
+        fehler.push(trenner?'In „'+z+'“ steht ein Name, der oben nicht vorkommt.':'„'+z+'“ ist kein Paar aus zwei Namen (Beispiel: „Anna - Ben“).');return;}
+      if(a===b){fehler.push('„'+z+'“ nennt zweimal dieselbe Person.');return;}
+      paare.push([a,b]);
+    });
+    return {paare:paare,fehler:fehler};
+  }
+
+  // verbot[i][j] = true heißt: i darf j nicht ziehen
+  function verbotsTabelle(n,paare){
+    var v=[];for(var i=0;i<n;i++){v.push([]);for(var j=0;j<n;j++)v[i].push(i===j);}
+    paare.forEach(function(p){v[p[0]][p[1]]=true;v[p[1]][p[0]]=true;});
+    return v;
+  }
+
+  // Gibt es überhaupt eine Verteilung? Vollständige Suche (Zuordnung über augmentierende Pfade).
+  function moeglich(v){
+    var n=v.length,partner=[];for(var j=0;j<n;j++)partner.push(-1);
+    function suche(i,besucht){
+      for(var j=0;j<n;j++){
+        if(v[i][j]||besucht[j])continue;besucht[j]=true;
+        if(partner[j]<0||suche(partner[j],besucht)){partner[j]=i;return true;}
+      }
+      return false;
+    }
+    for(var i=0;i<n;i++){var b=[];for(var k=0;k<n;k++)b.push(false);if(!suche(i,b))return false;}
+    return true;
+  }
+
+  function mische(n){var p=[];for(var i=0;i<n;i++)p.push(i);for(var k=n-1;k>0;k--){var r=zufall(k+1),t=p[k];p[k]=p[r];p[r]=t;}return p;}
+  function gueltig(p,v){for(var i=0;i<p.length;i++)if(v[i][p[i]])return false;return true;}
+
+  // Zufällige gültige Verteilung: zufällig mischen und verwerfen, bis alle Regeln stimmen (gleichverteilt).
+  function lose(v){
+    if(!moeglich(v))return null;
+    for(var versuch=0;versuch<200000;versuch++){var p=mische(v.length);if(gueltig(p,v))return p;}
+    // sehr seltener Notweg bei extrem vielen Ausschlüssen: zufällige Reihenfolge + Suche
+    var n=v.length,partner=[];for(var j=0;j<n;j++)partner.push(-1);
+    var reihen=mische(n);
+    function suche(i,besucht){var spalten=mische(n);for(var s=0;s<n;s++){var j=spalten[s];if(v[i][j]||besucht[j])continue;besucht[j]=true;if(partner[j]<0||suche(partner[j],besucht)){partner[j]=i;return true;}}return false;}
+    reihen.forEach(function(i){suche(i,[]);});
+    var p=[];for(j=0;j<n;j++)p[partner[j]]=j;return p;
+  }
+
+  function meldung(text,art){var m=$('kowi-msg');m.textContent=text;m.className='kowi-msg'+(art?' kowi-'+art:'');}
+
+  var aktuell=null;
+  function zeige(namen,p){
+    var ul=$('kowi-liste');ul.innerHTML='';
+    namen.forEach(function(name,i){
+      var li=document.createElement('li');
+      var sp=document.createElement('span');sp.className='kowi-name';sp.textContent=name;
+      var bt=document.createElement('button');bt.type='button';bt.className='kowi-btn kowi-mini kowi-zweit';bt.textContent='Ich bin '+name+' – aufdecken';
+      bt.setAttribute('aria-expanded','false');
+      var gh=document.createElement('div');gh.className='kowi-geheim';gh.hidden=true;gh.setAttribute('data-kowi-i',String(i));
+      gh.innerHTML='';var t1=document.createTextNode(name+', du beschenkst: ');var b=document.createElement('strong');b.textContent=namen[p[i]];gh.appendChild(t1);gh.appendChild(b);
+      bt.addEventListener('click',function(){
+        var zu=gh.hidden;
+        // immer nur ein Ergebnis gleichzeitig sichtbar
+        Array.prototype.forEach.call(ul.querySelectorAll('.kowi-geheim'),function(g){g.hidden=true;});
+        Array.prototype.forEach.call(ul.querySelectorAll('button'),function(x){x.setAttribute('aria-expanded','false');x.textContent=x.textContent.replace('verdecken','aufdecken');});
+        if(zu){gh.hidden=false;bt.setAttribute('aria-expanded','true');bt.textContent='Ich bin '+name+' – verdecken';}
+      });
+      li.appendChild(sp);li.appendChild(bt);li.appendChild(gh);ul.appendChild(li);
+    });
+    $('kowi-erg').hidden=false;
+  }
+
+  function starte(){
+    var r=leseNamen($('kowi-namen').value);
+    if(r.doppelt.length){meldung('Diese Namen stehen doppelt: '+r.doppelt.join(', ')+'. Bitte unterscheidbar machen (z. B. „Lisa M.“).','fehler');return;}
+    if(r.namen.length<3){meldung('Bitte mindestens 3 Namen eintragen.','fehler');return;}
+    if(r.namen.length>MAX){meldung('Bitte höchstens '+MAX+' Namen eintragen.','fehler');return;}
+    var a=leseAusschluesse($('kowi-aus').value,r.namen);
+    if(a.fehler.length){meldung(a.fehler.join(' '),'fehler');return;}
+    var v=verbotsTabelle(r.namen.length,a.paare);
+    var p=lose(v);
+    if(!p){$('kowi-erg').hidden=true;meldung('Mit diesen Ausschlüssen gibt es keine mögliche Verteilung. Bitte einen Ausschluss streichen.','fehler');return;}
+    aktuell={namen:r.namen,p:p};
+    zeige(r.namen,p);
+    meldung('Ausgelost! '+r.namen.length+' Personen, '+a.paare.length+' Ausschluss'+(a.paare.length===1?'':'e')+' beachtet.','ok');
+  }
+
+  $('kowi-los').addEventListener('click',starte);
+  $('kowi-neu').addEventListener('click',starte);
+  // nur für automatische Prüfung: reine Rechenfunktionen, ohne Daten
+  wurzel.kowiTest={leseNamen:leseNamen,leseAusschluesse:leseAusschluesse,verbotsTabelle:verbotsTabelle,moeglich:moeglich,lose:lose,gueltig:gueltig,aktuell:function(){return aktuell;}};
+})();
+</script>
