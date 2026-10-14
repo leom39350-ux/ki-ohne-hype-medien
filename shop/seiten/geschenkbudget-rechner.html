@@ -1,0 +1,267 @@
+<!-- Werkzeug „Geschenkbudget-Rechner Weihnachten“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kogb{--kogb-a:#b3261e;--kogb-g:#1f6f43;--kogb-t:#1d1d1f;--kogb-m:#5f6368;--kogb-r:#e2e2e2;--kogb-h:#faf7f2;max-width:760px;margin:0 auto;color:var(--kogb-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kogb *,.kogb *::before,.kogb *::after{box-sizing:border-box}
+.kogb-box{background:var(--kogb-h);border:1px solid var(--kogb-r);border-radius:14px;padding:18px;margin:16px 0}
+.kogb h2{font-size:1.35em;margin:0 0 8px}
+.kogb h3{font-size:1.1em;margin:18px 0 6px}
+.kogb label,.kogb .kogb-lab{display:block;font-weight:600;margin:12px 0 4px}
+.kogb .kogb-hint{font-size:.88em;color:var(--kogb-m);margin:2px 0 0}
+.kogb input,.kogb select{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.kogb-zwei{display:grid;grid-template-columns:1fr;gap:0 14px}
+@media (min-width:620px){.kogb-zwei{grid-template-columns:1fr 1fr}}
+.kogb-person{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 0;border-top:1px solid var(--kogb-r)}
+.kogb-person .kogb-voll{grid-column:1 / -1}
+@media (min-width:620px){.kogb-person{grid-template-columns:2fr 1.3fr 1fr 1fr auto}.kogb-person .kogb-voll{grid-column:auto}}
+.kogb-person label{font-size:.85em;margin:0 0 2px;font-weight:600}
+.kogb-btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--kogb-a);color:#fff;margin:12px 8px 0 0}
+.kogb-btn:focus-visible,.kogb input:focus-visible,.kogb select:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.kogb-btn.kogb-zweit{background:#fff;color:var(--kogb-t);border:1px solid #bdbdbd}
+.kogb-btn.kogb-mini{padding:8px 12px;margin:0;font-size:.9em;align-self:end;justify-self:end;min-width:44px}
+.kogb-msg{margin-top:12px;padding:10px 12px;border-radius:10px;display:none}
+.kogb-msg.kogb-fehler{display:block;background:#fdecea;color:#7a1b14}
+.kogb-msg.kogb-ok{display:block;background:#e8f4ec;color:#174d31}
+.kogb-tab{width:100%;border-collapse:collapse;margin-top:8px;font-size:.95em}
+.kogb-tab th,.kogb-tab td{padding:8px 6px;border-top:1px solid var(--kogb-r);text-align:right;vertical-align:top}
+.kogb-tab th:first-child,.kogb-tab td:first-child{text-align:left;word-break:break-word}
+.kogb-tab thead th{border-top:0;font-size:.85em;color:var(--kogb-m)}
+.kogb-tab tfoot td{font-weight:700;border-top:2px solid var(--kogb-t)}
+.kogb-minus{color:#b3261e;font-weight:700}
+.kogb-kenn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.kogb-kenn div{background:#fff;border:1px solid var(--kogb-r);border-radius:10px;padding:10px}
+.kogb-kenn span{display:block;font-size:.82em;color:var(--kogb-m)}
+.kogb-kenn strong{font-size:1.2em}
+.kogb-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media (min-width:620px){.kogb-karten{grid-template-columns:1fr 1fr}}
+.kogb-karte{display:block;border:1px solid var(--kogb-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.kogb-karte:hover{border-color:var(--kogb-a)}
+.kogb-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--kogb-m)}
+.kogb-karte strong{display:block;margin:4px 0}
+.kogb-faq details{border-top:1px solid var(--kogb-r);padding:10px 0}
+.kogb-faq summary{cursor:pointer;font-weight:600}
+.kogb-fuss{font-size:.85em;color:var(--kogb-m);margin-top:20px}
+</style>
+
+<div class="kogb" id="kogb">
+  <h2>Geschenkbudget-Rechner für Weihnachten</h2>
+  <p>Du legst fest, wie viel Weihnachten dieses Jahr kosten darf – der Rechner verteilt den Betrag fair auf alle, die du beschenken willst. Wichtige Menschen bekommen mehr, Kleinigkeiten weniger, feste Beträge bleiben fest. Dazu siehst du, wie viel du bis Heiligabend pro Woche zurücklegen musst. Alles läuft nur in deinem Browser: <strong>nichts wird gespeichert oder verschickt</strong>.</p>
+
+  <div class="kogb-box">
+    <div class="kogb-zwei">
+      <div>
+        <label for="kogb-budget">1. Gesamtbudget für Geschenke (€)</label>
+        <input id="kogb-budget" inputmode="decimal" autocomplete="off" placeholder="z. B. 400">
+      </div>
+      <div>
+        <label for="kogb-puffer">Puffer für Papier, Versand, Vergessenes</label>
+        <select id="kogb-puffer">
+          <option value="0">kein Puffer</option>
+          <option value="5">5 %</option>
+          <option value="10" selected>10 %</option>
+          <option value="15">15 %</option>
+          <option value="20">20 %</option>
+        </select>
+      </div>
+    </div>
+    <p class="kogb-hint">Der Puffer wird zuerst abgezogen und nicht verteilt.</p>
+
+    <span class="kogb-lab" id="kogb-plab">2. Wen beschenkst du?</span>
+    <p class="kogb-hint">„Wichtigkeit“ steuert die Verteilung: groß bekommt dreimal so viel wie klein, mittel doppelt so viel. Ein fester Betrag (z. B. fürs Wichteln) wird genau so übernommen. „Schon gekauft“ ist freiwillig.</p>
+    <div id="kogb-personen" aria-labelledby="kogb-plab"></div>
+    <button type="button" class="kogb-btn kogb-zweit" id="kogb-plus">+ Person hinzufügen</button>
+
+    <div class="kogb-zwei">
+      <div>
+        <label for="kogb-gespart">3. Davon schon zurückgelegt (€, freiwillig)</label>
+        <input id="kogb-gespart" inputmode="decimal" autocomplete="off" placeholder="0">
+      </div>
+    </div>
+
+    <button type="button" class="kogb-btn" id="kogb-los">Budget verteilen</button>
+    <div class="kogb-msg" id="kogb-msg" role="status" aria-live="polite"></div>
+  </div>
+
+  <div id="kogb-erg" hidden>
+    <h3>Dein Plan</h3>
+    <table class="kogb-tab">
+      <thead><tr><th scope="col">Person</th><th scope="col">Budget</th><th scope="col">Gekauft</th><th scope="col">Noch frei</th></tr></thead>
+      <tbody id="kogb-zeilen"></tbody>
+      <tfoot><tr><td>Summe</td><td id="kogb-s-b"></td><td id="kogb-s-k"></td><td id="kogb-s-o"></td></tr></tfoot>
+    </table>
+    <div class="kogb-kenn">
+      <div><span>Puffer</span><strong id="kogb-k-puffer"></strong></div>
+      <div><span>Rest durch Abrunden</span><strong id="kogb-k-rest"></strong></div>
+      <div><span>Noch zu sparen pro Woche</span><strong id="kogb-k-woche"></strong></div>
+      <div><span>Tage bis Heiligabend</span><strong id="kogb-k-tage"></strong></div>
+    </div>
+    <p class="kogb-hint" id="kogb-k-text"></p>
+
+    <h3>Passt dazu</h3>
+    <div class="kogb-karten">
+      <a class="kogb-karte" href="/products/spar-tracker-2027">
+        <span class="kogb-werb">Eigenwerbung</span>
+        <strong>Spar-Tracker 2027 (Excel-Vorlage)</strong>
+        Sparziele anlegen, Challenge abhaken und sehen, wie weit du bist – auch für das Geschenkbudget im nächsten Jahr.
+      </a>
+      <a class="kogb-karte" href="/products/gutscheine-weihnachten">
+        <span class="kogb-werb">Eigenwerbung</span>
+        <strong>Weihnachts-Gutscheine zum Ausdrucken (PDF)</strong>
+        Zeit statt Zeug: fertige Gutscheine zum Ausfüllen – ein Geschenk, das kaum etwas vom Budget frisst.
+      </a>
+    </div>
+  </div>
+
+  <h3>So rechnet der Rechner</h3>
+  <p>Vom Gesamtbudget geht zuerst der Puffer ab. Dann werden die festen Beträge abgezogen. Der Rest wird nach Wichtigkeit verteilt (klein = 1 Teil, mittel = 2 Teile, groß = 3 Teile) und auf volle Euro abgerundet – so bleibt kein krummer Betrag. Was durch das Abrunden übrig bleibt, steht als „Rest“ extra. Für die Sparrate zählt der Rechner die Tage bis zum 24. Dezember, macht daraus angefangene Wochen und teilt den noch fehlenden Betrag gleichmäßig auf (auf den Cent aufgerundet).</p>
+
+  <div class="kogb-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Wie viel sollte man für Weihnachtsgeschenke ausgeben?</summary><p>Dafür gibt es keine richtige Zahl. Ein guter Startpunkt ist der Betrag, den du bis Heiligabend ohne Dispo und ohne Ratenkauf zusammenbekommst. Der Rechner zeigt dir, wie viel das pro Woche bedeutet – ist dir das zu viel, senk das Budget und rechne neu.</p></details>
+    <details><summary>Was bedeutet „Wichtigkeit“?</summary><p>Sie legt fest, wer mehr bekommt. Eine Person mit „groß“ bekommt dreimal so viel wie eine mit „klein“. Willst du allen gleich viel geben, stell alle auf dieselbe Stufe.</p></details>
+    <details><summary>Wofür ist der feste Betrag?</summary><p>Für Geschenke mit vorgegebenem Preis – etwa beim Wichteln (oft 10 oder 20 €) oder wenn du schon weißt, was es wird. Feste Beträge werden vor der Verteilung abgezogen.</p></details>
+    <details><summary>Werden meine Angaben gespeichert?</summary><p>Nein. Die Rechnung läuft komplett in deinem Browser. Es gibt keine Anmeldung, keine Cookies dieses Rechners und nichts wird an uns geschickt. Lädst du die Seite neu, ist alles weg.</p></details>
+    <details><summary>Warum steht bei „Noch frei“ ein Minus?</summary><p>Dann hast du für diese Person schon mehr gekauft als geplant. Du kannst den Betrag bei jemand anderem einsparen oder das Budget anpassen.</p></details>
+  </div>
+
+  <p class="kogb-fuss">Ein Rechenwerkzeug für deinen Überblick – keine Finanzberatung. Stichtag für die Sparrate ist der 24. Dezember (nach dem 24. Dezember: der im nächsten Jahr). Stand: 14.10.2026 · KI ohne Hype</p>
+</div>
+
+<script>
+(function(){
+  var wurzel=document.getElementById('kogb');
+  if(!wurzel)return;
+  function $(id){return document.getElementById(id);}
+  var MAX_P=30, MAX_CENT=100000000; // höchstens 1.000.000 €
+  var GEWICHT={klein:1,mittel:2,gross:3};
+
+  // "1.234,50" | "1234.5" | "50" | "50 €" → Cent (Ganzzahl). Leer → null. Ungültig → NaN
+  function leseBetrag(txt){
+    var s=String(txt==null?'':txt).replace(/\s|€|eur/gi,'');
+    if(s==='')return null;
+    if(!/^[0-9.,]+$/.test(s))return NaN;
+    if(s.indexOf(',')>=0){
+      if(s.indexOf(',')!==s.lastIndexOf(','))return NaN;
+      var vorne=s.split(',')[0];
+      if(vorne.indexOf('.')>=0&&!/^\d{1,3}(\.\d{3})+$/.test(vorne))return NaN;
+      s=s.replace(/\./g,'').replace(',','.');
+    }else if(/^\d{1,3}(\.\d{3})+$/.test(s)){
+      s=s.replace(/\./g,'');
+    }
+    if(!/^\d+(\.\d{1,2})?$/.test(s))return NaN;
+    var t=s.split('.');
+    var c=parseInt(t[0],10)*100+(t[1]?parseInt((t[1]+'0').slice(0,2),10):0);
+    return c;
+  }
+  function euro(c){
+    var neg=c<0;c=Math.abs(c);
+    var e=Math.floor(c/100),ct=c%100;
+    var es=String(e).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+    return (neg?'−':'')+es+','+(ct<10?'0':'')+ct+' €';
+  }
+  // Tage bis zum nächsten 24.12. (heute = 24.12. → 0)
+  function tageBisHeiligabend(heute){
+    var y=heute.getFullYear(),m=heute.getMonth(),d=heute.getDate();
+    var h=Date.UTC(y,m,d), z=Date.UTC(y,11,24);
+    if(h>z)z=Date.UTC(y+1,11,24);
+    return Math.round((z-h)/86400000);
+  }
+  // Kern-Rechnung, nur Ganzzahlen (Cent)
+  // personen: [{name, stufe:'klein'|'mittel'|'gross', fest:Cent|null, gekauft:Cent|null}]
+  function rechne(budget,pufferProz,personen,gespart,heute){
+    var puffer=Math.floor(budget*pufferProz/100);
+    var verfuegbar=budget-puffer;
+    var festSumme=0,teile=0;
+    personen.forEach(function(p){if(p.fest!=null)festSumme+=p.fest;else teile+=GEWICHT[p.stufe];});
+    if(festSumme>verfuegbar)return {fehler:'Die festen Beträge ('+euro(festSumme)+') sind höher als das verfügbare Budget nach Puffer ('+euro(verfuegbar)+').'};
+    var frei=verfuegbar-festSumme, verteilt=0;
+    var zeilen=personen.map(function(p){
+      var b;
+      if(p.fest!=null)b=p.fest;
+      else{var x=frei*GEWICHT[p.stufe],n=teile*100;b=((x-x%n)/n)*100;}
+      verteilt+=b;
+      var k=p.gekauft||0;
+      return {name:p.name,budget:b,gekauft:k,offen:b-k};
+    });
+    var rest=verfuegbar-verteilt;
+    var tage=tageBisHeiligabend(heute);
+    var wochen=tage>0?Math.ceil(tage/7):0;
+    var fehlt=Math.max(0,budget-(gespart||0));
+    var proWoche=wochen>0?Math.ceil(fehlt/wochen):null;
+    var sk=0;zeilen.forEach(function(z){sk+=z.gekauft;});
+    return {puffer:puffer,verfuegbar:verfuegbar,rest:rest,zeilen:zeilen,summeBudget:verteilt,summeGekauft:sk,
+      summeOffen:verteilt-sk,tage:tage,wochen:wochen,fehlt:fehlt,proWoche:proWoche};
+  }
+
+  var liste=$('kogb-personen'),zaehler=0;
+  function neuePerson(name,stufe){
+    if(liste.children.length>=MAX_P){meldung('Höchstens '+MAX_P+' Personen.','fehler');return;}
+    zaehler++;var n=zaehler;
+    var div=document.createElement('div');div.className='kogb-person';
+    div.innerHTML=
+      '<div class="kogb-voll"><label for="kogb-n'+n+'">Name</label><input id="kogb-n'+n+'" class="kogb-f-name" autocomplete="off" maxlength="40"></div>'+
+      '<div><label for="kogb-w'+n+'">Wichtigkeit</label><select id="kogb-w'+n+'" class="kogb-f-stufe"><option value="klein">klein</option><option value="mittel">mittel</option><option value="gross">groß</option></select></div>'+
+      '<div><label for="kogb-f'+n+'">Fester Betrag €</label><input id="kogb-f'+n+'" class="kogb-f-fest" inputmode="decimal" autocomplete="off" placeholder="–"></div>'+
+      '<div><label for="kogb-k'+n+'">Schon gekauft €</label><input id="kogb-k'+n+'" class="kogb-f-kauf" inputmode="decimal" autocomplete="off" placeholder="0"></div>'+
+      '<button type="button" class="kogb-btn kogb-zweit kogb-mini" aria-label="Person entfernen">✕</button>';
+    div.querySelector('.kogb-f-name').value=name||'';
+    div.querySelector('.kogb-f-stufe').value=stufe||'mittel';
+    div.querySelector('button').addEventListener('click',function(){div.parentNode.removeChild(div);});
+    liste.appendChild(div);
+  }
+  function meldung(t,art){var m=$('kogb-msg');m.textContent=t;m.className='kogb-msg kogb-'+art;}
+
+  function lesePersonen(){
+    var out=[],fehler=[];
+    Array.prototype.forEach.call(liste.children,function(div,i){
+      var name=div.querySelector('.kogb-f-name').value.trim()||('Person '+(i+1));
+      var fest=leseBetrag(div.querySelector('.kogb-f-fest').value);
+      var kauf=leseBetrag(div.querySelector('.kogb-f-kauf').value);
+      if(isNaN(fest))fehler.push('Fester Betrag bei „'+name+'“ ist keine gültige Zahl.');
+      if(isNaN(kauf))fehler.push('„Schon gekauft“ bei „'+name+'“ ist keine gültige Zahl.');
+      out.push({name:name,stufe:div.querySelector('.kogb-f-stufe').value,fest:fest,gekauft:kauf});
+    });
+    return {personen:out,fehler:fehler};
+  }
+  function td(t,kl){var e=document.createElement('td');e.textContent=t;if(kl)e.className=kl;return e;}
+  function zeige(r){
+    var tb=$('kogb-zeilen');tb.innerHTML='';
+    r.zeilen.forEach(function(z){
+      var tr=document.createElement('tr');
+      var th=document.createElement('td');th.textContent=z.name;tr.appendChild(th);
+      tr.appendChild(td(euro(z.budget)));tr.appendChild(td(euro(z.gekauft)));
+      tr.appendChild(td(euro(z.offen),z.offen<0?'kogb-minus':''));
+      tb.appendChild(tr);
+    });
+    $('kogb-s-b').textContent=euro(r.summeBudget);$('kogb-s-k').textContent=euro(r.summeGekauft);
+    var so=$('kogb-s-o');so.textContent=euro(r.summeOffen);so.className=r.summeOffen<0?'kogb-minus':'';
+    $('kogb-k-puffer').textContent=euro(r.puffer);
+    $('kogb-k-rest').textContent=euro(r.rest);
+    $('kogb-k-tage').textContent=String(r.tage);
+    var txt;
+    if(r.fehlt===0){$('kogb-k-woche').textContent=euro(0);txt='Dein Budget ist schon komplett zurückgelegt.';}
+    else if(r.proWoche==null){$('kogb-k-woche').textContent='–';txt='Heute ist Heiligabend – zum Sparen ist keine Zeit mehr. Noch fehlen '+euro(r.fehlt)+'.';}
+    else{$('kogb-k-woche').textContent=euro(r.proWoche);txt='Noch fehlen '+euro(r.fehlt)+'. Bis Heiligabend sind es '+r.tage+' Tage, also '+r.wochen+' angefangene Woche'+(r.wochen===1?'':'n')+'.';}
+    $('kogb-k-text').textContent=txt;
+    $('kogb-erg').hidden=false;
+  }
+  function starte(){
+    var b=leseBetrag($('kogb-budget').value);
+    if(b==null||isNaN(b)||b<=0){$('kogb-erg').hidden=true;meldung('Bitte ein Gesamtbudget größer als 0 eintragen (z. B. 400 oder 399,50).','fehler');return;}
+    if(b>MAX_CENT){$('kogb-erg').hidden=true;meldung('Bitte höchstens 1.000.000 € eintragen.','fehler');return;}
+    var g=leseBetrag($('kogb-gespart').value);
+    if(isNaN(g)){$('kogb-erg').hidden=true;meldung('„Schon zurückgelegt“ ist keine gültige Zahl.','fehler');return;}
+    var lp=lesePersonen();
+    if(lp.fehler.length){$('kogb-erg').hidden=true;meldung(lp.fehler.join(' '),'fehler');return;}
+    if(!lp.personen.length){$('kogb-erg').hidden=true;meldung('Bitte mindestens eine Person hinzufügen.','fehler');return;}
+    var r=rechne(b,parseInt($('kogb-puffer').value,10),lp.personen,g||0,new Date());
+    if(r.fehler){$('kogb-erg').hidden=true;meldung(r.fehler,'fehler');return;}
+    zeige(r);
+    meldung('Fertig: '+euro(r.summeBudget)+' auf '+r.zeilen.length+' Person'+(r.zeilen.length===1?'':'en')+' verteilt.','ok');
+  }
+  neuePerson('','gross');neuePerson('','mittel');neuePerson('','klein');
+  $('kogb-plus').addEventListener('click',function(){neuePerson('','mittel');});
+  $('kogb-los').addEventListener('click',starte);
+  // nur für automatische Prüfung: reine Rechenfunktionen, ohne Daten
+  wurzel.kogbTest={leseBetrag:leseBetrag,euro:euro,tageBisHeiligabend:tageBisHeiligabend,rechne:rechne};
+})();
+</script>
