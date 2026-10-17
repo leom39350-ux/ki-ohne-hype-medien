@@ -1,0 +1,304 @@
+<!-- Werkzeug „Umzugs-Checkliste mit Zeitplan“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kouz{--kouz-a:#1f5fa8;--kouz-g:#1f6f43;--kouz-f:#b3261e;--kouz-t:#1d1d1f;--kouz-m:#5f6368;--kouz-r:#e2e2e2;--kouz-h:#f5f8fc;max-width:760px;margin:0 auto;color:var(--kouz-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kouz *,.kouz *::before,.kouz *::after{box-sizing:border-box}
+.kouz h2{font-size:1.35em;margin:0 0 8px}
+.kouz h3{font-size:1.1em;margin:18px 0 6px}
+.kouz-box{background:var(--kouz-h);border:1px solid var(--kouz-r);border-radius:14px;padding:18px;margin:16px 0}
+.kouz-lab{display:block;font-weight:600;margin:0 0 6px}
+.kouz-hint{font-size:.88em;color:var(--kouz-m);margin:4px 0 0}
+.kouz-zeile{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+@media (min-width:560px){.kouz-zeile{grid-template-columns:1fr 1fr}}
+.kouz select,.kouz input.kouz-ein{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.kouz-haken{display:flex;align-items:flex-start;gap:8px;margin:8px 0 0;cursor:pointer}
+.kouz-haken input{width:20px;height:20px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--kouz-a)}
+.kouz button{font:inherit;border-radius:10px;cursor:pointer;padding:10px 16px;border:1px solid var(--kouz-a);background:#fff;color:var(--kouz-a);font-weight:600}
+.kouz button.kouz-los{background:var(--kouz-a);color:#fff;width:100%;margin-top:16px;padding:12px;font-size:1.05em}
+.kouz select:focus-visible,.kouz input:focus-visible,.kouz button:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.kouz-fehler{color:var(--kouz-f);font-weight:600;margin:8px 0 0}
+.kouz-count{text-align:center;margin:0 0 10px}
+.kouz-count .kouz-gross{display:block;font-size:2.3em;font-weight:800;line-height:1.1;color:var(--kouz-a)}
+.kouz-stand{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:.92em;color:var(--kouz-m)}
+.kouz-balken{height:8px;background:#e6e6e6;border-radius:6px;overflow:hidden;margin:6px 0 4px}
+.kouz-balken span{display:block;height:100%;width:0;background:var(--kouz-g);transition:width .2s}
+.kouz-wichtig{background:#fff7e0;border:1px solid #f0d58a;border-radius:10px;padding:10px 12px;margin:12px 0}
+.kouz-wichtig p{margin:4px 0}
+.kouz-phase{margin:16px 0 6px;font-size:1.02em;border-bottom:2px solid var(--kouz-r);padding-bottom:3px}
+.kouz-liste{list-style:none;margin:0;padding:0}
+.kouz-liste li{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--kouz-r);border-radius:10px;padding:9px 10px;margin:6px 0}
+.kouz-liste li.kouz-spaet{border-color:#e6a19c;background:#fff4f3}
+.kouz-liste li.kouz-erl{opacity:.6}
+.kouz-liste li.kouz-erl .kouz-txt{text-decoration:line-through}
+.kouz-liste input{width:22px;height:22px;margin:1px 0 0;flex:0 0 auto;accent-color:var(--kouz-g)}
+.kouz-dat{display:block;font-size:.85em;font-weight:700;color:var(--kouz-a)}
+.kouz-spaet .kouz-dat{color:var(--kouz-f)}
+.kouz-txt{display:block}
+.kouz-mehr{display:block;font-size:.88em;color:var(--kouz-m)}
+.kouz-knoepfe{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.kouz-karten{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:560px){.kouz-karten{grid-template-columns:1fr 1fr}}
+.kouz-karte{display:block;border:1px solid var(--kouz-r);border-radius:12px;padding:12px;background:#fff;color:inherit;text-decoration:none}
+.kouz-karte:hover{border-color:var(--kouz-a)}
+.kouz-karte strong{display:block;color:var(--kouz-a);margin:2px 0 4px}
+.kouz-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.05em;color:var(--kouz-m)}
+.kouz details{border:1px solid var(--kouz-r);border-radius:10px;padding:10px 12px;margin:8px 0;background:#fff}
+.kouz summary{cursor:pointer;font-weight:600}
+.kouz-fuss{font-size:.85em;color:var(--kouz-m);margin:14px 0 0;overflow-wrap:anywhere}
+@media print{.kouz-form,.kouz-karten,.kouz-knoepfe,.kouz-faq,.kouz-nichtdruck{display:none!important}.kouz-liste li{break-inside:avoid}}
+</style>
+
+<div class="kouz" id="kouz">
+  <h2>Umzugs-Checkliste mit Zeitplan</h2>
+  <p>Gib deinen Umzugstag ein – der Rechner macht daraus eine Checkliste, bei der <strong>jede Aufgabe ein Datum hat</strong>: wann du kündigen, Kartons kaufen, den Transporter reservieren und dich spätestens ummelden musst. Was schon überfällig ist, steht oben in Rot. Kostenlos, ohne Anmeldung, nichts wird gespeichert.</p>
+
+  <form class="kouz-box kouz-form" id="kouz-form" novalidate>
+    <label class="kouz-lab" for="kouz-tag">Wann ziehst du um? (Einzug in die neue Wohnung)</label>
+    <input class="kouz-ein" type="date" id="kouz-tag" required>
+    <div class="kouz-zeile">
+      <div>
+        <label class="kouz-lab" for="kouz-art">Wer trägt?</label>
+        <select id="kouz-art">
+          <option value="selbst">Selbst mit Helfern und Transporter</option>
+          <option value="firma">Umzugsfirma</option>
+        </select>
+      </div>
+      <div>
+        <label class="kouz-lab" for="kouz-tier">Haustier dabei?</label>
+        <select id="kouz-tier">
+          <option value="nein">Nein</option>
+          <option value="hund">Hund</option>
+          <option value="katze">Katze</option>
+          <option value="andere">Anderes Tier</option>
+        </select>
+      </div>
+    </div>
+    <label class="kouz-haken"><input type="checkbox" id="kouz-miete" checked> <span>Ich ziehe aus einer <strong>Mietwohnung</strong> aus und muss noch kündigen</span></label>
+    <label class="kouz-haken"><input type="checkbox" id="kouz-kinder"> <span>Mit Kindern (Kita/Schule wechselt)</span></label>
+    <label class="kouz-haken"><input type="checkbox" id="kouz-auto"> <span>Mit Auto (Adresse in den Fahrzeugpapieren ändern)</span></label>
+    <p class="kouz-fehler" id="kouz-fehler" role="alert" hidden></p>
+    <button type="submit" class="kouz-los">Zeitplan erstellen</button>
+  </form>
+
+  <div id="kouz-ergebnis" hidden>
+    <div class="kouz-box">
+      <div class="kouz-count" aria-live="polite">
+        <span class="kouz-gross" id="kouz-tage"></span>
+        <span id="kouz-tagtext"></span>
+      </div>
+      <div class="kouz-stand"><span id="kouz-zahl"></span><span id="kouz-spaetzahl"></span></div>
+      <div class="kouz-balken" aria-hidden="true"><span id="kouz-balken"></span></div>
+      <div class="kouz-wichtig" id="kouz-wichtig"></div>
+      <div id="kouz-plan"></div>
+      <div class="kouz-knoepfe">
+        <button type="button" id="kouz-ics">Termine in den Kalender (.ics)</button>
+        <button type="button" id="kouz-druck">Liste drucken</button>
+        <button type="button" id="kouz-neu">Anderes Datum</button>
+      </div>
+      <p class="kouz-hint kouz-nichtdruck">Häkchen gelten nur, solange die Seite offen ist. Die Kalender-Datei entsteht in deinem Browser und wird nirgends hochgeladen.</p>
+
+      <h3 class="kouz-nichtdruck">Alles auf Papier – mit Platz für eigene Aufgaben</h3>
+      <div class="kouz-karten" id="kouz-karten">
+        <a class="kouz-karte" id="kouz-k1" href="/products/umzugsplaner">
+          <span class="kouz-werb">Eigenwerbung</span>
+          <strong>Umzugsplaner zum Ausdrucken (PDF)</strong>
+          45 Aufgaben in 6 Abschnitten von 8 Wochen vorher bis nach dem Einzug, Kostenplan, Angebote vergleichen, Adressänderungen – zum Abhaken.
+        </a>
+        <a class="kouz-karte" id="kouz-k2" href="/products/wochenplaner-2027">
+          <span class="kouz-werb">Eigenwerbung</span>
+          <strong id="kouz-k2t">Wochenplaner 2027 (PDF)</strong>
+          <span id="kouz-k2b">Für die Wochen rund um den Umzug: jeder Termin an seinem Platz.</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <h3>So rechnet die Checkliste</h3>
+  <ul>
+    <li><strong>Rückwärts vom Umzugstag:</strong> Aufgaben stehen 8, 6, 4, 3 und 2 Wochen, eine Woche und einen Tag vorher – so wie es Umzugs-Ratgeber üblicherweise empfehlen.</li>
+    <li><strong>Ummelden:</strong> Wer eine Wohnung bezieht, muss sich innerhalb von zwei Wochen nach dem Einzug bei der Meldebehörde anmelden (§ 17 Bundesmeldegesetz). Die Checkliste nennt dir den letzten Tag und erinnert drei Wochen vorher an die Terminbuchung, weil Bürgerämter oft ausgebucht sind.</li>
+    <li><strong>Mietwohnung kündigen:</strong> Bei einem unbefristeten Mietvertrag kann der Mieter spätestens am dritten Werktag eines Monats zum Ende des übernächsten Monats kündigen (§ 573c BGB). Die Checkliste nimmt an, dass die alte Miete zum Ende des Umzugsmonats enden soll, und nennt einen sicheren Tag, bis zu dem die Kündigung beim Vermieter sein sollte – nämlich vor Beginn des Monats mit der Frist.</li>
+  </ul>
+
+  <div class="kouz-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Wie früh sollte ich mit der Umzugsplanung anfangen?</summary><p>Etwa acht Wochen vorher ist gut: Dann bekommst du noch Angebote von Umzugsfirmen, einen Transporter zum Wunschtermin und – wichtig bei Mietwohnungen – kündigst rechtzeitig. Wer kurzfristig umzieht, bekommt alle schon fälligen Aufgaben gesammelt als „jetzt nachholen“ angezeigt.</p></details>
+    <details><summary>Bis wann muss ich mich nach dem Umzug ummelden?</summary><p>Innerhalb von zwei Wochen nach dem Einzug (§ 17 Abs. 1 Bundesmeldegesetz). Zur Anmeldung brauchst du in der Regel einen Ausweis und die Bestätigung deines Vermieters (Wohnungsgeberbestätigung). Was genau dein Bürgeramt verlangt, steht auf der Seite deiner Stadt.</p></details>
+    <details><summary>Muss ich mich am alten Wohnort abmelden?</summary><p>Bei einem Umzug innerhalb Deutschlands meldest du dich nur am neuen Wohnort an. Eine Abmeldung ist nur nötig, wenn du keine neue Wohnung im Inland beziehst, zum Beispiel beim Umzug ins Ausland (§ 17 Abs. 2 Bundesmeldegesetz).</p></details>
+    <details><summary>Stimmt der Kündigungstermin für meinen Mietvertrag?</summary><p>Die Checkliste rechnet nur mit der gesetzlichen Frist für Mieter bei unbefristeten Verträgen. Hast du einen Zeitmietvertrag, einen Kündigungsverzicht oder eine andere Vereinbarung, gilt das, was in deinem Vertrag steht. Die Kündigung muss schriftlich sein und rechtzeitig beim Vermieter <em>ankommen</em> – abschicken reicht nicht. Im Zweifel hilft ein Mieterverein. Das hier ist keine Rechtsberatung.</p></details>
+    <details><summary>Was ist die Kalender-Datei?</summary><p>Eine .ics-Datei mit allen Aufgaben als ganztägige Termine. Du kannst sie im Handy- oder PC-Kalender öffnen (zum Beispiel Google Kalender, Apple Kalender, Outlook) und hast die Erinnerungen dann dort. Sie wird in deinem Browser erzeugt und nicht an uns geschickt.</p></details>
+    <details><summary>Werden meine Angaben gespeichert?</summary><p>Nein. Alles läuft nur in deinem Browser. Es gibt keine Anmeldung, keine Cookies dieses Rechners, und nichts wird an uns geschickt. Lädst du die Seite neu, ist alles wieder leer.</p></details>
+  </div>
+
+  <p class="kouz-fuss"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a> · <a href="/pages/brueckentage-2027">Brückentage 2027 →</a></p>
+  <p class="kouz-fuss">Quellen (Stand 17.10.2026): <a href="https://www.gesetze-im-internet.de/bmg/__17.html" rel="noopener">§ 17 Bundesmeldegesetz – Anmeldung, Abmeldung</a> · <a href="https://www.gesetze-im-internet.de/bgb/__573c.html" rel="noopener">§ 573c BGB – Fristen der ordentlichen Kündigung</a>. Die Wochen-Abstände der übrigen Aufgaben sind Erfahrungswerte, keine Vorschrift. Keine Rechtsberatung. Alle Angaben ohne Gewähr.</p>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var TAG=86400000;
+  var WT=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  var MON=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  /* Tage als ganze Zahlen (UTC-Mitternacht) – keine Probleme mit Sommerzeit */
+  function tagNr(j,m,t){return Math.round(Date.UTC(j,m-1,t)/TAG);}
+  function teile(n){var d=new Date(n*TAG);return {j:d.getUTCFullYear(),m:d.getUTCMonth()+1,t:d.getUTCDate(),w:d.getUTCDay()};}
+  function zwei(x){return (x<10?'0':'')+x;}
+  function datum(n){var p=teile(n);return WT[p.w]+', '+zwei(p.t)+'.'+zwei(p.m)+'.'+p.j;}
+  function monatsletzter(j,m){return tagNr(j,m+1,1)-1;}
+  function monatPlus(j,m,d){var x=(j*12+(m-1))+d;return {j:Math.floor(x/12),m:(x%12)+1};}
+  function liesDatum(s){
+    var r=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s||'').trim());if(!r)return null;
+    var j=+r[1],m=+r[2],t=+r[3];if(m<1||m>12||t<1)return null;
+    var n=tagNr(j,m,t);var p=teile(n);if(p.j!==j||p.m!==m||p.t!==t)return null;return n;
+  }
+  function heuteNr(){var d=new Date();return tagNr(d.getFullYear(),d.getMonth()+1,d.getDate());}
+
+  /* Kündigung: Miete soll zum Ende des Umzugsmonats enden.
+     Gesetzlich: Zugang spätestens am 3. Werktag des Monats M-2 (§ 573c BGB).
+     Sicherer Tag: letzter Tag des Monats M-3. */
+  function kuendigung(u,heute){
+    var p=teile(u),ende=monatsletzter(p.j,p.m),fm=monatPlus(p.j,p.m,-2),sm=monatPlus(p.j,p.m,-3);
+    var sicher=monatsletzter(sm.j,sm.m);
+    var r={mietende:ende,fristMonat:fm,sicher:sicher,zuSpaet:sicher<heute};
+    if(r.zuSpaet){var h=teile(heute),nm=monatPlus(h.j,h.m,3);r.fruehestSicher=monatsletzter(nm.j,nm.m);}
+    return r;
+  }
+
+  function plan(u,heute,o){
+    o=o||{};var L=[];
+    function a(key,tage,phase,text,mehr){L.push({key:key,tage:tage,datum:u+tage,phase:phase,text:text,mehr:mehr||''});}
+    var firma=o.art==='firma',tier=o.tier||'nein';
+    var anm=u+14;
+    if(o.miete){var k=kuendigung(u,heute);
+      a('kuendigen',k.sicher-u,'vorher','Mietvertrag der alten Wohnung kündigen (schriftlich, mit Unterschrift)',
+        'Damit die Miete am '+datum(k.mietende)+' endet, muss die Kündigung spätestens am 3. Werktag im '+MON[k.fristMonat.m-1]+' '+k.fristMonat.j+' beim Vermieter sein (§ 573c BGB, unbefristeter Vertrag). Sicher bist du, wenn sie bis zu diesem Tag ankommt.');}
+    a('termin',-56,'vorher','Umzugstag festmachen und Urlaub beim Arbeitgeber beantragen');
+    a('ausmisten',-56,'vorher','Ausmisten beginnen: Was kommt nicht mit? Verkaufen, verschenken, entsorgen');
+    if(firma)a('angebote',-56,'vorher','Angebote von mindestens drei Umzugsfirmen einholen (am besten mit Besichtigung)');
+    else a('helfer',-56,'vorher','Helfer fragen und den Termin mit allen festmachen');
+    if(firma)a('beauftragen',-42,'vorher','Umzugsfirma schriftlich beauftragen');
+    else a('transporter',-42,'vorher','Transporter reservieren (Größe nach Zimmerzahl, Führerscheinklasse beachten)');
+    a('vertraege',-42,'vorher','Verträge prüfen: Strom, Gas, Internet, Handy, Zeitungen, Vereine – Umzug melden oder kündigen','Fristen stehen im jeweiligen Vertrag.');
+    if(o.kinder)a('kita',-42,'vorher','Kinder in neuer Kita/Schule anmelden, alte Einrichtung informieren');
+    a('material',-28,'vorher','Kartons, Klebeband, Polstermaterial und Marker besorgen');
+    a('halteverbot',-28,'vorher','Halteverbotszone vor alter und neuer Wohnung bei der Stadt beantragen','Vorlauf und Gebühren legt jede Stadt selbst fest – lieber früh nachfragen.');
+    a('internet',-28,'vorher','Internetanschluss für die neue Wohnung bestellen oder umziehen lassen');
+    if(tier!=='nein')a('tierbetreuung',-28,'vorher','Betreuung für dein Tier am Umzugstag klären');
+    a('buergeramt',-21,'vorher','Termin beim Bürgeramt für die Anmeldung buchen','Anmelden musst du dich bis '+datum(anm)+' (2 Wochen nach Einzug, § 17 Bundesmeldegesetz). Termine sind oft Wochen im Voraus ausgebucht.');
+    a('nachsenden',-21,'vorher','Nachsendeauftrag für deine Post einrichten');
+    a('sperrmuell',-21,'vorher','Sperrmüll-Termin vereinbaren oder Wertstoffhof einplanen');
+    a('packen',-14,'vorher','Selten Benutztes einpacken, Kartons beschriften (Raum + Inhalt)');
+    a('uebergabe',-14,'vorher','Termine für die Wohnungsübergaben vereinbaren (alte und neue Wohnung)');
+    a('kuehlschrank',-7,'woche','Vorräte aufbrauchen, nicht mehr groß einkaufen');
+    a('werkzeug',-7,'woche','Werkzeug, Akkuschrauber, Müllsäcke, Putzzeug bereitlegen');
+    a('ablauf',-7,'woche',firma?'Ablauf, Adressen und Zugang mit der Umzugsfirma abstimmen':'Plan für den Umzugstag an alle Helfer schicken (Uhrzeit, Adresse, wer fährt)');
+    a('kiste',-1,'woche','Erste-Nacht-Kiste packen: Bettzeug, Ladekabel, Medikamente, Dokumente, Werkzeug, Klopapier');
+    a('abtauen',-1,'woche','Kühlschrank abtauen, Waschmaschine leer laufen lassen');
+    if(!firma)a('verpflegung',-1,'woche','Getränke und Essen für die Helfer besorgen');
+    a('zaehler',0,'tag','Zählerstände (Strom, Gas, Wasser) in alter und neuer Wohnung fotografieren');
+    a('protokoll',0,'tag','Übergabeprotokoll mit Vermieter ausfüllen, Schlüssel zählen');
+    if(tier!=='nein')a('tierruhig',0,'tag','Tier in einem ruhigen, geschlossenen Raum oder bei der Betreuung lassen');
+    a('adressen',7,'danach','Neue Adresse mitteilen: Arbeitgeber, Bank, Versicherungen, Krankenkasse, Rundfunkbeitrag, Online-Shops');
+    if(o.auto)a('kfz',7,'danach','Adresse in den Fahrzeugpapieren bei der Zulassungsstelle ändern lassen','Die Zulassungsstelle deines neuen Wohnorts sagt dir, was du mitbringen musst.');
+    if(tier==='hund')a('hundesteuer',7,'danach','Hund bei der neuen Gemeinde anmelden (Hundesteuer), alte Gemeinde abmelden');
+    a('anmelden',14,'danach','Letzter Tag: beim Bürgeramt anmelden (Ausweis + Wohnungsgeberbestätigung mitnehmen)','2 Wochen nach Einzug, § 17 Abs. 1 Bundesmeldegesetz.');
+    L.forEach(function(x){x.spaet=x.datum<heute;});
+    L.sort(function(x,y){return x.datum-y.datum||0;});
+    return L;
+  }
+
+  /* Kalender-Datei (RFC 5545, ganztägige Termine) */
+  function icsText(L,stempel){
+    function d8(n){var p=teile(n);return p.j+zwei(p.m)+zwei(p.t);}
+    function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');}
+    /* Zeilen nach höchstens 75 Byte (UTF-8) falten, nie mitten in einem Zeichen */
+    function bytes(c){var n=c.codePointAt(0);return n<128?1:(n<2048?2:(n<65536?3:4));}
+    function falte(z){var out=[],cur='',b=0;Array.from(z).forEach(function(c){var k=bytes(c);if(b+k>75){out.push(cur);cur=' ';b=1;}cur+=c;b+=k;});out.push(cur);return out.join('\r\n');}
+    var z=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//KI ohne Hype//Umzugs-Checkliste//DE','CALSCALE:GREGORIAN'];
+    L.forEach(function(x,i){
+      z.push('BEGIN:VEVENT');
+      z.push('UID:umzug-'+d8(x.datum)+'-'+x.key+'-'+i+'@ki-ohne-hype');
+      z.push('DTSTAMP:'+stempel);
+      z.push('DTSTART;VALUE=DATE:'+d8(x.datum));
+      z.push('DTEND;VALUE=DATE:'+d8(x.datum+1));
+      z.push(falte('SUMMARY:'+esc('Umzug: '+x.text)));
+      if(x.mehr)z.push(falte('DESCRIPTION:'+esc(x.mehr)));
+      z.push('END:VEVENT');
+    });
+    z.push('END:VCALENDAR');
+    return z.join('\r\n')+'\r\n';
+  }
+
+  var PHASE={vorher:'Vorbereitung',woche:'Letzte Woche',tag:'Am Umzugstag',danach:'Nach dem Einzug'};
+  var KARTE={
+    hund:['/products/hundeplaner','Hundeplaner zum Ausdrucken (PDF)','Neue Gemeinde, neuer Tierarzt: Steckbrief, Kontakte, Termine und Kosten deines Hundes an einem Ort.'],
+    katze:['/products/katzenplaner','Katzenplaner zum Ausdrucken (PDF)','Neue Umgebung für die Katze: Steckbrief, Tierarzt, Futter, Kosten und Notfallkarten an einem Ort.'],
+    kinder:['/products/familienplaner-2027','Familienplaner 2027','Neue Schule, neue Termine: Familienkalender mit Feiertagen und Schulferien deines Bundeslands.'],
+    sonst:['/products/wochenplaner-2027','Wochenplaner 2027 (PDF)','Für die Wochen rund um den Umzug: jeder Termin an seinem Platz.']
+  };
+  function karteFuer(o){if(o.tier==='hund')return 'hund';if(o.tier==='katze')return 'katze';if(o.kinder)return 'kinder';return 'sonst';}
+
+  var $=function(id){return document.getElementById(id);};
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+  var S={liste:[],erl:{}};
+
+  function optionen(){return {art:$('kouz-art').value,tier:$('kouz-tier').value,miete:$('kouz-miete').checked,kinder:$('kouz-kinder').checked,auto:$('kouz-auto').checked};}
+  function pruefeEingabe(u,heute){
+    if(u===null)return 'Bitte wähle ein gültiges Datum.';
+    if(u<heute-14)return 'Der Umzug ist schon mehr als zwei Wochen her – dafür gibt es keinen Zeitplan mehr.';
+    if(u>heute+730)return 'Bitte wähle einen Tag in den nächsten zwei Jahren.';
+    return '';
+  }
+  function zaehle(){
+    var n=S.liste.length,e=0,s=0;S.liste.forEach(function(x){if(S.erl[x.key])e++;else if(x.spaet)s++;});
+    $('kouz-zahl').textContent=e+' von '+n+' erledigt';
+    $('kouz-spaetzahl').textContent=s?(s+' überfällig'):'';
+    $('kouz-balken').style.width=(n?Math.round(e*100/n):0)+'%';
+  }
+  function zeige(u,heute,o){
+    S.liste=plan(u,heute,o);S.erl={};S.u=u;
+    var d=u-heute;
+    $('kouz-tage').textContent=d>0?String(d):(d===0?'Heute':String(-d));
+    $('kouz-tagtext').textContent=d>1?'Tage bis zum Umzug am '+datum(u):(d===1?'Tag bis zum Umzug am '+datum(u):(d===0?'ist Umzugstag – viel Erfolg!':(d===-1?'Tag seit dem Umzug am '+datum(u):'Tage seit dem Umzug am '+datum(u))));
+    var w=$('kouz-wichtig');w.innerHTML='';
+    var anm=el('p');anm.appendChild(el('strong',null,'Ummelden bis: '));anm.appendChild(document.createTextNode(datum(u+14)+' (2 Wochen nach Einzug).'));w.appendChild(anm);
+    if(o.miete){var k=kuendigung(u,heute),p=el('p');
+      p.appendChild(el('strong',null,'Kündigung sicher beim Vermieter bis: '));
+      p.appendChild(document.createTextNode(datum(k.sicher)+' – dann endet die alte Miete am '+datum(k.mietende)+'.'));w.appendChild(p);
+      if(k.zuSpaet){var q=el('p');q.appendChild(el('strong',null,'Achtung: '));
+        q.appendChild(document.createTextNode('Dieser sichere Tag ist vorbei. Kündigst du jetzt, endet die Miete sicher erst am '+datum(k.fruehestSicher)+' – rechne mit doppelter Miete oder frag deinen Vermieter nach einem Aufhebungsvertrag oder Nachmieter. Kommt die Kündigung noch in den ersten drei Werktagen eines Monats an, kann es einen Monat früher sein.'));w.appendChild(q);}
+    }
+    var pl=$('kouz-plan');pl.innerHTML='';var akt='',ul=null;
+    var offenSpaet=S.liste.filter(function(x){return x.spaet;});
+    if(offenSpaet.length){pl.appendChild(el('h4','kouz-phase','Jetzt nachholen ('+offenSpaet.length+')'));ul=el('ul','kouz-liste');pl.appendChild(ul);offenSpaet.forEach(function(x){ul.appendChild(zeile(x));});}
+    S.liste.forEach(function(x){if(x.spaet)return;if(x.phase!==akt){akt=x.phase;pl.appendChild(el('h4','kouz-phase',PHASE[akt]));ul=el('ul','kouz-liste');pl.appendChild(ul);}ul.appendChild(zeile(x));});
+    var kk=KARTE[karteFuer(o)],k2=$('kouz-k2');k2.setAttribute('href',kk[0]);$('kouz-k2t').textContent=kk[1];$('kouz-k2b').textContent=kk[2];
+    zaehle();$('kouz-ergebnis').hidden=false;
+  }
+  function zeile(x){
+    var li=el('li',x.spaet?'kouz-spaet':null),cb=document.createElement('input');cb.type='checkbox';cb.setAttribute('aria-label','erledigt: '+x.text);
+    cb.addEventListener('change',function(){S.erl[x.key]=cb.checked;li.classList.toggle('kouz-erl',cb.checked);zaehle();});
+    var t=el('span');t.appendChild(el('span','kouz-dat',(x.spaet?'überfällig seit ':'')+datum(x.datum)));t.appendChild(el('span','kouz-txt',x.text));if(x.mehr)t.appendChild(el('span','kouz-mehr',x.mehr));
+    li.appendChild(cb);li.appendChild(t);li.setAttribute('data-key',x.key);return li;
+  }
+  function stempelJetzt(){var d=new Date();return d.getUTCFullYear()+zwei(d.getUTCMonth()+1)+zwei(d.getUTCDate())+'T'+zwei(d.getUTCHours())+zwei(d.getUTCMinutes())+zwei(d.getUTCSeconds())+'Z';}
+
+  window.kouzRechner={plan:plan,kuendigung:kuendigung,icsText:icsText,liesDatum:liesDatum,tagNr:tagNr,datum:datum,pruefeEingabe:pruefeEingabe,karteFuer:karteFuer,zeige:zeige};
+
+  var f=$('kouz-form');if(!f)return;
+  var start=heuteNr()+56,sp=teile(start);$('kouz-tag').value=sp.j+'-'+zwei(sp.m)+'-'+zwei(sp.t);
+  f.addEventListener('submit',function(ev){ev.preventDefault();
+    var h=heuteNr(),u=liesDatum($('kouz-tag').value),fe=pruefeEingabe(u,h),fl=$('kouz-fehler');
+    if(fe){fl.textContent=fe;fl.hidden=false;$('kouz-ergebnis').hidden=true;return;}
+    fl.hidden=true;zeige(u,h,optionen());
+    try{$('kouz-ergebnis').scrollIntoView({behavior:'smooth',block:'start'});}catch(x){}
+  });
+  $('kouz-neu').addEventListener('click',function(){$('kouz-ergebnis').hidden=true;try{$('kouz-tag').focus();}catch(x){}});
+  $('kouz-druck').addEventListener('click',function(){window.print();});
+  $('kouz-ics').addEventListener('click',function(){
+    var b=new Blob([icsText(S.liste,stempelJetzt())],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');
+    a.href=URL.createObjectURL(b);a.download='umzug-'+teile(S.u).j+'-'+zwei(teile(S.u).m)+'-'+zwei(teile(S.u).t)+'.ics';
+    document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
+  });
+})();
+</script>

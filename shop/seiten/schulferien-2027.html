@@ -1,0 +1,229 @@
+<!-- Werkzeug „Schulferien 2026/27 – Countdown je Bundesland“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kosf{--kosf-a:#1f5fa8;--kosf-g:#1f6f43;--kosf-t:#1d1d1f;--kosf-m:#5f6368;--kosf-r:#e2e2e2;--kosf-h:#f5f8fc;max-width:760px;margin:0 auto;color:var(--kosf-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kosf *,.kosf *::before,.kosf *::after{box-sizing:border-box}
+.kosf-box{background:var(--kosf-h);border:1px solid var(--kosf-r);border-radius:14px;padding:18px;margin:16px 0}
+.kosf h2{font-size:1.35em;margin:0 0 8px}
+.kosf h3{font-size:1.1em;margin:18px 0 6px}
+.kosf label.kosf-lab{display:block;font-weight:600;margin:0 0 4px}
+.kosf .kosf-hint{font-size:.88em;color:var(--kosf-m);margin:4px 0 0}
+.kosf select{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.kosf select:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.kosf-count{background:#fff;border:2px solid var(--kosf-g);border-radius:14px;padding:16px;margin:14px 0 0;text-align:center}
+.kosf-count .kosf-gross{display:block;font-size:2.6em;font-weight:800;line-height:1.1;color:var(--kosf-g)}
+.kosf-count .kosf-was{display:block;font-weight:700;margin-top:4px}
+.kosf-count p{margin:6px 0 0;font-size:.93em}
+.kosf-kenn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.kosf-kenn div{background:#fff;border:1px solid var(--kosf-r);border-radius:10px;padding:10px}
+.kosf-kenn span{display:block;font-size:.82em;color:var(--kosf-m)}
+.kosf-kenn strong{font-size:1.2em}
+.kosf-tab{width:100%;border-collapse:collapse;margin-top:8px;font-size:.95em}
+.kosf-tab th,.kosf-tab td{padding:7px 6px;border-top:1px solid var(--kosf-r);text-align:left;vertical-align:top}
+.kosf-tab thead th{border-top:0;font-size:.85em;color:var(--kosf-m)}
+.kosf-tab tr.kosf-vorbei td{color:var(--kosf-m);text-decoration:line-through}
+.kosf-tab tr.kosf-jetzt td{background:#e8f4ec}
+.kosf-tag{display:inline-block;font-size:.75em;background:#e8f4ec;color:#174d31;border-radius:6px;padding:1px 6px;margin-left:4px;font-weight:700;text-decoration:none}
+.kosf-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media (min-width:620px){.kosf-karten{grid-template-columns:1fr 1fr}}
+.kosf-karte{display:block;border:1px solid var(--kosf-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.kosf-karte:hover{border-color:var(--kosf-a)}
+.kosf-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--kosf-m)}
+.kosf-karte strong{display:block;margin:4px 0}
+.kosf-faq details{border-top:1px solid var(--kosf-r);padding:10px 0}
+.kosf-faq summary{cursor:pointer;font-weight:600}
+.kosf-fuss{font-size:.85em;color:var(--kosf-m);margin-top:20px;word-break:break-word}
+.kosf-fuss a{color:inherit}
+</style>
+
+<div class="kosf" id="kosf">
+  <h2>Schulferien 2026/27: Wie lange noch bis zu den Ferien?</h2>
+  <p>Wähl dein Bundesland – du siehst sofort, wie viele Tage und Schultage es noch bis zu den nächsten Ferien sind, und alle Ferientermine des Schuljahres 2026/27 auf einen Blick: Herbst-, Weihnachts-, Winter-, Oster-, Pfingst- und Sommerferien. Dazu, wie viele Tage ihr mit Wochenenden am Stück frei habt. Alles läuft nur in deinem Browser: <strong>nichts wird gespeichert oder verschickt</strong>.</p>
+
+  <div class="kosf-box">
+    <label class="kosf-lab" for="kosf-land">Bundesland</label>
+    <select id="kosf-land">
+      <option value="BW">Baden-Württemberg</option>
+      <option value="BY">Bayern</option>
+      <option value="BE">Berlin</option>
+      <option value="BB">Brandenburg</option>
+      <option value="HB">Bremen</option>
+      <option value="HH">Hamburg</option>
+      <option value="HE">Hessen</option>
+      <option value="MV">Mecklenburg-Vorpommern</option>
+      <option value="NI">Niedersachsen</option>
+      <option value="NW" selected>Nordrhein-Westfalen</option>
+      <option value="RP">Rheinland-Pfalz</option>
+      <option value="SL">Saarland</option>
+      <option value="SN">Sachsen</option>
+      <option value="ST">Sachsen-Anhalt</option>
+      <option value="SH">Schleswig-Holstein</option>
+      <option value="TH">Thüringen</option>
+    </select>
+
+    <div class="kosf-count" id="kosf-count" aria-live="polite"></div>
+    <div class="kosf-kenn">
+      <div><span>Schultage bis dahin</span><strong id="kosf-k-st"></strong></div>
+      <div><span>Ferientage im Schuljahr (ohne Wochenenden)</span><strong id="kosf-k-ft"></strong></div>
+    </div>
+    <p class="kosf-hint" id="kosf-beweg"></p>
+
+    <h3 id="kosf-h-liste">Alle Ferien 2026/27</h3>
+    <table class="kosf-tab"><thead><tr><th>Ferien</th><th>Termin</th><th>Frei am Stück*</th></tr></thead><tbody id="kosf-liste"></tbody></table>
+    <p class="kosf-hint">* mit den angrenzenden Wochenenden und gesetzlichen Feiertagen. Durchgestrichen: schon vorbei.</p>
+
+    <h3>Passt dazu</h3>
+    <div class="kosf-karten">
+      <a class="kosf-karte" href="/products/familienplaner-2027">
+        <span class="kosf-werb">Eigenwerbung</span>
+        <strong>Familienplaner 2027 (PDF)</strong>
+        Für jedes Bundesland eine eigene Datei – Schulferien und Feiertage 2027 sind schon eingetragen. Drucken, aufhängen, Termine der Familie eintragen.
+      </a>
+      <a class="kosf-karte" href="/products/wochenplaner-2027">
+        <span class="kosf-werb">Eigenwerbung</span>
+        <strong>Wochenplaner 2027 (PDF)</strong>
+        Eine Woche auf einer Doppelseite, mit Kalenderwochen und den Feiertagen aller Bundesländer – zum Ausdrucken in A4/A5 oder fürs Tablet.
+      </a>
+    </div>
+  </div>
+
+  <h3>Sommerferien 2027 in allen Bundesländern</h3>
+  <p>Sortiert nach Beginn. Die Sommerferien legt die Kultusministerkonferenz langfristig fest.</p>
+  <table class="kosf-tab"><thead><tr><th>Bundesland</th><th>Sommerferien 2027</th></tr></thead><tbody id="kosf-sommer"></tbody></table>
+
+  <h3>So rechnet der Countdown</h3>
+  <p>„Noch X Tage“ zählt die Kalendertage von heute bis zum ersten Ferientag. Als Schultage zählen Montag bis Freitag ab heute (heute mitgezählt) bis zum letzten Tag vor den Ferien – ohne gesetzliche Feiertage deines Landes und ohne die einzelnen freien Tage aus dem Ferienkalender. Bewegliche Ferientage und schulfreie Tage, die deine Schule selbst festlegt, kennt der Rechner nicht; bei dir können es also ein paar Schultage weniger sein. Einzelne freie Tage (zum Beispiel ein Freitag nach Christi Himmelfahrt) stehen in der Liste, der Countdown zählt aber auf die nächsten richtigen Ferien von mindestens drei Tagen.</p>
+
+  <div class="kosf-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Woher kommen die Ferientermine?</summary><p>Aus der Übersicht der Kultusministerkonferenz (KMK) „Ferien im Schuljahr 2026/2027“. Die Länder legen ihre Ferien selbst fest, die KMK sammelt sie. Verbindlich ist immer, was dein Land und deine Schule bekannt geben.</p></details>
+    <details><summary>Was sind bewegliche Ferientage?</summary><p>In vielen Ländern darf jede Schule ein paar zusätzliche freie Tage selbst festlegen, oft rund um Brückentage oder Karneval. Wie viele es sind, steht beim Bundesland – welche Tage es genau sind, erfährst du nur von deiner Schule.</p></details>
+    <details><summary>Warum sind manche Ferien nur ein Tag?</summary><p>Einige Länder geben einzelne freie Tage, etwa den Freitag nach Christi Himmelfahrt oder Halbjahresferien von ein bis zwei Tagen. Sie stehen so in der Liste, wie die Länder sie melden.</p></details>
+    <details><summary>Gelten die Termine auch auf den Nordsee-Inseln?</summary><p>Nicht ganz: In Schleswig-Holstein gelten auf Sylt, Föhr, Amrum, Helgoland und den Halligen für Sommer- und Herbstferien Sonderregelungen. Frag dort bitte bei deiner Schule nach.</p></details>
+    <details><summary>Wird mein Bundesland gespeichert?</summary><p>Nein. Die Rechnung läuft komplett in deinem Browser. Es gibt keine Anmeldung, keine Cookies dieses Rechners, und nichts wird an uns geschickt.</p></details>
+  </div>
+
+  <p class="kosf-fuss"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a> · <a href="/pages/brueckentage-2027">Brückentage 2027 für Berufstätige →</a></p>
+  <p class="kosf-fuss">Angaben ohne Gewähr. Ferientermine laut <a href="https://www.kmk.org/service/ferienregelung.html" rel="noopener" target="_blank">Kultusministerkonferenz: Ferienregelung</a> – „Ferien im Schuljahr 2026/2027“ (Stand der KMK-Übersicht: 09.10.2025) und „Sommerferienregelung 2025–2030“; abgeglichen mit smart-rechner.de und kalenderpedia.de am 15.10.2026. Gesetzliche Feiertage nach den Feiertagsgesetzen der Länder (Fronleichnam in Sachsen und Thüringen gilt nur in einem Teil der Gemeinden und ist hier nicht abgezogen). Stand: 15.10.2026 · KI ohne Hype</p>
+</div>
+
+<script>
+(function(){
+  var wurzel=document.getElementById('kosf');if(!wurzel)return;
+  function $(id){return document.getElementById(id);}
+  var NAMEN={BW:'Baden-Württemberg',BY:'Bayern',BE:'Berlin',BB:'Brandenburg',HB:'Bremen',HH:'Hamburg',HE:'Hessen',MV:'Mecklenburg-Vorpommern',NI:'Niedersachsen',NW:'Nordrhein-Westfalen',RP:'Rheinland-Pfalz',SL:'Saarland',SN:'Sachsen',ST:'Sachsen-Anhalt',SH:'Schleswig-Holstein',TH:'Thüringen'};
+  // Ferien im Schuljahr 2026/2027 laut KMK (Stand 09.10.2025), erster und letzter Ferientag.
+  // Je Land: [Herbst, Weihnachten, Winter, Ostern/Frühjahr, Himmelfahrt/Pfingsten, Sommer]; '' = keine. b = bewegliche Ferientage laut KMK.
+  var F={
+    BW:{b:4,f:['26.10.-30.10.,31.10.','23.12.-09.01.','','25.03.,30.03.-03.04.','18.05.-29.05.','29.07.-11.09.']},
+    BY:{b:0,f:['02.11.-06.11.','24.12.-08.01.','08.02.-12.02.','22.03.-02.04.','18.05.-28.05.','02.08.-13.09.']},
+    BE:{b:0,f:['19.10.-31.10.','23.12.-02.01.','01.02.-06.02.','22.03.-02.04.','07.05.,18.05.-19.05.','01.07.-14.08.']},
+    BB:{b:1,f:['19.10.-30.10.','23.12.-02.01.','01.02.-06.02.','22.03.-03.04.','18.05.','01.07.-14.08.']},
+    HB:{b:0,f:['12.10.-24.10.','23.12.-09.01.','01.02.-02.02.','22.03.-03.04.','07.05.,18.05.','08.07.-18.08.']},
+    HH:{b:0,f:['19.10.-30.10.','21.12.-01.01.','29.01.','01.03.-12.03.','07.05.-14.05.','01.07.-11.08.']},
+    HE:{b:4,f:['05.10.-17.10.','23.12.-12.01.','','22.03.-02.04.','','28.06.-06.08.']},
+    MV:{b:0,f:['15.10.-24.10.','21.12.-02.01.','08.02.-19.02.','24.03.-02.04.','07.05.,14.05.-18.05.','05.07.-14.08.']},
+    NI:{b:0,f:['12.10.-24.10.','23.12.-09.01.','01.02.-02.02.','22.03.-03.04.','07.05.,18.05.','08.07.-18.08.']},
+    NW:{b:3,f:['17.10.-31.10.','23.12.-06.01.','','22.03.-03.04.','18.05.','19.07.-31.08.']},
+    RP:{b:6,f:['05.10.-16.10.','23.12.-08.01.','','22.03.-02.04.','','28.06.-06.08.']},
+    SL:{b:2,f:['05.10.-16.10.','21.12.-31.12.','08.02.-12.02.','30.03.-09.04.','','28.06.-06.08.']},
+    SN:{b:1,f:['12.10.-24.10.','23.12.-02.01.','08.02.-19.02.','26.03.-02.04.','07.05.,15.05.-18.05.','10.07.-20.08.']},
+    ST:{b:2,f:['19.10.-30.10.','21.12.-02.01.','01.02.-06.02.','22.03.-27.03.','15.05.-22.05.','10.07.-20.08.']},
+    SH:{b:2,f:['12.10.-24.10.','21.12.-06.01.','','30.03.-10.04.','07.05.','03.07.-14.08.']},
+    TH:{b:2,f:['12.10.-24.10.','23.12.-02.01.','01.02.-06.02.','22.03.-03.04.','07.05.','10.07.-20.08.']}
+  };
+  var ART=['Herbstferien','Weihnachtsferien','Winterferien','Osterferien','Pfingstferien / freie Tage','Sommerferien'];
+  var ARTKURZ=['Herbstferien','Weihnachtsferien','Winterferien','Osterferien','Pfingstferien','Sommerferien'];
+  var ALLE='BW BY BE BB HB HH HE MV NI NW RP SL SN ST SH TH';
+  // Gesetzliche Feiertage Okt. 2026 – Sep. 2027 (nur landesweite; Fronleichnam SN/TH und lokale Feiertage bewusst nicht).
+  var FT=[
+    ['2026-10-31','BB HB HH MV NI SH SN ST TH'],['2026-11-01','BW BY NW RP SL'],['2026-11-18','SN'],
+    ['2026-12-25',ALLE],['2026-12-26',ALLE],['2027-01-01',ALLE],['2027-01-06','BW BY ST'],['2027-03-08','BE MV'],
+    ['2027-03-26',ALLE],['2027-03-28','BB'],['2027-03-29',ALLE],['2027-05-01',ALLE],['2027-05-06',ALLE],
+    ['2027-05-16','BB'],['2027-05-17',ALLE],['2027-05-27','BW BY HE NW RP SL'],['2027-08-15','SL'],['2027-09-20','TH']
+  ];
+  var TAG=864e5, WT=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  function zuMs(s){var p=s.split('-');return Date.UTC(+p[0],+p[1]-1,+p[2]);}
+  function iso(ms){return new Date(ms).toISOString().slice(0,10);}
+  function kurz(ms){var d=new Date(ms);return WT[d.getUTCDay()]+' '+('0'+d.getUTCDate()).slice(-2)+'.'+('0'+(d.getUTCMonth()+1)).slice(-2)+'.'+d.getUTCFullYear();}
+  // Datum „TT.MM.“ im Schuljahr: August–Dezember = 2026, Januar–September 2027; Sommerferien immer 2027.
+  function tm(s,sommer){var t=+s.slice(0,2),m=+s.slice(3,5);var j=(sommer||m<8)?2027:2026;return Date.UTC(j,m-1,t);}
+  function bloecke(land){
+    var out=[];F[land].f.forEach(function(txt,i){
+      if(!txt)return;txt.split(',').forEach(function(teil){
+        var p=teil.split('-');var a=tm(p[0],i===5),e=p[1]?tm(p[1],i===5):a;
+        out.push({art:i,von:a,bis:e});
+      });
+    });
+    return out;
+  }
+  function feiertage(land){var s={};FT.forEach(function(f){if(f[1].split(' ').indexOf(land)>=0)s[zuMs(f[0])]=1;});return s;}
+  // Kern der Rechnung (heuteIso: 'JJJJ-MM-TT')
+  function rechne(land,heuteIso){
+    var heute=zuMs(heuteIso), ft=feiertage(land), bl=bloecke(land);
+    var ferien={};bl.forEach(function(b){for(var d=b.von;d<=b.bis;d+=TAG)ferien[d]=1;});
+    function wochenende(d){var w=new Date(d).getUTCDay();return w===0||w===6;}
+    function frei(d){return wochenende(d)||ft[d]||ferien[d];}
+    var liste=bl.map(function(b){
+      var v=b.von,e=b.bis;while(frei(v-TAG))v-=TAG;while(frei(e+TAG))e+=TAG;
+      var tage=0;for(var d=b.von;d<=b.bis;d+=TAG)if(!wochenende(d)&&!ft[d])tage++;
+      return {art:b.art,von:b.von,bis:b.bis,stueckVon:v,stueckBis:e,amStueck:Math.round((e-v)/TAG)+1,
+        werktage:tage,laenge:Math.round((b.bis-b.von)/TAG)+1,
+        zustand:b.bis<heute?'vorbei':(b.von<=heute?'jetzt':'kommt')};
+    });
+    var ziel=null;for(var i=0;i<liste.length;i++){var b=liste[i];if(b.laenge>=3&&b.bis>=heute){if(!ziel||b.von<ziel.von)ziel=b;}}
+    var r={land:land,liste:liste,ziel:ziel,schultage:0,tage:0,laeuft:false,nochFerien:0,ferientage:0};
+    var ges={};liste.forEach(function(b){for(var d=b.von;d<=b.bis;d+=TAG)if(!wochenende(d)&&!ft[d])ges[d]=1;});
+    r.ferientage=Object.keys(ges).length;
+    if(ziel){
+      if(ziel.von<=heute){r.laeuft=true;r.nochFerien=Math.round((ziel.bis-heute)/TAG)+1;}
+      else{r.tage=Math.round((ziel.von-heute)/TAG);for(var d=heute;d<ziel.von;d+=TAG)if(!frei(d))r.schultage++;}
+    }
+    return r;
+  }
+  function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+  function heuteIso(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
+  function zeige(){
+    var land=$('kosf-land').value, r=rechne(land,wurzel.kosfHeute||heuteIso());
+    var c=$('kosf-count');c.innerHTML='';
+    if(!r.ziel){
+      c.appendChild(el('span','kosf-was','Das Schuljahr 2026/27 ist vorbei.'));
+      c.appendChild(el('p',null,'Die Ferien für 2027/28 folgen hier, sobald wir sie geprüft haben.'));
+      $('kosf-k-st').textContent='–';
+    }else if(r.laeuft){
+      c.appendChild(el('span','kosf-gross',ARTKURZ[r.ziel.art]+'!'));
+      c.appendChild(el('span','kosf-was','Noch '+r.nochFerien+' Ferientag'+(r.nochFerien===1?'':'e')+' (bis '+kurz(r.ziel.bis)+')'));
+      c.appendChild(el('p',null,'Frei am Stück mit Wochenenden: bis '+kurz(r.ziel.stueckBis)+'.'));
+      $('kosf-k-st').textContent='Ferien!';
+    }else{
+      c.appendChild(el('span','kosf-gross',r.tage===1?'Morgen!':'Noch '+r.tage+' Tage'));
+      c.appendChild(el('span','kosf-was','bis zu den '+ARTKURZ[r.ziel.art]+' in '+NAMEN[land]));
+      c.appendChild(el('p',null,'Erster Ferientag: '+kurz(r.ziel.von)+' · letzter Ferientag: '+kurz(r.ziel.bis)+' · mit Wochenenden '+r.ziel.amStueck+' Tage frei am Stück.'));
+      $('kosf-k-st').textContent=String(r.schultage);
+    }
+    $('kosf-k-ft').textContent=String(r.ferientage);
+    var b=F[land].b;
+    $('kosf-beweg').textContent=b?('Dazu kommen laut KMK '+b+' bewegliche'+(b===1?'r Ferientag':' Ferientage')+', die jede Schule selbst festlegt – frag deine Schule nach den genauen Tagen.'):'Für '+NAMEN[land]+' nennt die KMK-Übersicht keine beweglichen Ferientage; einzelne schulfreie Tage kann es trotzdem geben.';
+    $('kosf-h-liste').textContent='Alle Ferien 2026/27 in '+NAMEN[land];
+    var tb=$('kosf-liste');tb.innerHTML='';
+    r.liste.forEach(function(x){
+      var tr=el('tr',x.zustand==='vorbei'?'kosf-vorbei':(x.zustand==='jetzt'?'kosf-jetzt':null));
+      var n=el('td',null,ART[x.art]);if(x.zustand==='jetzt')n.appendChild(el('span','kosf-tag','jetzt'));
+      if(r.ziel&&x===r.ziel&&!r.laeuft)n.appendChild(el('span','kosf-tag','als Nächstes'));
+      tr.appendChild(n);
+      tr.appendChild(el('td',null,x.von===x.bis?kurz(x.von):kurz(x.von)+' – '+kurz(x.bis)));
+      tr.appendChild(el('td',null,x.amStueck+' Tag'+(x.amStueck===1?'':'e')));
+      tb.appendChild(tr);
+    });
+  }
+  function sommer(){
+    var tb=$('kosf-sommer');tb.innerHTML='';
+    Object.keys(F).map(function(l){var b=bloecke(l).filter(function(x){return x.art===5;})[0];return {l:l,b:b};})
+      .sort(function(a,b){return a.b.von-b.b.von||(NAMEN[a.l]<NAMEN[b.l]?-1:1);})
+      .forEach(function(x){var tr=el('tr');tr.appendChild(el('td',null,NAMEN[x.l]));tr.appendChild(el('td',null,kurz(x.b.von)+' – '+kurz(x.b.bis)));tb.appendChild(tr);});
+  }
+  $('kosf-land').addEventListener('change',zeige);
+  sommer();zeige();
+  // nur für automatische Prüfung: Rechenfunktion und Neuzeichnen mit festem Datum
+  wurzel.kosfTest={rechne:rechne,zeigeAm:function(t){wurzel.kosfHeute=t;zeige();}};
+})();
+</script>

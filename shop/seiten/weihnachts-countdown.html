@@ -1,0 +1,287 @@
+<!-- Werkzeug „Weihnachts-Countdown mit Adventskalender-Ideen“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kowc{--kowc-a:#b3261e;--kowc-g:#1f6f43;--kowc-t:#1d1d1f;--kowc-m:#5f6368;--kowc-r:#e2e2e2;--kowc-h:#faf7f2;max-width:760px;margin:0 auto;color:var(--kowc-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kowc *,.kowc *::before,.kowc *::after{box-sizing:border-box}
+.kowc-box{background:var(--kowc-h);border:1px solid var(--kowc-r);border-radius:14px;padding:18px;margin:16px 0}
+.kowc h2{font-size:1.35em;margin:0 0 8px}
+.kowc h3{font-size:1.1em;margin:18px 0 6px}
+.kowc label,.kowc .kowc-lab{display:block;font-weight:600;margin:12px 0 4px}
+.kowc .kowc-hint{font-size:.88em;color:var(--kowc-m);margin:2px 0 0}
+.kowc input[type=date],.kowc select{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.kowc-check{display:flex;gap:8px;align-items:flex-start;font-weight:400 !important}
+.kowc-check input{width:20px;height:20px;margin-top:3px;flex:0 0 auto}
+.kowc-zwei{display:grid;grid-template-columns:1fr;gap:0 14px}
+@media (min-width:620px){.kowc-zwei{grid-template-columns:1fr 1fr}}
+.kowc-btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--kowc-a);color:#fff;margin:12px 8px 0 0}
+.kowc-btn.kowc-zweit{background:#fff;color:var(--kowc-t);border:1px solid #bdbdbd}
+.kowc-btn:focus-visible,.kowc input:focus-visible,.kowc select:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.kowc-msg{margin-top:12px;padding:10px 12px;border-radius:10px;display:none}
+.kowc-msg.kowc-fehler{display:block;background:#fdecea;color:#7a1b14}
+.kowc-msg.kowc-ok{display:block;background:#e8f4ec;color:#174d31}
+.kowc-gross{text-align:center;padding:8px 0 4px}
+.kowc-gross strong{display:block;font-size:3em;line-height:1.1;color:var(--kowc-a)}
+.kowc-gross span{color:var(--kowc-m)}
+.kowc-kenn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+@media (min-width:620px){.kowc-kenn{grid-template-columns:repeat(4,1fr)}}
+.kowc-kenn div{background:#fff;border:1px solid var(--kowc-r);border-radius:10px;padding:10px}
+.kowc-kenn span{display:block;font-size:.82em;color:var(--kowc-m)}
+.kowc-kenn strong{font-size:1.1em}
+.kowc-liste{list-style:none;padding:0;margin:10px 0 0}
+.kowc-liste li{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:start;padding:9px 0;border-top:1px solid var(--kowc-r)}
+.kowc-nr{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:#fff;border:1px solid var(--kowc-r);font-weight:700}
+.kowc-liste li.kowc-heute{background:#fff6d6;border-radius:10px}
+.kowc-liste li.kowc-heute .kowc-nr{background:var(--kowc-a);color:#fff;border-color:var(--kowc-a)}
+.kowc-liste li.kowc-fest .kowc-nr{border-color:var(--kowc-g);color:var(--kowc-g)}
+.kowc-tag{display:block;font-size:.8em;color:var(--kowc-m)}
+.kowc-euro{font-size:.8em;color:var(--kowc-m);white-space:nowrap}
+.kowc-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media (min-width:620px){.kowc-karten{grid-template-columns:1fr 1fr}}
+.kowc-karte{display:block;border:1px solid var(--kowc-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.kowc-karte:hover{border-color:var(--kowc-a)}
+.kowc-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--kowc-m)}
+.kowc-karte strong{display:block;margin:4px 0}
+.kowc-faq details{border-top:1px solid var(--kowc-r);padding:10px 0}
+.kowc-faq summary{cursor:pointer;font-weight:600}
+.kowc-fuss{font-size:.85em;color:var(--kowc-m);margin-top:20px}
+.kowc-fuss a,.kowc a{color:var(--kowc-a)}
+@media print{.kowc-btn,.kowc-eingabe,.kowc-faq,.kowc-werbung,.kowc-einl{display:none !important}.kowc-box{border:0;padding:0}}
+</style>
+<div class="kowc" id="kowc">
+  <p class="kowc-einl">Wie viele Tage sind es noch bis Weihnachten? Der Countdown rechnet es dir aus – dazu die Daten aller vier Adventssonntage und einen fertigen Adventskalender mit 24 Ideen zum Gemeinsam-Erleben: für Kinder, die ganze Familie, Paare oder das Team im Büro. Auf Wunsch nur Ideen, für die du nichts kaufen musst. Kostenlos, ohne Anmeldung – alles läuft in deinem Browser.</p>
+
+  <div class="kowc-box kowc-eingabe">
+    <h2>Countdown &amp; Adventskalender</h2>
+    <div class="kowc-zwei">
+      <div>
+        <label for="kowc-datum">Datum</label>
+        <input type="date" id="kowc-datum">
+        <p class="kowc-hint">Steht auf heute. Du kannst ein anderes Datum wählen, um vorauszuplanen.</p>
+      </div>
+      <div>
+        <label for="kowc-gruppe">Adventskalender für …</label>
+        <select id="kowc-gruppe">
+          <option value="k">Kinder (ca. 3–8 Jahre)</option>
+          <option value="f">die ganze Familie</option>
+          <option value="p">Paare</option>
+          <option value="b">Kolleginnen &amp; Kollegen</option>
+        </select>
+      </div>
+    </div>
+    <label class="kowc-check"><input type="checkbox" id="kowc-gratis" checked> <span>Nur Ideen, für die man nichts kaufen muss (Dinge aus dem Haushalt reichen)</span></label>
+    <button type="button" class="kowc-btn" id="kowc-los">Countdown &amp; Ideen zeigen</button>
+    <div class="kowc-msg" id="kowc-msg" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="kowc-box" id="kowc-erg" hidden>
+    <div class="kowc-gross"><strong id="kowc-tage">–</strong><span id="kowc-tage-text">Tage bis Heiligabend</span></div>
+    <div class="kowc-kenn">
+      <div><span>Heiligabend</span><strong id="kowc-k-ha">–</strong></div>
+      <div><span>Nikolaus</span><strong id="kowc-k-niko">–</strong></div>
+      <div><span>1. Advent</span><strong id="kowc-k-a1">–</strong></div>
+      <div><span>Heutiges Türchen</span><strong id="kowc-k-tuer">–</strong></div>
+    </div>
+    <p class="kowc-hint" id="kowc-advente"></p>
+
+    <h3 id="kowc-liste-titel">Dein Adventskalender</h3>
+    <p class="kowc-hint">Grün umrandet: feste Tage (Nikolaus, Adventssonntage, Heiligabend). Gelb: das Türchen von heute. Ideen mit „€“ brauchen einen kleinen Einkauf.</p>
+    <ol class="kowc-liste" id="kowc-liste"></ol>
+    <button type="button" class="kowc-btn kowc-zweit" id="kowc-mischen">Neu mischen</button>
+    <button type="button" class="kowc-btn kowc-zweit" id="kowc-drucken">Liste drucken</button>
+    <p class="kowc-hint" id="kowc-mischung"></p>
+  </div>
+
+  <div class="kowc-box kowc-werbung" id="kowc-werbung" hidden>
+    <span class="kowc-werb">Eigenwerbung</span>
+    <h3 style="margin-top:4px">Fertig zum Ausdrucken aus unserem Shop</h3>
+    <div class="kowc-karten" id="kowc-karten"></div>
+  </div>
+
+  <div class="kowc-faq">
+    <h2>Häufige Fragen</h2>
+    <details><summary>Wann ist der 1. Advent?</summary><p>Der 1. Advent ist der vierte Sonntag vor dem 1. Weihnachtstag (25. Dezember). Deshalb fällt er immer zwischen den 27. November und den 3. Dezember. 2026 ist er am 29. November, 2027 am 28. November.</p></details>
+    <details><summary>Wie zählt der Countdown die Tage?</summary><p>Gezählt werden die ganzen Tage vom gewählten Datum bis zum 24. Dezember. Am 23. Dezember steht dort also „1 Tag“, an Heiligabend „0“. Nach dem 24. Dezember zählt der Rechner bis Heiligabend des nächsten Jahres.</p></details>
+    <details><summary>Bekomme ich jedes Mal dieselben Ideen?</summary><p>Ja, solange du nicht „Neu mischen“ drückst. Jede Mischung hat eine Nummer – mit derselben Nummer, Zielgruppe und Einstellung kommt dieselbe Liste heraus. Die Liste wird nirgends gespeichert; drucke sie aus, wenn du sie behalten willst.</p></details>
+    <details><summary>Werden meine Angaben gespeichert?</summary><p>Nein. Der Rechner läuft vollständig in deinem Browser. Es werden keine Daten gesendet, keine Cookies gesetzt und nichts gespeichert.</p></details>
+    <details><summary>Was heißt „nichts kaufen“?</summary><p>Diese Ideen kommen mit Dingen aus, die in den meisten Haushalten ohnehin da sind (Papier, Stifte, Decken, Musik, Mehl). Ideen mit „€“ brauchen einen kleinen Einkauf, zum Beispiel Zutaten oder einen Eintritt.</p></details>
+  </div>
+
+  <p class="kowc-fuss kowc-mehr"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a></p>
+  <p class="kowc-fuss">Regel für die Adventssonntage: „Der erste Advent ist der viertletzte Sonntag vor dem ersten Weihnachtstag“ – <a href="https://www.smart-rechner.de/feiertage/infothek/erster_advent.php" rel="noopener" target="_blank">smart-rechner.de</a> (abgerufen am 14.10.2026; dort auch 29.11.2026 und 28.11.2027). Nikolaus: 6. Dezember. Ideen: KI ohne Hype, Stand 14.10.2026. Ein Werkzeug von KI ohne Hype.</p>
+</div>
+<script>
+(function(){
+  var wurzel=document.getElementById('kowc');if(!wurzel)return;
+  function $(id){return document.getElementById(id);}
+  var MONATE=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  var WT=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  // [Text, Zielgruppen (k=Kinder f=Familie p=Paar b=Büro), braucht Einkauf]
+  var IDEEN=[
+    ['Plätzchen backen und mit Ausstechern verzieren','kfp',1],
+    ['Lichter-Spaziergang am Abend: Wer zählt die meisten geschmückten Fenster?','kf',0],
+    ['Schneeflocken aus Papier falten, ausschneiden und ans Fenster kleben','kf',0],
+    ['Wunschzettel malen oder schreiben','kf',0],
+    ['Kuschel-Kinoabend mit einem Weihnachtsfilm und Decken auf dem Sofa','kfp',0],
+    ['Eine Höhle aus Decken und Kissen bauen und darin eine Geschichte vorlesen','kf',0],
+    ['Salzteig-Anhänger formen (2 Tassen Mehl, 1 Tasse Salz, Wasser) und trocknen lassen','kf',0],
+    ['Weihnachtslieder singen und mit Kochlöffeln auf Töpfen trommeln','kf',0],
+    ['Ein Bild für Oma, Opa oder Nachbarn malen und beim nächsten Treffen verschenken','kf',0],
+    ['Märchenstunde bei Kerzenschein (Erwachsene zünden an)','kf',0],
+    ['Frühstück oder Abendessen im Schlafanzug','kfp',0],
+    ['Ein Kuscheltier bekommt ein eingepacktes Geschenk','k',0],
+    ['Musik-Stopptanz mit Weihnachtsliedern','kf',0],
+    ['Ein Spielzeug oder Buch aussuchen, das ein anderes Kind bekommen soll','kf',0],
+    ['Abends Sterne und Mond vom Fenster aus suchen','kfp',0],
+    ['Ein Weihnachts-Memory selbst malen und gleich spielen','kf',0],
+    ['Mini-Theater mit Kuscheltieren aufführen','k',0],
+    ['Suchspiel: Ein kleiner Wichtel aus Papier versteckt sich in der Wohnung','kf',0],
+    ['Eine Papierkette basteln und jeden Tag ein Glied abreißen','k',0],
+    ['Fingerspiel oder Klatschreim zum Winter lernen','k',0],
+    ['Aus Klopapierrollen einen Tannenbaum oder Schneemann basteln','kf',0],
+    ['Winter-Pantomime: Schneeballschlacht, Schlittenfahren, Plätzchen naschen vorspielen','kf',0],
+    ['Gemeinsam ein Weihnachtsbuch aus der Bücherei oder dem Regal anschauen','kf',0],
+    ['Ein Sternenlicht-Bad: Licht aus, Taschenlampe an, Sterne an die Decke malen lassen','k',0],
+    ['Lebkuchenhaus bauen und verzieren','kf',1],
+    ['Kinderpunsch mit Apfelsaft, Orangen und Zimt kochen','kf',1],
+    ['Meisenknödel oder Vogelfutter aufhängen und Vögel beobachten','kf',1],
+    ['Eine Runde Karussell auf dem Weihnachtsmarkt','k',1],
+    ['Brettspiel-Abend – der Gewinner darf den Nachtisch aussuchen','fp',0],
+    ['Fotos des Jahres gemeinsam anschauen und die drei schönsten küren','fp',0],
+    ['Familien-Quiz: Jeder stellt drei Fragen über die anderen','f',0],
+    ['Handyfreier Abend mit Spielen, Musik oder Gesprächen','fp',0],
+    ['Dankbarkeits-Glas: Jeder schreibt auf, wofür er dieses Jahr dankbar ist','fp',0],
+    ['Wohnung gemeinsam weihnachtlich dekorieren','fp',0],
+    ['Reihum eine Geschichte erfinden – jeder sagt einen Satz','kf',0],
+    ['Ein altes Familienrezept nachkochen','f',1],
+    ['Weihnachtskarten schreiben und verschicken','fp',1],
+    ['Plätzchen für die Nachbarn vor die Tür stellen','f',1],
+    ['Lieblingslieder-Abend: Jeder darf zwei Lieder aussuchen','fp',0],
+    ['Videoanruf mit Verwandten, die weit weg wohnen','fp',0],
+    ['Winterspaziergang mit Thermoskanne – Tee oder Kakao von zu Hause','fp',0],
+    ['Einen Brief an den anderen schreiben: Was ich an dir mag','p',0],
+    ['Gutschein für eine Massage – heute eingelöst','p',0],
+    ['Frühstück ans Bett','p',0],
+    ['Im Wohnzimmer zu eurem Lied tanzen','p',0],
+    ['Fragen-Abend: drei Fragen, die ihr euch noch nie gestellt habt','p',0],
+    ['Pläne fürs nächste Jahr schmieden: ein Ausflug, ein Abenteuer, ein Ziel','p',0],
+    ['Playlists tauschen und gemeinsam durchhören','p',0],
+    ['Picknick auf dem Wohnzimmerboden','p',0],
+    ['Ein Kompliment-Zettel in Jackentasche oder Brotdose verstecken','p',0],
+    ['Die Hausarbeit des anderen heute einfach übernehmen','p',0],
+    ['Spaziergang zu einem Ort, an dem ihr eine schöne Erinnerung habt','p',0],
+    ['Wellness-Abend zu Hause mit Kerzen und Musik','p',0],
+    ['Glühwein oder Punsch auf dem Weihnachtsmarkt','fp',1],
+    ['Gemeinsam ein neues Gericht kochen','fp',1],
+    ['Mini-Geschenk unter 5 Euro für den anderen','p',1],
+    ['Weihnachtsmusik zum Arbeitsbeginn – jeder darf einmal auswählen','b',0],
+    ['Kompliment-Runde: Jeder sagt einer Kollegin oder einem Kollegen etwas Nettes','b',0],
+    ['Weihnachtsquiz in der Mittagspause','b',0],
+    ['Den eigenen Schreibtisch weihnachtlich schmücken','b',0],
+    ['Gemeinsamer Spaziergang in der Mittagspause','b',0],
+    ['Tag des hässlichen Weihnachtspullis','b',0],
+    ['Eine Danke-Nachricht an jemanden schicken, der dir dieses Jahr geholfen hat','b',0],
+    ['Lieblings-Plätzchenrezepte austauschen','b',0],
+    ['Rätsel des Tages am Whiteboard oder im Team-Chat','b',0],
+    ['Wichtel-Namen auslosen (z. B. mit unserer kostenlosen Wichtel-Auslosung)','bf',0],
+    ['Teamfoto mit Weihnachtsmütze oder Papierkrone','b',0],
+    ['Rückblick: Was war das schönste Team-Erlebnis in diesem Jahr?','b',0],
+    ['Weihnachts-Bingo mit Begriffen aus dem Arbeitsalltag','b',0],
+    ['Die Büro-Pflanze bekommt Schmuck aus Papier','b',0],
+    ['Emoji-Raten: Weihnachtsfilme nur mit Emojis beschreiben','b',0],
+    ['Eine Stunde ohne Termine für alle','b',0],
+    ['Tipp-Tausch: Jeder verrät seinen besten Trick für den Arbeitsalltag','b',0],
+    ['Erzählrunde: Wie wurde bei euch früher Weihnachten gefeiert?','bf',0],
+    ['Abstimmung über den besten Weihnachtsfilm aller Zeiten','bf',0],
+    ['Weihnachtliche Lieblingsfotos im Team-Chat teilen','b',0],
+    ['Gemeinsam die schönste Schneeflocke aus Papier schneiden – das Team stimmt ab','b',0],
+    ['Gute-Laune-Liste: Jeder nennt einen Erfolg aus diesem Jahr','b',0],
+    ['Eine kurze Dehn- und Bewegungspause zu einem Weihnachtslied','b',0],
+    ['Plätzchen oder Lebkuchen fürs Team mitbringen','b',1],
+    ['Gemeinsames Team-Frühstück','b',1]
+  ];
+  var FEST={
+    niko:{k:'Nikolaustag! Stiefel am Abend vorher putzen und vor die Tür stellen',f:'Nikolaustag! Stiefel am Abend vorher putzen und vor die Tür stellen',p:'Nikolaus: einen kleinen Gruß in den Schuh des anderen stecken',b:'Nikolaus: einen kleinen Gruß auf jeden Platz legen'},
+    ha:{k:'Heiligabend! Vor der Bescherung eine letzte Runde Lichter gucken',f:'Heiligabend! Zusammen essen, singen, auspacken',p:'Heiligabend: Lieblingsessen und Zeit nur für euch',b:'Heiligabend – meist frei. Frohe Weihnachten schon am letzten Arbeitstag wünschen'},
+    adv:{k:'. Advent: Kerze am Adventskranz anzünden (Erwachsene helfen) und ein Lied singen',f:'. Advent: Kerze am Adventskranz anzünden und gemeinsam Kaffee oder Kakao trinken',p:'. Advent: Kerze anzünden und einen gemütlichen Sonntag ohne Pläne verbringen',b:'. Advent – Sonntag, frei. Am Montag: Wer hat was Schönes erlebt?'}
+  };
+  var NAMEN={k:'Kinder',f:'die ganze Familie',p:'Paare',b:'Kolleginnen & Kollegen'};
+  var PRODUKTE={
+    k:[['raetsel-adventskalender','Rätsel-Adventskalender für Kinder','24 Rätsel in zwei Schwierigkeitsstufen zum Ausdrucken (PDF) – 5,90 €'],['wichteltuer-briefe','Wichteltür-Briefe „Wichtel Krümel“','Briefe vom Wichtel für die Adventszeit (PDF + Word) – 5,90 €']],
+    f:[['raetsel-adventskalender','Rätsel-Adventskalender für Kinder','24 Rätsel in zwei Schwierigkeitsstufen zum Ausdrucken (PDF) – 5,90 €'],['weihnachtsquiz-bingo','Weihnachtsquiz & Bingo','50 Quizfragen und 40 Bingokarten für den Familienabend (PDF) – 5,90 €']],
+    p:[['adventskalender-paare','Adventskalender für Paare','24 Karten mit Erlebnissen, Fragen und Gutscheinen für zwei (PDF) – 4,90 €'],['gutscheine-weihnachten','Weihnachts-Gutscheine zum Ausfüllen','Gutscheine zum Verschenken (PDF) – 4,90 €']],
+    b:[['team-adventskalender','Team-Adventskalender fürs Büro','24 Karten mit Mini-Aktionen und Rätseln fürs Team (PDF) – 5,90 €'],['wichtelspiel','Wichtel-Spieleset','Würfelwichteln, Schrottwichteln und mehr (PDF) – 4,90 €']]
+  };
+  function utc(y,m,d){return Date.UTC(y,m-1,d);}
+  function wochentag(y,m,d){return new Date(utc(y,m,d)).getUTCDay();}
+  function tageZwischen(a,b){return Math.round((utc(b[0],b[1],b[2])-utc(a[0],a[1],a[2]))/86400000);}
+  function plusTage(y,m,d,n){var t=new Date(utc(y,m,d)+n*86400000);return [t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate()];}
+  // 4. Advent = letzter Sonntag vor dem 25.12. (kann der 24.12. sein); 1. Advent = 3 Wochen davor
+  function advente(y){var a4=24-wochentag(y,12,24);var r=[];for(var i=3;i>=0;i--)r.push(plusTage(y,12,a4,-7*i));return r;}
+  function countdown(y,m,d){
+    var zj=(m===12&&d>24)?y+1:y;
+    return {zieljahr:zj,tage:tageZwischen([y,m,d],[zj,12,24]),tuer:(m===12&&d<=24)?d:null,
+      niko:tageZwischen([y,m,d],[(m===12&&d>6)?y+1:y,12,6]),advente:advente(zj)};
+  }
+  // kleiner Zufallsgenerator mit fester Startzahl (mulberry32) – gleiche Nummer = gleiche Liste
+  function zufall(s){return function(){s=(s+0x6D2B79F5)|0;var t=Math.imul(s^(s>>>15),1|s);t=(t+Math.imul(t^(t>>>7),61|t))^t;return ((t^(t>>>14))>>>0)/4294967296;};}
+  function kalender(zieljahr,gruppe,gratis,mischung){
+    var adv=advente(zieljahr),festTage={};
+    adv.forEach(function(a,i){if(a[1]===12&&a[2]<=24)festTage[a[2]]={art:'adv',nr:i+1};});
+    [[6,'niko'],[24,'ha']].forEach(function(x){var vor=festTage[x[0]];festTage[x[0]]={art:x[1],zugleich:vor?vor.nr:0};});
+    var pool=[];IDEEN.forEach(function(e,i){if(e[1].indexOf(gruppe)>=0&&(!gratis||!e[2]))pool.push(i);});
+    var r=zufall(mischung*7919+gruppe.charCodeAt(0)*31+(gratis?1:0));
+    for(var i=pool.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t;}
+    var out=[],k=0;
+    for(var tag=1;tag<=24;tag++){
+      var f=festTage[tag];
+      if(f){out.push({tag:tag,fest:true,text:f.art==='adv'?(f.nr+FEST.adv[gruppe]):FEST[f.art][gruppe]+(f.zugleich?' · Zugleich '+f.zugleich+'. Advent: Kerze am Adventskranz anzünden.':''),geld:false});}
+      else{var id=pool[k++];out.push({tag:tag,fest:false,id:id,text:IDEEN[id][0],geld:!!IDEEN[id][2]});}
+    }
+    return out;
+  }
+  function datumText(a){return WT[wochentag(a[0],a[1],a[2])]+', '+a[2]+'. '+MONATE[a[1]-1]+' '+a[0];}
+  function kurz(a){return a[2]+'.'+a[1]+'.'+a[0];}
+  function meldung(t,art){var m=$('kowc-msg');m.textContent=t;m.className='kowc-msg kowc-'+art;}
+  function leseDatum(){var v=$('kowc-datum').value;var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v||'');if(!m)return null;var y=+m[1],mo=+m[2],d=+m[3];if(y<1900||y>2199)return null;var p=plusTage(y,mo,d,0);if(p[1]!==mo||p[2]!==d)return null;return [y,mo,d];}
+  var mischung=1;
+  function zeige(){
+    var dt=leseDatum();
+    if(!dt){$('kowc-erg').hidden=true;$('kowc-werbung').hidden=true;meldung('Bitte ein gültiges Datum zwischen 1900 und 2199 wählen.','fehler');return;}
+    var g=$('kowc-gruppe').value,gr=$('kowc-gratis').checked;
+    var c=countdown(dt[0],dt[1],dt[2]);
+    $('kowc-tage').textContent=String(c.tage);
+    $('kowc-tage-text').textContent=c.tage===0?'Heute ist Heiligabend!':(c.tage===1?'Tag bis Heiligabend':'Tage bis Heiligabend')+' '+c.zieljahr;
+    $('kowc-k-ha').textContent=kurz([c.zieljahr,12,24]);
+    $('kowc-k-niko').textContent=c.niko===0?'heute':'in '+c.niko+' Tag'+(c.niko===1?'':'en');
+    $('kowc-k-a1').textContent=kurz(c.advente[0]);
+    $('kowc-k-tuer').textContent=c.tuer?String(c.tuer):'noch zu';
+    $('kowc-advente').textContent='Adventssonntage '+c.zieljahr+': '+c.advente.map(function(a,i){return (i+1)+'. Advent '+datumText(a);}).join(' · ')+'.';
+    var liste=kalender(c.zieljahr,g,gr,mischung),ol=$('kowc-liste');ol.innerHTML='';
+    liste.forEach(function(e){
+      var li=document.createElement('li');
+      if(e.fest)li.className='kowc-fest';
+      if(c.tuer===e.tag)li.className+=' kowc-heute';
+      var n=document.createElement('span');n.className='kowc-nr';n.textContent=String(e.tag);
+      var t=document.createElement('div');var tg=document.createElement('span');tg.className='kowc-tag';tg.textContent=datumText([c.zieljahr,12,e.tag]);
+      t.appendChild(tg);t.appendChild(document.createTextNode(e.text));
+      if(e.geld){var eu=document.createElement('span');eu.className='kowc-euro';eu.textContent=' · €';t.appendChild(eu);}
+      li.appendChild(n);li.appendChild(t);ol.appendChild(li);
+    });
+    $('kowc-liste-titel').textContent='Dein Adventskalender '+c.zieljahr+' für '+NAMEN[g];
+    $('kowc-mischung').textContent='Mischung Nr. '+mischung+' – mit derselben Nummer und Einstellung kommt dieselbe Liste.';
+    var kk=$('kowc-karten');kk.innerHTML='';
+    PRODUKTE[g].forEach(function(p){var a=document.createElement('a');a.className='kowc-karte';a.href='/products/'+p[0];
+      var w=document.createElement('span');w.className='kowc-werb';w.textContent='Eigenwerbung';
+      var s=document.createElement('strong');s.textContent=p[1];var d=document.createElement('span');d.textContent=p[2];
+      a.appendChild(w);a.appendChild(s);a.appendChild(d);kk.appendChild(a);});
+    $('kowc-erg').hidden=false;$('kowc-werbung').hidden=false;
+    meldung(c.tage===0?'Frohe Weihnachten!':'Noch '+c.tage+' Tag'+(c.tage===1?'':'e')+' bis Heiligabend – 24 Ideen stehen unten.','ok');
+  }
+  var h=new Date();$('kowc-datum').value=h.getFullYear()+'-'+String(h.getMonth()+1).padStart(2,'0')+'-'+String(h.getDate()).padStart(2,'0');
+  $('kowc-los').addEventListener('click',function(){mischung=1;zeige();});
+  $('kowc-mischen').addEventListener('click',function(){mischung++;zeige();});
+  $('kowc-drucken').addEventListener('click',function(){window.print();});
+  zeige();
+  // nur für automatische Prüfung: reine Rechenfunktionen, ohne Daten
+  wurzel.kowcTest={advente:advente,countdown:countdown,kalender:kalender,anzahl:IDEEN.length,ideen:IDEEN};
+})();
+</script>

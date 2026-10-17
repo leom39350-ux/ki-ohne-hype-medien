@@ -1,0 +1,260 @@
+<!-- Werkzeug „Einmaleins-Trainer“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.koee{--koee-a:#1f5fa8;--koee-g:#1f6f43;--koee-f:#b3261e;--koee-t:#1d1d1f;--koee-m:#5f6368;--koee-r:#e2e2e2;--koee-h:#f5f8fc;max-width:760px;margin:0 auto;color:var(--koee-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.koee *,.koee *::before,.koee *::after{box-sizing:border-box}
+.koee h2{font-size:1.35em;margin:0 0 8px}
+.koee h3{font-size:1.1em;margin:18px 0 6px}
+.koee-box{background:var(--koee-h);border:1px solid var(--koee-r);border-radius:14px;padding:18px;margin:16px 0}
+.koee-lab{display:block;font-weight:600;margin:0 0 6px}
+.koee-hint{font-size:.88em;color:var(--koee-m);margin:4px 0 0}
+.koee-reihen{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.koee-reihen label{display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid #bdbdbd;border-radius:10px;padding:8px 4px;background:#fff;cursor:pointer;font-weight:700;user-select:none}
+.koee-reihen input{width:18px;height:18px;margin:0;accent-color:var(--koee-a)}
+.koee-reihen label.koee-an{border-color:var(--koee-a);background:#e9f1fb}
+.koee-mini{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.koee-zeile{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+@media (min-width:560px){.koee-zeile{grid-template-columns:1fr 1fr}}
+.koee select,.koee input.koee-ein{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.koee button{font:inherit;border-radius:10px;cursor:pointer;padding:10px 16px;border:1px solid var(--koee-a);background:#fff;color:var(--koee-a);font-weight:600}
+.koee button.koee-los{background:var(--koee-a);color:#fff;width:100%;margin-top:16px;padding:12px;font-size:1.05em}
+.koee button.koee-klein{padding:5px 10px;font-size:.88em}
+.koee select:focus-visible,.koee input:focus-visible,.koee button:focus-visible,.koee-reihen label:focus-within{outline:3px solid #f2b705;outline-offset:2px}
+.koee-fehler{color:var(--koee-f);font-weight:600;margin:8px 0 0}
+.koee-quiz{text-align:center}
+.koee-stand{display:flex;justify-content:space-between;font-size:.9em;color:var(--koee-m)}
+.koee-balken{height:8px;background:#e6e6e6;border-radius:6px;overflow:hidden;margin:6px 0 14px}
+.koee-balken span{display:block;height:100%;width:0;background:var(--koee-g);transition:width .2s}
+.koee-aufgabe{font-size:2.6em;font-weight:800;line-height:1.15;margin:6px 0 12px;letter-spacing:.02em}
+.koee-antwort{display:flex;gap:8px;max-width:320px;margin:0 auto}
+.koee-antwort input.koee-ein{font-size:1.6em;text-align:center;font-weight:700;padding:8px}
+.koee-antwort button{flex:0 0 auto}
+.koee-rueck{min-height:2.6em;margin:12px 0 0;font-weight:700;font-size:1.1em}
+.koee-rueck.koee-ok{color:var(--koee-g)}
+.koee-rueck.koee-falsch{color:var(--koee-f)}
+.koee-ende{text-align:center}
+.koee-ende .koee-gross{display:block;font-size:2.4em;font-weight:800;color:var(--koee-g);line-height:1.1}
+.koee-liste{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0;padding:0;list-style:none}
+.koee-liste li{background:#fff;border:1px solid var(--koee-r);border-radius:8px;padding:4px 10px}
+.koee-knoepfe{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.koee-tafel-wrap{overflow-x:auto}
+.koee-tafel{border-collapse:collapse;width:100%;min-width:300px;font-size:.92em;text-align:center}
+.koee-tafel th,.koee-tafel td{border:1px solid var(--koee-r);padding:5px 2px}
+.koee-tafel th{background:#eef1f5}
+.koee-tafel td.koee-markiert{background:#e9f1fb}
+.koee-tafel td.koee-quadrat{font-weight:800}
+.koee-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;text-align:left}
+@media (min-width:620px){.koee-karten{grid-template-columns:1fr 1fr}}
+.koee-karte{display:block;border:1px solid var(--koee-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.koee-karte:hover{border-color:var(--koee-a)}
+.koee-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--koee-m)}
+.koee-karte strong{display:block;margin:4px 0}
+.koee-faq details{border-top:1px solid var(--koee-r);padding:10px 0}
+.koee-faq summary{cursor:pointer;font-weight:600}
+.koee-fuss{font-size:.85em;color:var(--koee-m);margin-top:20px;word-break:break-word}
+.koee-fuss a{color:inherit}
+.koee [hidden]{display:none!important}
+</style>
+
+<div class="koee" id="koee">
+  <h2>Einmaleins-Trainer: das kleine 1×1 online üben</h2>
+  <p>Such dir die Reihen aus, die gerade dran sind, wähl Mal- oder Geteilt-Aufgaben – und los. Nach jeder Aufgabe siehst du sofort, ob sie stimmt. Am Ende kannst du genau die Aufgaben noch einmal üben, die noch nicht geklappt haben. Kostenlos, ohne Anmeldung, ohne Werbung während des Übens – und <strong>nichts wird gespeichert oder verschickt</strong>.</p>
+
+  <div class="koee-box" id="koee-start">
+    <span class="koee-lab" id="koee-lab-reihen">Welche Reihen üben?</span>
+    <div class="koee-reihen" id="koee-reihen" role="group" aria-labelledby="koee-lab-reihen"></div>
+    <div class="koee-mini">
+      <button type="button" class="koee-klein" data-koee-wahl="alle">alle</button>
+      <button type="button" class="koee-klein" data-koee-wahl="kern">leichte Reihen (1, 2, 5, 10)</button>
+      <button type="button" class="koee-klein" data-koee-wahl="schwer">schwere Reihen (6, 7, 8, 9)</button>
+      <button type="button" class="koee-klein" data-koee-wahl="keine">keine</button>
+    </div>
+    <div class="koee-zeile">
+      <div>
+        <label class="koee-lab" for="koee-art">Aufgaben</label>
+        <select id="koee-art">
+          <option value="mal">Malaufgaben (3 · 7)</option>
+          <option value="geteilt">Geteilt-Aufgaben (21 : 7)</option>
+          <option value="mix">gemischt</option>
+        </select>
+      </div>
+      <div>
+        <label class="koee-lab" for="koee-anzahl">Wie viele Aufgaben?</label>
+        <select id="koee-anzahl">
+          <option value="10">10 Aufgaben</option>
+          <option value="20" selected>20 Aufgaben</option>
+          <option value="30">30 Aufgaben</option>
+          <option value="0">alle Aufgaben der Reihen einmal</option>
+        </select>
+      </div>
+    </div>
+    <p class="koee-fehler" id="koee-start-fehler" role="alert" hidden>Bitte wähl mindestens eine Reihe aus.</p>
+    <button type="button" class="koee-los" id="koee-los">Los geht’s</button>
+  </div>
+
+  <div class="koee-box koee-quiz" id="koee-quiz" hidden>
+    <div class="koee-stand"><span id="koee-nr">Aufgabe 1 von 20</span><span id="koee-punkte">0 richtig</span></div>
+    <div class="koee-balken" aria-hidden="true"><span id="koee-balken"></span></div>
+    <div class="koee-aufgabe" id="koee-aufgabe" aria-live="polite">3 · 7 = ?</div>
+    <form class="koee-antwort" id="koee-form" autocomplete="off" novalidate>
+      <label for="koee-eingabe" class="koee-lab" style="position:absolute;left:-9999px">Deine Antwort</label>
+      <input class="koee-ein" id="koee-eingabe" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off">
+      <button type="submit" id="koee-pruefen">Prüfen</button>
+    </form>
+    <div class="koee-rueck" id="koee-rueck" role="status"></div>
+    <button type="button" id="koee-weiter" hidden>Weiter</button>
+    <div class="koee-knoepfe"><button type="button" class="koee-klein" id="koee-abbruch">Runde beenden</button></div>
+  </div>
+
+  <div class="koee-box koee-ende" id="koee-ende" hidden>
+    <span class="koee-gross" id="koee-ergebnis">18 von 20</span>
+    <p id="koee-lob"></p>
+    <p id="koee-zeit" class="koee-hint"></p>
+    <div id="koee-fehlerteil">
+      <h3 id="koee-fehler-titel">Das üben wir noch:</h3>
+      <ul class="koee-liste" id="koee-fehlerliste"></ul>
+    </div>
+    <div class="koee-knoepfe">
+      <button type="button" id="koee-nochmal">Fehler noch einmal üben</button>
+      <button type="button" id="koee-neu">Neue Runde</button>
+      <button type="button" id="koee-einstellungen">Andere Reihen wählen</button>
+    </div>
+
+    <h3>Passend zum Üben auf Papier</h3>
+    <div class="koee-karten">
+      <a class="koee-karte" href="/products/einmaleins-ueben">
+        <span class="koee-werb">Eigenwerbung</span>
+        <strong>Einmaleins üben – Übungsheft Klasse 2–3 (PDF)</strong>
+        In 8 Stufen vom „Was heißt mal?“ bis zum sicheren Rechnen – mit Merk-Tricks, Geteilt-Aufgaben, Malmauern und 4 Blitzrechen-Tests. Zum Ausdrucken.
+      </a>
+      <a class="koee-karte" href="/products/schriftlich-multiplizieren">
+        <span class="koee-werb">Eigenwerbung</span>
+        <strong>Schriftlich multiplizieren – Übungsheft Klasse 3–4 (PDF)</strong>
+        Der nächste Schritt nach dem 1×1: in 11 Stufen zum schriftlichen Malnehmen, mit Kästchen für jede Ziffer und allen Lösungen.
+      </a>
+    </div>
+  </div>
+
+  <h3>Die Einmaleins-Tafel</h3>
+  <p>Zum Nachschlagen: Die gewählten Reihen sind hellblau hinterlegt, die Quadratzahlen (2 · 2, 3 · 3 …) fett.</p>
+  <div class="koee-tafel-wrap"><table class="koee-tafel" id="koee-tafel" aria-label="Einmaleins-Tafel 1 bis 10"></table></div>
+
+  <h3>Tricks, mit denen das 1×1 leichter geht</h3>
+  <ul>
+    <li><strong>Erst die leichten Reihen:</strong> 1, 2, 5 und 10 sitzen meist schnell. Aus ihnen lassen sich fast alle anderen Aufgaben ableiten.</li>
+    <li><strong>Tauschaufgaben:</strong> 3 · 8 ist dasselbe wie 8 · 3. Wer eine kann, kann beide – damit halbiert sich das Lernen.</li>
+    <li><strong>Verdoppeln:</strong> Die 4er-Reihe ist die 2er-Reihe verdoppelt, die 8er-Reihe die 4er-Reihe verdoppelt (4 · 7 = 28, also 8 · 7 = 56).</li>
+    <li><strong>9er-Trick:</strong> 9 · 7 ist 10 · 7 minus 7, also 70 − 7 = 63.</li>
+    <li><strong>Nachbaraufgaben:</strong> 6 · 7 ist 5 · 7 plus noch einmal 7, also 35 + 7 = 42.</li>
+    <li><strong>Geteilt ist die Umkehrung:</strong> Wer weiß, dass 6 · 7 = 42 ist, weiß auch 42 : 7 = 6.</li>
+    <li><strong>Lieber kurz und oft:</strong> Jeden Tag eine Runde mit 10 Aufgaben bringt mehr als eine lange Runde am Wochenende.</li>
+  </ul>
+
+  <div class="koee-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Ab welcher Klasse passt der Trainer?</summary><p>Das kleine Einmaleins wird meist in Klasse 2 eingeführt und in Klasse 3 gefestigt. Der Trainer passt für alle, die gerade die Reihen lernen oder auffrischen wollen – auch für Erwachsene.</p></details>
+    <details><summary>Was bedeutet „alle Aufgaben der Reihen einmal“?</summary><p>Dann kommt jede Aufgabe der gewählten Reihen genau einmal dran, in zufälliger Reihenfolge – bei der 7er-Reihe mit Malaufgaben also 1 · 7 bis 10 · 7. Bei den anderen Einstellungen werden Aufgaben wiederholt, wenn du mehr Aufgaben wählst, als die Reihen haben – aber nie zweimal direkt hintereinander.</p></details>
+    <details><summary>Wie schreibt man Mal und Geteilt in der Grundschule?</summary><p>In deutschen Schulbüchern steht meist der Malpunkt (3 · 7) und der Doppelpunkt für geteilt (21 : 7). Genau so zeigt es auch der Trainer.</p></details>
+    <details><summary>Wird die Zeit gestoppt?</summary><p>Die Zeit wird nur gemessen und am Ende angezeigt – es gibt keinen Zeitdruck und keine Bestenliste. Wer will, kann sich so selbst übertreffen.</p></details>
+    <details><summary>Werden Ergebnisse gespeichert?</summary><p>Nein. Alles läuft nur in deinem Browser. Es gibt keine Anmeldung, keine Cookies dieses Trainers, und nichts wird an uns geschickt. Wenn du die Seite neu lädst, ist alles wieder leer.</p></details>
+  </div>
+
+  <p class="koee-fuss"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a> · <a href="/pages/schulferien-2027">Wie lange noch bis zu den Ferien? →</a></p>
+  <p class="koee-fuss">Die Aufgaben rechnet der Trainer selbst aus (kleines Einmaleins mit Faktoren 1 bis 10, Geteilt-Aufgaben nur ohne Rest). Ersetzt keinen Unterricht. Stand: 15.10.2026 · KI ohne Hype</p>
+</div>
+
+<script>
+(function(){
+  var wurzel=document.getElementById('koee');if(!wurzel)return;
+  function $(id){return document.getElementById(id);}
+  function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+
+  // Zufall mit Startwert (mulberry32) – damit die Prüfung jede Runde nachrechnen kann.
+  function zufall(seed){var s=seed>>>0;return function(){s=(s+0x6D2B79F5)>>>0;var t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+  function mische(liste,rng){var a=liste.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rng()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+  function schluessel(t){return t.op+':'+t.a+':'+t.b;}
+  function loesung(t){return t.op==='mal'?t.a*t.b:t.a/t.b;}
+  function text(t){return t.a+(t.op==='mal'?' · ':' : ')+t.b;}
+  // Vorrat: je Reihe r und k = 1…10 die Malaufgabe k · r und die Geteilt-Aufgabe (k·r) : r.
+  function vorrat(reihen,art){var p=[];reihen.forEach(function(r){for(var k=1;k<=10;k++){if(art!=='geteilt')p.push({a:k,b:r,op:'mal'});if(art!=='mal')p.push({a:k*r,b:r,op:'geteilt'});}});return p;}
+  // Liste mischen, so oft wie nötig hintereinander hängen, nie dieselbe Aufgabe zweimal direkt nacheinander.
+  function reihe(pool,n,rng){var out=[];if(!pool.length)return out;if(!n)n=pool.length;
+    while(out.length<n){var s=mische(pool,rng);if(out.length&&s.length>1&&schluessel(s[0])===schluessel(out[out.length-1])){var x=s[0];s[0]=s[1];s[1]=x;}
+      for(var i=0;i<s.length&&out.length<n;i++)out.push(s[i]);}
+    return out;}
+  function baue(reihen,art,n,seed){return reihe(vorrat(reihen,art),n,zufall(seed));}
+  function pruefe(t,eingabe){var e=String(eingabe==null?'':eingabe).replace(/\s+/g,'');if(!/^\d{1,3}$/.test(e))return null;return parseInt(e,10)===loesung(t);}
+  function bewertung(richtig,gesamt){var p=gesamt?Math.round(richtig*100/gesamt):0;
+    var lob=p===100?'Alles richtig – super gemacht!':p>=90?'Fast alles richtig – stark!':p>=70?'Gut gemacht! Die paar Aufgaben unten schaffst du auch noch.':p>=50?'Schon mehr als die Hälfte – üb die Aufgaben unten noch einmal.':'Kein Problem, Übung macht den Meister: Nimm dir erst weniger Reihen vor.';
+    return {prozent:p,lob:lob};}
+  function zeitText(ms){var s=Math.round(ms/1000),m=Math.floor(s/60);s=s%60;return m?(m+' min '+s+' s'):(s+' s');}
+
+  var R={aufgaben:[],i:0,richtig:0,fehler:[],start:0,warte:false,letzte:null,verzoegerung:700,seed:null};
+  var reihenBox=$('koee-reihen');
+  for(var r=1;r<=10;r++){var lab=el('label');var cb=el('input');cb.type='checkbox';cb.value=String(r);cb.checked=(r===2||r===5||r===10);
+    lab.appendChild(cb);lab.appendChild(document.createTextNode(String(r)+'er'));reihenBox.appendChild(lab);}
+  function gewaehlt(){return Array.prototype.filter.call(reihenBox.querySelectorAll('input'),function(c){return c.checked;}).map(function(c){return +c.value;});}
+  function markiere(){Array.prototype.forEach.call(reihenBox.querySelectorAll('label'),function(l){l.classList.toggle('koee-an',l.firstChild.checked);});tafel();}
+  reihenBox.addEventListener('change',markiere);
+  var WAHL={alle:[1,2,3,4,5,6,7,8,9,10],kern:[1,2,5,10],schwer:[6,7,8,9],keine:[]};
+  Array.prototype.forEach.call(wurzel.querySelectorAll('[data-koee-wahl]'),function(b){b.addEventListener('click',function(){var w=WAHL[b.getAttribute('data-koee-wahl')];
+    Array.prototype.forEach.call(reihenBox.querySelectorAll('input'),function(c){c.checked=w.indexOf(+c.value)>=0;});markiere();});});
+
+  function tafel(){var t=$('koee-tafel'),g=gewaehlt();t.innerHTML='';var kopf=el('tr');kopf.appendChild(el('th',null,'·'));
+    for(var b=1;b<=10;b++)kopf.appendChild(el('th',null,String(b)));t.appendChild(kopf);
+    for(var a=1;a<=10;a++){var tr=el('tr');tr.appendChild(el('th',null,String(a)));
+      for(var c=1;c<=10;c++){var td=el('td',null,String(a*c));var cls=[];if(g.indexOf(a)>=0||g.indexOf(c)>=0)cls.push('koee-markiert');if(a===c)cls.push('koee-quadrat');td.className=cls.join(' ');tr.appendChild(td);}
+      t.appendChild(tr);}}
+
+  function zeigeTeil(id){['koee-start','koee-quiz','koee-ende'].forEach(function(x){$(x).hidden=(x!==id);});}
+  function neuerSeed(){return (Math.random()*4294967296)>>>0;}
+  function starte(aufgaben){R.aufgaben=aufgaben;R.i=0;R.richtig=0;R.fehler=[];R.start=Date.now();R.warte=false;zeigeTeil('koee-quiz');naechste();}
+  function naechste(){
+    if(R.i>=R.aufgaben.length){ende();return;}
+    var t=R.aufgaben[R.i];R.warte=false;
+    $('koee-nr').textContent='Aufgabe '+(R.i+1)+' von '+R.aufgaben.length;
+    $('koee-punkte').textContent=R.richtig+' richtig';
+    $('koee-balken').style.width=Math.round(R.i*100/R.aufgaben.length)+'%';
+    $('koee-aufgabe').textContent=text(t)+' = ?';
+    var e=$('koee-eingabe');e.value='';e.disabled=false;$('koee-pruefen').disabled=false;
+    $('koee-rueck').textContent='';$('koee-rueck').className='koee-rueck';$('koee-weiter').hidden=true;
+    try{e.focus({preventScroll:true});}catch(x){e.focus();}
+  }
+  function antworte(){
+    if(R.warte)return;
+    var t=R.aufgaben[R.i],e=$('koee-eingabe'),ok=pruefe(t,e.value),rk=$('koee-rueck');
+    if(ok===null){rk.className='koee-rueck koee-falsch';rk.textContent='Bitte gib eine Zahl ein.';return;}
+    R.warte=true;e.disabled=true;$('koee-pruefen').disabled=true;
+    if(ok){R.richtig++;rk.className='koee-rueck koee-ok';rk.textContent='Richtig! '+text(t)+' = '+loesung(t);
+      $('koee-punkte').textContent=R.richtig+' richtig';
+      R.i++;if(R.verzoegerung>0)setTimeout(naechste,R.verzoegerung);else naechste();}
+    else{if(!R.fehler.some(function(f){return schluessel(f)===schluessel(t);}))R.fehler.push(t);
+      rk.className='koee-rueck koee-falsch';rk.textContent='Nicht ganz: '+text(t)+' = '+loesung(t);
+      R.i++;var w=$('koee-weiter');w.hidden=false;try{w.focus({preventScroll:true});}catch(x){w.focus();}}
+  }
+  function ende(){
+    var n=R.aufgaben.length,b=bewertung(R.richtig,n);
+    $('koee-ergebnis').textContent=R.richtig+' von '+n+' richtig';
+    $('koee-lob').textContent=b.lob+' ('+b.prozent+' %)';
+    $('koee-zeit').textContent=n?('Gebraucht: '+zeitText(Date.now()-R.start)+' – das sind im Schnitt '+(Math.round((Date.now()-R.start)/n/100)/10).toString().replace('.',',')+' s je Aufgabe.'):'';
+    var fl=$('koee-fehlerliste');fl.innerHTML='';
+    R.fehler.forEach(function(f){fl.appendChild(el('li',null,text(f)+' = '+loesung(f)));});
+    $('koee-fehlerteil').hidden=!R.fehler.length;$('koee-nochmal').hidden=!R.fehler.length;
+    R.letzte=R.fehler.slice();zeigeTeil('koee-ende');
+  }
+  function rundeAusEinstellungen(seed){
+    var g=gewaehlt();if(!g.length){$('koee-start-fehler').hidden=false;zeigeTeil('koee-start');return false;}
+    $('koee-start-fehler').hidden=true;R.seed=(seed==null?neuerSeed():seed);
+    starte(baue(g,$('koee-art').value,+$('koee-anzahl').value,R.seed));return true;}
+  $('koee-los').addEventListener('click',function(){rundeAusEinstellungen();});
+  $('koee-form').addEventListener('submit',function(ev){ev.preventDefault();antworte();});
+  $('koee-weiter').addEventListener('click',naechste);
+  $('koee-abbruch').addEventListener('click',function(){R.aufgaben=R.aufgaben.slice(0,R.i);ende();});
+  $('koee-nochmal').addEventListener('click',function(){var f=R.letzte||[];if(f.length)starte(reihe(f,f.length,zufall(neuerSeed())));});
+  $('koee-neu').addEventListener('click',function(){rundeAusEinstellungen();});
+  $('koee-einstellungen').addEventListener('click',function(){zeigeTeil('koee-start');});
+  markiere();
+  // nur für automatische Prüfung: Rechenfunktionen und Start mit festem Startwert
+  wurzel.koeeTest={baue:baue,reihe:reihe,zufall:zufall,pruefe:pruefe,loesung:loesung,bewertung:bewertung,zustand:R,
+    starteMit:function(seed){R.verzoegerung=0;return rundeAusEinstellungen(seed);}};
+})();
+</script>

@@ -1,0 +1,258 @@
+<!-- Werkzeug „Brückentage-Rechner 2027“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kobt{--kobt-a:#1f5fa8;--kobt-g:#1f6f43;--kobt-t:#1d1d1f;--kobt-m:#5f6368;--kobt-r:#e2e2e2;--kobt-h:#f5f8fc;max-width:760px;margin:0 auto;color:var(--kobt-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kobt *,.kobt *::before,.kobt *::after{box-sizing:border-box}
+.kobt-box{background:var(--kobt-h);border:1px solid var(--kobt-r);border-radius:14px;padding:18px;margin:16px 0}
+.kobt h2{font-size:1.35em;margin:0 0 8px}
+.kobt h3{font-size:1.1em;margin:18px 0 6px}
+.kobt label.kobt-lab{display:block;font-weight:600;margin:12px 0 4px}
+.kobt .kobt-hint{font-size:.88em;color:var(--kobt-m);margin:4px 0 0}
+.kobt select{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.kobt-zwei{display:grid;grid-template-columns:1fr;gap:0 14px}
+@media (min-width:620px){.kobt-zwei{grid-template-columns:1fr 1fr}}
+.kobt-check{display:flex;gap:10px;align-items:flex-start;margin:12px 0 0;font-weight:400}
+.kobt-check input{width:20px;height:20px;margin:2px 0 0;flex:0 0 auto}
+.kobt-btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--kobt-a);color:#fff;margin:14px 0 0}
+.kobt-btn:focus-visible,.kobt select:focus-visible,.kobt-check input:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.kobt-msg{margin-top:12px;padding:10px 12px;border-radius:10px;display:none}
+.kobt-msg.kobt-ok{display:block;background:#e8f4ec;color:#174d31}
+.kobt-kenn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.kobt-kenn div{background:#fff;border:1px solid var(--kobt-r);border-radius:10px;padding:10px}
+.kobt-kenn span{display:block;font-size:.82em;color:var(--kobt-m)}
+.kobt-kenn strong{font-size:1.2em}
+.kobt-vor{background:#fff;border:1px solid var(--kobt-r);border-radius:12px;padding:12px 14px;margin:10px 0}
+.kobt-vor.kobt-top{border:2px solid var(--kobt-g)}
+.kobt-vor .kobt-kopf{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;font-weight:700}
+.kobt-vor .kobt-zahl{color:var(--kobt-g)}
+.kobt-vor p{margin:4px 0 0;font-size:.93em}
+.kobt-stern{display:inline-block;font-size:.75em;background:#e8f4ec;color:#174d31;border-radius:6px;padding:1px 6px;margin-left:6px;font-weight:700}
+.kobt-tab{width:100%;border-collapse:collapse;margin-top:8px;font-size:.95em}
+.kobt-tab th,.kobt-tab td{padding:7px 6px;border-top:1px solid var(--kobt-r);text-align:left;vertical-align:top}
+.kobt-tab thead th{border-top:0;font-size:.85em;color:var(--kobt-m)}
+.kobt-tab td.kobt-we{color:var(--kobt-m)}
+.kobt-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media (min-width:620px){.kobt-karten{grid-template-columns:1fr 1fr}}
+.kobt-karte{display:block;border:1px solid var(--kobt-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.kobt-karte:hover{border-color:var(--kobt-a)}
+.kobt-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--kobt-m)}
+.kobt-karte strong{display:block;margin:4px 0}
+.kobt-faq details{border-top:1px solid var(--kobt-r);padding:10px 0}
+.kobt-faq summary{cursor:pointer;font-weight:600}
+.kobt-fuss{font-size:.85em;color:var(--kobt-m);margin-top:20px;word-break:break-word}
+.kobt-fuss a{color:inherit}
+</style>
+
+<div class="kobt" id="kobt">
+  <h2>Brückentage-Rechner 2027 für dein Bundesland</h2>
+  <p>Wähl dein Bundesland – der Rechner zeigt dir alle Brückentage 2027: an welchen Tagen sich Urlaub besonders lohnt und wie viele freie Tage am Stück du dafür bekommst. Grundlage sind die gesetzlichen Feiertage 2027 und eine Arbeitswoche von Montag bis Freitag. Alles läuft nur in deinem Browser: <strong>nichts wird gespeichert oder verschickt</strong>.</p>
+
+  <div class="kobt-box">
+    <div class="kobt-zwei">
+      <div>
+        <label class="kobt-lab" for="kobt-land">Bundesland</label>
+        <select id="kobt-land">
+          <option value="BW">Baden-Württemberg</option>
+          <option value="BY">Bayern</option>
+          <option value="BE">Berlin</option>
+          <option value="BB">Brandenburg</option>
+          <option value="HB">Bremen</option>
+          <option value="HH">Hamburg</option>
+          <option value="HE">Hessen</option>
+          <option value="MV">Mecklenburg-Vorpommern</option>
+          <option value="NI">Niedersachsen</option>
+          <option value="NW" selected>Nordrhein-Westfalen</option>
+          <option value="RP">Rheinland-Pfalz</option>
+          <option value="SL">Saarland</option>
+          <option value="SN">Sachsen</option>
+          <option value="ST">Sachsen-Anhalt</option>
+          <option value="SH">Schleswig-Holstein</option>
+          <option value="TH">Thüringen</option>
+        </select>
+      </div>
+      <div>
+        <label class="kobt-lab" for="kobt-max">Höchstens so viele Urlaubstage je Vorschlag</label>
+        <select id="kobt-max">
+          <option value="1">1 Tag</option><option value="2">2 Tage</option><option value="3">3 Tage</option>
+          <option value="4" selected>4 Tage</option><option value="5">5 Tage</option><option value="6">6 Tage</option>
+          <option value="7">7 Tage</option><option value="8">8 Tage</option><option value="9">9 Tage</option><option value="10">10 Tage</option>
+        </select>
+      </div>
+    </div>
+    <label class="kobt-check"><input type="checkbox" id="kobt-hl"> <span>Heiligabend und Silvester (24. und 31.12.) habe ich frei <span class="kobt-hint" style="display:block">Das sind keine gesetzlichen Feiertage – viele Betriebe geben die Tage aber frei.</span></span></label>
+    <div id="kobt-regional"></div>
+    <button type="button" class="kobt-btn" id="kobt-los">Brückentage zeigen</button>
+    <div class="kobt-msg" id="kobt-msg" role="status" aria-live="polite"></div>
+  </div>
+
+  <div id="kobt-erg" hidden>
+    <div class="kobt-kenn">
+      <div><span>Feiertage Mo–Fr</span><strong id="kobt-k-wt"></strong></div>
+      <div><span>Feiertage am Wochenende</span><strong id="kobt-k-we"></strong></div>
+    </div>
+    <h3>Deine Brückentage 2027</h3>
+    <p class="kobt-hint">Sortiert nach Datum. Grün umrandet: die drei Vorschläge mit dem besten Verhältnis von freien Tagen zu Urlaubstagen.</p>
+    <div id="kobt-liste"></div>
+
+    <h3>Passt dazu</h3>
+    <div class="kobt-karten">
+      <a class="kobt-karte" href="/products/familienplaner-2027">
+        <span class="kobt-werb">Eigenwerbung</span>
+        <strong>Familienplaner 2027 (PDF)</strong>
+        Alle Termine der Familie an einem Ort – Feiertage und Schulferien deines Bundeslands sind schon eingetragen.
+      </a>
+      <a class="kobt-karte" href="/products/urlaubsplaner-2027">
+        <span class="kobt-werb">Eigenwerbung</span>
+        <strong>Urlaubsplaner 2027 für Betriebe (Excel)</strong>
+        Für alle, die den Urlaub im Team planen: Bundesland wählen, U eintragen – Resturlaub und Feiertage rechnet die Vorlage.
+      </a>
+    </div>
+
+    <h3>Gesetzliche Feiertage 2027 in deinem Bundesland</h3>
+    <table class="kobt-tab"><thead><tr><th>Datum</th><th>Feiertag</th></tr></thead><tbody id="kobt-fz"></tbody></table>
+  </div>
+
+  <h3>So rechnet der Rechner</h3>
+  <p>Frei sind Samstag, Sonntag und die gesetzlichen Feiertage deines Bundeslands (und, wenn du es ankreuzt, der 24. und 31. Dezember). Der Rechner sucht jeden Abschnitt aus Arbeitstagen, der links und rechts an freie Tage grenzt und höchstens so viele Arbeitstage hat, wie du eingestellt hast. Nimmst du genau diese Tage Urlaub, verschmelzen die freien Tage davor und danach zu einem Block. Gezeigt werden nur Vorschläge, die mindestens doppelt so viele freie Tage bringen wie Urlaubstage – und keine, die ein anderer Vorschlag im selben Zeitraum mit weniger Urlaub und mehr freien Tagen schlägt.</p>
+
+  <div class="kobt-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Was ist ein Brückentag?</summary><p>Ein Arbeitstag zwischen einem Feiertag und dem Wochenende – zum Beispiel der Freitag nach Christi Himmelfahrt. Nimmst du dort einen Tag Urlaub, hast du vier Tage am Stück frei.</p></details>
+    <details><summary>Warum gibt es 2027 so wenige Brückentage?</summary><p>2027 fallen viele Feiertage auf ein Wochenende: der 1. Mai (Samstag), der Tag der Deutschen Einheit (Sonntag) und beide Weihnachtstage (Samstag und Sonntag). Der Rechner zeigt dir diese Tage in der Liste mit an.</p></details>
+    <details><summary>Fronleichnam in Sachsen oder Thüringen – zählt das?</summary><p>Dort ist Fronleichnam nur in einem Teil der Gemeinden ein Feiertag (Sachsen: in den vom Innenministerium bestimmten Gemeinden, Thüringen: in Gemeinden mit überwiegend katholischer Bevölkerung). Kreuz es an, wenn das bei dir gilt.</p></details>
+    <details><summary>Gelten die Brückentage auch für Schulkinder?</summary><p>Nein, für Schulen gelten eigene Ferien und bewegliche Ferientage. Der Rechner geht von einer Arbeitswoche Montag bis Freitag aus.</p></details>
+    <details><summary>Werden meine Angaben gespeichert?</summary><p>Nein. Die Rechnung läuft komplett in deinem Browser. Es gibt keine Anmeldung, keine Cookies dieses Rechners, und nichts wird an uns geschickt.</p></details>
+  </div>
+
+  <p class="kobt-fuss kobt-mehr"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a></p>
+  <p class="kobt-fuss">Ein Rechenwerkzeug für deine Urlaubsplanung – keine Rechtsberatung. Ob du an einem Tag frei bekommst, regeln dein Arbeitsvertrag und dein Betrieb. Feiertage 2027 laut <a href="https://www.adac.de/news/reise-feiertage-brueckentage-2027/" rel="noopener" target="_blank">ADAC: Feiertage und Brückentage 2027</a> und <a href="https://www.feiertage-deutschland.de/2027/" rel="noopener" target="_blank">feiertage-deutschland.de/2027</a> (abgeglichen am 14.10.2026), rechtliche Grundlage sind die Feiertagsgesetze der Länder. Stand: 14.10.2026 · KI ohne Hype</p>
+</div>
+
+<script>
+(function(){
+  var wurzel=document.getElementById('kobt');if(!wurzel)return;
+  function $(id){return document.getElementById(id);}
+  var ALLE='BW BY BE BB HB HH HE MV NI NW RP SL SN ST SH TH';
+  // Gesetzliche Feiertage (Quellen siehe Seitenfuß). r = nur in Teilen des Landes (zum Ankreuzen).
+  var FT=[
+    ['2026-12-25','1. Weihnachtstag',ALLE],['2026-12-26','2. Weihnachtstag',ALLE],
+    ['2027-01-01','Neujahr',ALLE],
+    ['2027-01-06','Heilige Drei Könige','BW BY ST'],
+    ['2027-03-08','Internationaler Frauentag','BE MV'],
+    ['2027-03-26','Karfreitag',ALLE],
+    ['2027-03-28','Ostersonntag','BB'],
+    ['2027-03-29','Ostermontag',ALLE],
+    ['2027-05-01','Tag der Arbeit',ALLE],
+    ['2027-05-06','Christi Himmelfahrt',ALLE],
+    ['2027-05-16','Pfingstsonntag','BB'],
+    ['2027-05-17','Pfingstmontag',ALLE],
+    ['2027-05-27','Fronleichnam','BW BY HE NW RP SL'],
+    ['2027-05-27','Fronleichnam','SN TH','r','Fronleichnam ist in meiner Gemeinde Feiertag'],
+    ['2027-08-08','Augsburger Friedensfest','BY','r','Ich arbeite in der Stadt Augsburg (Augsburger Friedensfest, 8.8.)'],
+    ['2027-08-15','Mariä Himmelfahrt','SL'],
+    ['2027-08-15','Mariä Himmelfahrt','BY','r','Mariä Himmelfahrt ist in meiner Gemeinde Feiertag'],
+    ['2027-09-20','Weltkindertag','TH'],
+    ['2027-10-03','Tag der Deutschen Einheit',ALLE],
+    ['2027-10-31','Reformationstag','BB HB HH MV NI SH SN ST TH'],
+    ['2027-11-01','Allerheiligen','BW BY NW RP SL'],
+    ['2027-11-17','Buß- und Bettag','SN'],
+    ['2027-12-25','1. Weihnachtstag',ALLE],['2027-12-26','2. Weihnachtstag',ALLE],
+    ['2028-01-01','Neujahr',ALLE]
+  ];
+  var TAG=864e5, WT=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  function zuMs(s){var p=s.split('-');return Date.UTC(+p[0],+p[1]-1,+p[2]);}
+  function iso(ms){return new Date(ms).toISOString().slice(0,10);}
+  function wtag(ms){return new Date(ms).getUTCDay();}
+  function kurz(ms){var d=new Date(ms);return WT[d.getUTCDay()]+' '+('0'+d.getUTCDate()).slice(-2)+'.'+('0'+(d.getUTCMonth()+1)).slice(-2)+'.';}
+  function regionale(land){var o=[];FT.forEach(function(f,i){if(f[3]==='r'&&f[2].split(' ').indexOf(land)>=0)o.push({i:i,text:f[4]});});return o;}
+  // Reine Rechnung: land, max Urlaubstage, hl (24./31.12. frei), regional = Liste der angekreuzten FT-Nummern
+  function rechne(land,max,hl,regional){
+    regional=regional||[];
+    var frei={},namen={};
+    FT.forEach(function(f,i){
+      if(f[2].split(' ').indexOf(land)<0)return;
+      if(f[3]==='r'&&regional.indexOf(i)<0)return;
+      frei[f[0]]=1;namen[f[0]]=f[1];
+    });
+    function istFrei(ms){var w=wtag(ms),s=iso(ms);if(w===0||w===6||frei[s])return true;if(hl&&(s.slice(5)==='12-24'||s.slice(5)==='12-31'))return true;return false;}
+    var start=zuMs('2027-01-01'),ende=zuMs('2027-12-31'),kand=[];
+    for(var a=start;a<=ende;a+=TAG){
+      if(istFrei(a)||!istFrei(a-TAG))continue;
+      var n=0,urlaub=[];
+      for(var b=a;b<=ende;b+=TAG){
+        if(istFrei(b))continue;
+        n++;if(n>max)break;urlaub.push(b);
+        if(istFrei(b+TAG)){
+          var von=a,bis=b;
+          while(istFrei(von-TAG))von-=TAG;
+          while(istFrei(bis+TAG))bis+=TAG;
+          var ft=[];for(var t=von;t<=bis;t+=TAG){var s=iso(t);if(namen[s]&&wtag(t)>0&&wtag(t)<6)ft.push(namen[s]);}
+          kand.push({von:von,bis:bis,urlaub:urlaub.slice(),u:n,frei:Math.round((bis-von)/TAG)+1,feiertage:ft});
+        }
+      }
+    }
+    var gut=kand.filter(function(k){return k.frei>=2*k.u;});
+    var ergebnis=gut.filter(function(p){
+      return !gut.some(function(q){
+        if(q===p)return false;
+        var ueber=q.von<=p.bis&&p.von<=q.bis;
+        return ueber&&q.u<=p.u&&q.frei>=p.frei&&(q.u<p.u||q.frei>p.frei);
+      });
+    });
+    ergebnis.sort(function(x,y){return x.von-y.von||x.u-y.u;});
+    var rang=ergebnis.slice().sort(function(x,y){return (y.frei/y.u)-(x.frei/x.u)||y.frei-x.frei||x.von-y.von;});
+    rang.slice(0,3).forEach(function(k){k.top=true;});
+    var liste=[];
+    FT.forEach(function(f,i){
+      if(f[0].slice(0,4)!=='2027'||f[2].split(' ').indexOf(land)<0)return;
+      if(f[3]==='r'&&regional.indexOf(i)<0)return;
+      var ms=zuMs(f[0]);liste.push({d:ms,name:f[1],we:wtag(ms)===0||wtag(ms)===6});
+    });
+    return {vorschlaege:ergebnis,feiertage:liste,
+      wt:liste.filter(function(f){return !f.we;}).length,we:liste.filter(function(f){return f.we;}).length};
+  }
+  function zeigeRegional(){
+    var box=$('kobt-regional');box.innerHTML='';
+    regionale($('kobt-land').value).forEach(function(r){
+      var l=document.createElement('label');l.className='kobt-check';
+      var c=document.createElement('input');c.type='checkbox';c.className='kobt-reg';c.value=String(r.i);
+      var s=document.createElement('span');s.textContent=r.text+' (gilt nur in Teilen des Landes)';
+      l.appendChild(c);l.appendChild(s);box.appendChild(l);
+    });
+  }
+  function el(tag,kl,text){var e=document.createElement(tag);if(kl)e.className=kl;if(text!=null)e.textContent=text;return e;}
+  function starte(){
+    var land=$('kobt-land').value,max=parseInt($('kobt-max').value,10),hl=$('kobt-hl').checked;
+    var reg=[].map.call(document.querySelectorAll('#kobt .kobt-reg:checked'),function(c){return parseInt(c.value,10);});
+    var r=rechne(land,max,hl,reg);
+    var li=$('kobt-liste');li.innerHTML='';
+    if(!r.vorschlaege.length){li.appendChild(el('p','kobt-hint','Mit dieser Einstellung gibt es keinen Vorschlag. Erlaube mehr Urlaubstage je Vorschlag.'));}
+    r.vorschlaege.forEach(function(k){
+      var d=el('div','kobt-vor'+(k.top?' kobt-top':''));
+      var kopf=el('div','kobt-kopf');
+      var z=el('span',null,kurz(k.von)+(new Date(k.von).getUTCFullYear()!==2027?new Date(k.von).getUTCFullYear():'')+' – '+kurz(k.bis)+(new Date(k.bis).getUTCFullYear()!==2027?new Date(k.bis).getUTCFullYear():''));
+      if(k.top){z.appendChild(el('span','kobt-stern','bester Hebel'));}
+      kopf.appendChild(z);
+      kopf.appendChild(el('span','kobt-zahl',k.u+' Urlaubstag'+(k.u===1?'':'e')+' → '+k.frei+' Tage frei'));
+      d.appendChild(kopf);
+      d.appendChild(el('p',null,'Urlaub nehmen: '+k.urlaub.map(kurz).join(', ')+(k.feiertage.length?' · Feiertag: '+k.feiertage.join(', '):'')));
+      li.appendChild(d);
+    });
+    var fz=$('kobt-fz');fz.innerHTML='';
+    r.feiertage.forEach(function(f){
+      var tr=document.createElement('tr');
+      tr.appendChild(el('td',f.we?'kobt-we':null,kurz(f.d)+'2027'));
+      tr.appendChild(el('td',f.we?'kobt-we':null,f.name+(f.we?' (Wochenende)':'')));
+      fz.appendChild(tr);
+    });
+    $('kobt-k-wt').textContent=String(r.wt);$('kobt-k-we').textContent=String(r.we);
+    $('kobt-erg').hidden=false;
+    var m=$('kobt-msg');m.className='kobt-msg kobt-ok';
+    m.textContent=r.vorschlaege.length+' Vorschl'+(r.vorschlaege.length===1?'ag':'äge')+' für '+$('kobt-land').options[$('kobt-land').selectedIndex].text+'.';
+  }
+  $('kobt-land').addEventListener('change',zeigeRegional);
+  $('kobt-los').addEventListener('click',starte);
+  zeigeRegional();
+  // nur für automatische Prüfung: reine Rechenfunktionen, ohne Daten
+  wurzel.kobtTest={rechne:rechne,regionale:regionale};
+})();
+</script>

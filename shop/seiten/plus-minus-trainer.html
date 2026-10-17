@@ -1,0 +1,296 @@
+<!-- Werkzeug „Plus-Minus-Trainer“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kopm{--kopm-a:#1f5fa8;--kopm-g:#1f6f43;--kopm-f:#b3261e;--kopm-t:#1d1d1f;--kopm-m:#5f6368;--kopm-r:#e2e2e2;--kopm-h:#f5f8fc;max-width:760px;margin:0 auto;color:var(--kopm-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kopm *,.kopm *::before,.kopm *::after{box-sizing:border-box}
+.kopm h2{font-size:1.35em;margin:0 0 8px}
+.kopm h3{font-size:1.1em;margin:18px 0 6px}
+.kopm-box{background:var(--kopm-h);border:1px solid var(--kopm-r);border-radius:14px;padding:18px;margin:16px 0}
+.kopm-lab{display:block;font-weight:600;margin:0 0 6px}
+.kopm-hint{font-size:.88em;color:var(--kopm-m);margin:4px 0 0}
+.kopm-wahl{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.kopm-wahl label{display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid #bdbdbd;border-radius:10px;padding:9px 4px;background:#fff;cursor:pointer;font-weight:700;user-select:none;text-align:center}
+.kopm-wahl input{width:18px;height:18px;margin:0;accent-color:var(--kopm-a)}
+.kopm-wahl label.kopm-an{border-color:var(--kopm-a);background:#e9f1fb}
+.kopm-zeile{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+@media (min-width:560px){.kopm-zeile{grid-template-columns:1fr 1fr}}
+.kopm select,.kopm input.kopm-ein{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.kopm select:disabled{background:#eee;color:var(--kopm-m)}
+.kopm button{font:inherit;border-radius:10px;cursor:pointer;padding:10px 16px;border:1px solid var(--kopm-a);background:#fff;color:var(--kopm-a);font-weight:600}
+.kopm button.kopm-los{background:var(--kopm-a);color:#fff;width:100%;margin-top:16px;padding:12px;font-size:1.05em}
+.kopm button.kopm-klein{padding:5px 10px;font-size:.88em}
+.kopm select:focus-visible,.kopm input:focus-visible,.kopm button:focus-visible,.kopm-wahl label:focus-within{outline:3px solid #f2b705;outline-offset:2px}
+.kopm-fehler{color:var(--kopm-f);font-weight:600;margin:8px 0 0}
+.kopm-quiz{text-align:center}
+.kopm-stand{display:flex;justify-content:space-between;font-size:.9em;color:var(--kopm-m)}
+.kopm-balken{height:8px;background:#e6e6e6;border-radius:6px;overflow:hidden;margin:6px 0 14px}
+.kopm-balken span{display:block;height:100%;width:0;background:var(--kopm-g);transition:width .2s}
+.kopm-aufgabe{font-size:2.4em;font-weight:800;line-height:1.15;margin:6px 0 12px;letter-spacing:.02em;word-break:keep-all}
+.kopm-luecke{display:inline-block;min-width:1.6em;border-bottom:4px solid var(--kopm-a);color:var(--kopm-a)}
+.kopm-antwort{display:flex;gap:8px;max-width:320px;margin:0 auto}
+.kopm-antwort input.kopm-ein{font-size:1.6em;text-align:center;font-weight:700;padding:8px}
+.kopm-antwort button{flex:0 0 auto}
+.kopm-rueck{min-height:2.6em;margin:12px 0 0;font-weight:700;font-size:1.1em}
+.kopm-rueck.kopm-ok{color:var(--kopm-g)}
+.kopm-rueck.kopm-falsch{color:var(--kopm-f)}
+.kopm-weg{margin:6px auto 0;max-width:420px;text-align:left;background:#fff;border:1px dashed #9db8d9;border-radius:10px;padding:8px 12px;font-size:.98em}
+.kopm-weg ol{margin:4px 0 0;padding-left:1.4em}
+.kopm-ende{text-align:center}
+.kopm-ende .kopm-gross{display:block;font-size:2.4em;font-weight:800;color:var(--kopm-g);line-height:1.1}
+.kopm-liste{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0;padding:0;list-style:none}
+.kopm-liste li{background:#fff;border:1px solid var(--kopm-r);border-radius:8px;padding:4px 10px}
+.kopm-knoepfe{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.kopm-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;text-align:left}
+@media (min-width:620px){.kopm-karten{grid-template-columns:1fr 1fr}}
+.kopm-karte{display:block;border:1px solid var(--kopm-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.kopm-karte:hover{border-color:var(--kopm-a)}
+.kopm-karte.kopm-passt{border-color:var(--kopm-g);box-shadow:0 0 0 1px var(--kopm-g) inset}
+.kopm-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--kopm-m)}
+.kopm-karte strong{display:block;margin:4px 0}
+.kopm-faq details{border-top:1px solid var(--kopm-r);padding:10px 0}
+.kopm-faq summary{cursor:pointer;font-weight:600}
+.kopm-fuss{font-size:.85em;color:var(--kopm-m);margin-top:20px;word-break:break-word}
+.kopm-fuss a{color:inherit}
+.kopm [hidden]{display:none!important}
+</style>
+
+<div class="kopm" id="kopm">
+  <h2>Plus-Minus-Trainer: Rechnen bis 10, 20 und 100 online üben</h2>
+  <p>Zahlenraum wählen, Plus oder Minus, mit oder ohne Zehnerübergang – und los. Nach jeder Aufgabe siehst du sofort, ob sie stimmt. Geht etwas schief, zeigt der Trainer den Rechenweg in kleinen Schritten. Am Ende übst du genau die Aufgaben noch einmal, die noch nicht geklappt haben. Kostenlos, ohne Anmeldung – und <strong>nichts wird gespeichert oder verschickt</strong>.</p>
+
+  <div class="kopm-box" id="kopm-start">
+    <span class="kopm-lab" id="kopm-lab-raum">Zahlenraum</span>
+    <div class="kopm-wahl" id="kopm-raum" role="radiogroup" aria-labelledby="kopm-lab-raum">
+      <label><input type="radio" name="kopm-raum" value="10">bis 10</label>
+      <label><input type="radio" name="kopm-raum" value="20" checked>bis 20</label>
+      <label><input type="radio" name="kopm-raum" value="100">bis 100</label>
+    </div>
+    <div class="kopm-zeile">
+      <div>
+        <label class="kopm-lab" for="kopm-art">Rechenart</label>
+        <select id="kopm-art">
+          <option value="plus">nur Plus (8 + 5)</option>
+          <option value="minus">nur Minus (13 − 5)</option>
+          <option value="mix" selected>Plus und Minus gemischt</option>
+        </select>
+      </div>
+      <div>
+        <label class="kopm-lab" for="kopm-ueber">Zehnerübergang</label>
+        <select id="kopm-ueber">
+          <option value="egal" selected>gemischt</option>
+          <option value="ohne">nur ohne (12 + 5, 17 − 4)</option>
+          <option value="mit">nur mit (8 + 5, 13 − 5)</option>
+        </select>
+        <p class="kopm-hint" id="kopm-ueber-hint" hidden>Bis 10 gibt es keinen Zehnerübergang.</p>
+      </div>
+      <div>
+        <label class="kopm-lab" for="kopm-form">Aufgabenform</label>
+        <select id="kopm-form">
+          <option value="ergebnis" selected>Ergebnis gesucht (8 + 5 = ?)</option>
+          <option value="luecke">Lücke gesucht (8 + ? = 13)</option>
+          <option value="mix">gemischt</option>
+        </select>
+      </div>
+      <div>
+        <label class="kopm-lab" for="kopm-anzahl">Wie viele Aufgaben?</label>
+        <select id="kopm-anzahl">
+          <option value="10">10 Aufgaben</option>
+          <option value="20" selected>20 Aufgaben</option>
+          <option value="30">30 Aufgaben</option>
+        </select>
+      </div>
+    </div>
+    <button type="button" class="kopm-los" id="kopm-los">Los geht’s</button>
+  </div>
+
+  <div class="kopm-box kopm-quiz" id="kopm-quiz" hidden>
+    <div class="kopm-stand"><span id="kopm-nr">Aufgabe 1 von 20</span><span id="kopm-punkte">0 richtig</span></div>
+    <div class="kopm-balken" aria-hidden="true"><span id="kopm-balken"></span></div>
+    <div class="kopm-aufgabe" id="kopm-aufgabe" aria-live="polite">8 + 5 = ?</div>
+    <form class="kopm-antwort" id="kopm-formular" autocomplete="off" novalidate>
+      <label for="kopm-eingabe" style="position:absolute;left:-9999px">Deine Antwort</label>
+      <input class="kopm-ein" id="kopm-eingabe" type="text" inputmode="numeric" maxlength="3" autocomplete="off">
+      <button type="submit" id="kopm-pruefen">Prüfen</button>
+    </form>
+    <div class="kopm-rueck" id="kopm-rueck" role="status"></div>
+    <div class="kopm-weg" id="kopm-weg" hidden><strong>So kannst du rechnen:</strong><ol id="kopm-schritte"></ol></div>
+    <div class="kopm-knoepfe">
+      <button type="button" id="kopm-weiter" hidden>Weiter</button>
+      <button type="button" class="kopm-klein" id="kopm-tipp">Tipp zeigen</button>
+      <button type="button" class="kopm-klein" id="kopm-abbruch">Runde beenden</button>
+    </div>
+  </div>
+
+  <div class="kopm-box kopm-ende" id="kopm-ende" hidden>
+    <span class="kopm-gross" id="kopm-ergebnis">18 von 20</span>
+    <p id="kopm-lob"></p>
+    <p id="kopm-zeit" class="kopm-hint"></p>
+    <div id="kopm-fehlerteil">
+      <h3>Das üben wir noch:</h3>
+      <ul class="kopm-liste" id="kopm-fehlerliste"></ul>
+    </div>
+    <div class="kopm-knoepfe">
+      <button type="button" id="kopm-nochmal">Fehler noch einmal üben</button>
+      <button type="button" id="kopm-neu">Neue Runde</button>
+      <button type="button" id="kopm-einstellungen">Andere Einstellungen</button>
+    </div>
+
+    <h3>Passend zum Üben auf Papier</h3>
+    <div class="kopm-karten">
+      <a class="kopm-karte" id="kopm-k20" href="/products/plus-minus-20">
+        <span class="kopm-werb">Eigenwerbung</span>
+        <strong>Plus und Minus bis 20 – Übungsheft Klasse 1 (PDF)</strong>
+        In 9 Stufen vom Zwanzigerfeld über die verliebten Zahlen bis zum sicheren Rechnen über den Zehner – mit Zwischenschritten und allen Lösungen. Zum Ausdrucken.
+      </a>
+      <a class="kopm-karte" id="kopm-k100" href="/products/plus-minus-100">
+        <span class="kopm-werb">Eigenwerbung</span>
+        <strong>Plus und Minus bis 100 – Übungsheft Klasse 2 (PDF)</strong>
+        In 9 Stufen von Zehnern und Einern bis zum Plus- und Minusrechnen mit Zehnerübergang – mit Zwischenschritten, Spielen und allen Lösungen.
+      </a>
+    </div>
+  </div>
+
+  <h3>So klappt der Zehnerübergang</h3>
+  <ul>
+    <li><strong>Erst bis zum Zehner:</strong> 8 + 5 → erst 8 + 2 = 10, dann die restlichen 3 dazu: 10 + 3 = 13.</li>
+    <li><strong>Minus genauso, nur rückwärts:</strong> 13 − 5 → erst 13 − 3 = 10, dann noch 2 weg: 10 − 2 = 8.</li>
+    <li><strong>Die verliebten Zahlen kennen:</strong> 1 + 9, 2 + 8, 3 + 7, 4 + 6, 5 + 5 – wer sie sicher weiß, schafft jeden Zehnerübergang schneller.</li>
+    <li><strong>Bis 100: erst die Zehner, dann die Einer:</strong> 38 + 25 → 38 + 20 = 58, dann 58 + 2 = 60 und 60 + 3 = 63.</li>
+    <li><strong>Lücken-Aufgaben mit der Umkehraufgabe lösen:</strong> 8 + ? = 13 → rechne 13 − 8 = 5.</li>
+    <li><strong>Lieber kurz und oft:</strong> Jeden Tag 10 Aufgaben bringen mehr als eine lange Runde am Wochenende.</li>
+  </ul>
+
+  <div class="kopm-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Für welche Klasse ist der Trainer?</summary><p>Bis 10 und bis 20 passt zu Klasse 1, der Zahlenraum bis 100 zu Klasse 2. Auch zum Wiederholen in Klasse 3 oder für Vorschulkinder, die schon bis 10 rechnen, ist er gut geeignet.</p></details>
+    <details><summary>Was zählt hier als Zehnerübergang?</summary><p>Immer dann, wenn man über einen vollen Zehner hinweg rechnen muss – bei Plus ergeben die Einer zusammen 10 oder mehr (8 + 5, 37 + 6, auch 13 + 7 = 20), bei Minus sind die Einer der ersten Zahl kleiner als die abgezogenen Einer (13 − 5, 20 − 7). Aufgaben wie 12 + 5 oder 17 − 4 bleiben im selben Zehner und sind „ohne Zehnerübergang“.</p></details>
+    <details><summary>Was sind Lücken-Aufgaben?</summary><p>Bei Lücken-Aufgaben fehlt nicht das Ergebnis, sondern eine der Zahlen davor, zum Beispiel 8 + ? = 13 oder ? − 4 = 9. Sie trainieren das Ergänzen und die Umkehraufgabe – beides kommt in Klasse 1 und 2 in jedem Schulbuch vor.</p></details>
+    <details><summary>Kommen negative Zahlen oder Zahlen über 100 vor?</summary><p>Nein. Alle Ergebnisse und alle Zahlen bleiben im gewählten Zahlenraum, und bei Minus kommt nie etwas unter 0 heraus. Die kleinste Zahl in einer Aufgabe ist 1, ein Ergebnis kann auch 0 sein (zum Beispiel 7 − 7).</p></details>
+    <details><summary>Werden Ergebnisse gespeichert?</summary><p>Nein. Alles läuft nur in deinem Browser. Es gibt keine Anmeldung, keine Cookies dieses Trainers, und nichts wird an uns geschickt. Wenn du die Seite neu lädst, ist alles wieder leer.</p></details>
+  </div>
+
+  <p class="kopm-fuss"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a> · <a href="/pages/einmaleins-trainer">Einmaleins-Trainer →</a> · <a href="/pages/uhr-lesen-trainer">Uhr lesen üben →</a></p>
+  <p class="kopm-fuss">Die Aufgaben rechnet der Trainer selbst aus (natürliche Zahlen, kein Ergebnis unter 0 oder über dem Zahlenraum). Ersetzt keinen Unterricht. Stand: 17.10.2026 · KI ohne Hype</p>
+</div>
+
+<script>
+(function(){
+  var wurzel=document.getElementById('kopm');if(!wurzel)return;
+  function $(id){return document.getElementById(id);}
+  function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+  var MINUS='−';
+
+  // Zufall mit Startwert (mulberry32) – damit die Prüfung jede Runde nachrechnen kann.
+  function zufall(seed){var s=seed>>>0;return function(){s=(s+0x6D2B79F5)>>>0;var t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+  function mische(liste,rng){var a=liste.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rng()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+
+  // Aufgabe: a op b = c; l = 0 (Ergebnis gesucht), 1 (erste Zahl fehlt), 2 (zweite Zahl fehlt)
+  function ergebnis(t){return t.op==='plus'?t.a+t.b:t.a-t.b;}
+  function gesucht(t){return t.l===1?t.a:t.l===2?t.b:ergebnis(t);}
+  // Zehnerübergang = bündeln/entbündeln nötig: Plus, wenn die Einer zusammen 10 oder mehr ergeben; Minus, wenn die Einer der ersten Zahl kleiner sind.
+  function uebergang(t){return t.op==='plus'?(t.a%10+t.b%10>=10):(t.a%10<t.b%10);}
+  function schluessel(t){return t.op+':'+t.a+':'+t.b+':'+t.l;}
+  function teile(t){var c=ergebnis(t),o=t.op==='plus'?'+':MINUS;
+    return [t.l===1?null:String(t.a),o,t.l===2?null:String(t.b),'=',t.l===0?null:String(c)];}
+  function text(t){return teile(t).map(function(x){return x==null?'?':x;}).join(' ');}
+  function voll(t){var c=ergebnis(t);return t.a+' '+(t.op==='plus'?'+':MINUS)+' '+t.b+' = '+c;}
+
+  // Vorrat: alle Aufgaben mit Zahlen ab 1, Ergebnis 0 … Zahlenraum.
+  function vorrat(raum,art,ueber,form){var p=[],ls=form==='ergebnis'?[0]:form==='luecke'?[1,2]:[0,1,2];
+    var ops=art==='mix'?['plus','minus']:[art];
+    ops.forEach(function(op){for(var a=1;a<=raum;a++){for(var b=1;b<=raum;b++){
+      var c=op==='plus'?a+b:a-b;if(c<0||c>raum)continue;var t={a:a,b:b,op:op,l:0};
+      if(raum>10&&ueber!=='egal'&&uebergang(t)!==(ueber==='mit'))continue;
+      ls.forEach(function(l){p.push({a:a,b:b,op:op,l:l});});}}});
+    return p;}
+  // Liste mischen, so oft wie nötig hintereinander hängen, nie dieselbe Aufgabe zweimal direkt nacheinander.
+  function reihe(pool,n,rng){var out=[];if(!pool.length)return out;
+    while(out.length<n){var s=mische(pool,rng);if(out.length&&s.length>1&&schluessel(s[0])===schluessel(out[out.length-1])){var x=s[0];s[0]=s[1];s[1]=x;}
+      for(var i=0;i<s.length&&out.length<n;i++)out.push(s[i]);}
+    return out;}
+  function baue(raum,art,ueber,form,n,seed){return reihe(vorrat(raum,art,ueber,form),n,zufall(seed));}
+
+  // Rechenweg in kleinen Schritten (Zehner zuerst, dann über den vollen Zehner).
+  function weg(t){var s=[],c=ergebnis(t),o=t.op==='plus'?'+':MINUS;
+    if(t.l===1){s.push('Rechne die Umkehraufgabe: '+(t.op==='plus'?c+' '+MINUS+' '+t.b+' = '+t.a:c+' + '+t.b+' = '+t.a));return s;}
+    if(t.l===2){s.push('Rechne die Umkehraufgabe: '+(t.op==='plus'?c+' '+MINUS+' '+t.a+' = '+t.b:t.a+' '+MINUS+' '+c+' = '+t.b));return s;}
+    var Z=t.b-t.b%10,E=t.b%10,x=t.a;
+    if(Z>0&&E>0){var y=t.op==='plus'?x+Z:x-Z;s.push('Erst die Zehner: '+x+' '+o+' '+Z+' = '+y);x=y;}
+    else if(Z>0){s.push(x+' '+o+' '+Z+' = '+c);return s;}
+    var r=x%10;
+    if(t.op==='plus'){if(r>0&&r+E>10){var bis=10-r;s.push('Bis zum vollen Zehner: '+x+' + '+bis+' = '+(x+bis));s.push('Dann den Rest: '+(x+bis)+' + '+(E-bis)+' = '+c);}
+      else s.push((s.length?'Dann die Einer: ':'')+x+' + '+E+' = '+c);}
+    else{if(r>0&&r<E){s.push('Bis zum vollen Zehner: '+x+' '+MINUS+' '+r+' = '+(x-r));s.push('Dann den Rest: '+(x-r)+' '+MINUS+' '+(E-r)+' = '+c);}
+      else s.push((s.length?'Dann die Einer: ':'')+x+' '+MINUS+' '+E+' = '+c);}
+    return s;}
+
+  function pruefe(t,eingabe){var e=String(eingabe==null?'':eingabe).replace(/\s+/g,'');if(!/^\d{1,3}$/.test(e))return null;return parseInt(e,10)===gesucht(t);}
+  function bewertung(richtig,gesamt){var p=gesamt?Math.round(richtig*100/gesamt):0;
+    var lob=p===100?'Alles richtig – super gemacht!':p>=90?'Fast alles richtig – stark!':p>=70?'Gut gemacht! Die paar Aufgaben unten schaffst du auch noch.':p>=50?'Schon mehr als die Hälfte – üb die Aufgaben unten noch einmal.':'Kein Problem, Übung macht den Meister: Probier es erst ohne Zehnerübergang.';
+    return {prozent:p,lob:lob};}
+  function zeitText(ms){var s=Math.round(ms/1000),m=Math.floor(s/60);s=s%60;return m?(m+' min '+s+' s'):(s+' s');}
+
+  var R={aufgaben:[],i:0,richtig:0,fehler:[],start:0,warte:false,letzte:null,verzoegerung:700,seed:null};
+  var raumBox=$('kopm-raum');
+  function raum(){var r=raumBox.querySelector('input:checked');return r?+r.value:20;}
+  function markiere(){Array.prototype.forEach.call(raumBox.querySelectorAll('label'),function(l){l.classList.toggle('kopm-an',l.firstChild.checked);});
+    var zehn=raum()===10;$('kopm-ueber').disabled=zehn;$('kopm-ueber-hint').hidden=!zehn;}
+  raumBox.addEventListener('change',markiere);
+
+  function zeigeTeil(id){['kopm-start','kopm-quiz','kopm-ende'].forEach(function(x){$(x).hidden=(x!==id);});}
+  function neuerSeed(){return (Math.random()*4294967296)>>>0;}
+  function starte(aufgaben){R.aufgaben=aufgaben;R.i=0;R.richtig=0;R.fehler=[];R.start=Date.now();R.warte=false;zeigeTeil('kopm-quiz');naechste();}
+  function zeigeAufgabe(t){var a=$('kopm-aufgabe');a.innerHTML='';
+    teile(t).forEach(function(x,i){if(i)a.appendChild(document.createTextNode(' '));
+      if(x==null){var sp=el('span','kopm-luecke','?');sp.setAttribute('aria-label','Lücke');a.appendChild(sp);}else a.appendChild(document.createTextNode(x));});}
+  function zeigeWeg(t){var ol=$('kopm-schritte');ol.innerHTML='';weg(t).forEach(function(x){ol.appendChild(el('li',null,x));});$('kopm-weg').hidden=false;}
+  function naechste(){
+    if(R.i>=R.aufgaben.length){ende();return;}
+    var t=R.aufgaben[R.i];R.warte=false;
+    $('kopm-nr').textContent='Aufgabe '+(R.i+1)+' von '+R.aufgaben.length;
+    $('kopm-punkte').textContent=R.richtig+' richtig';
+    $('kopm-balken').style.width=Math.round(R.i*100/R.aufgaben.length)+'%';
+    zeigeAufgabe(t);
+    var e=$('kopm-eingabe');e.value='';e.disabled=false;$('kopm-pruefen').disabled=false;$('kopm-tipp').hidden=false;
+    $('kopm-rueck').textContent='';$('kopm-rueck').className='kopm-rueck';$('kopm-weiter').hidden=true;$('kopm-weg').hidden=true;
+    try{e.focus({preventScroll:true});}catch(x){e.focus();}
+  }
+  function antworte(){
+    if(R.warte)return;
+    var t=R.aufgaben[R.i],e=$('kopm-eingabe'),ok=pruefe(t,e.value),rk=$('kopm-rueck');
+    if(ok===null){rk.className='kopm-rueck kopm-falsch';rk.textContent='Bitte gib eine Zahl ein.';return;}
+    R.warte=true;e.disabled=true;$('kopm-pruefen').disabled=true;$('kopm-tipp').hidden=true;
+    if(ok){R.richtig++;rk.className='kopm-rueck kopm-ok';rk.textContent='Richtig! '+voll(t);
+      $('kopm-punkte').textContent=R.richtig+' richtig';
+      R.i++;if(R.verzoegerung>0)setTimeout(naechste,R.verzoegerung);else naechste();}
+    else{if(!R.fehler.some(function(f){return schluessel(f)===schluessel(t);}))R.fehler.push(t);
+      rk.className='kopm-rueck kopm-falsch';rk.textContent='Nicht ganz: '+voll(t);zeigeWeg(t);
+      R.i++;var w=$('kopm-weiter');w.hidden=false;try{w.focus({preventScroll:true});}catch(x){w.focus();}}
+  }
+  function ende(){
+    var n=R.aufgaben.length,b=bewertung(R.richtig,n);
+    $('kopm-ergebnis').textContent=R.richtig+' von '+n+' richtig';
+    $('kopm-lob').textContent=b.lob+' ('+b.prozent+' %)';
+    $('kopm-zeit').textContent=n?('Gebraucht: '+zeitText(Date.now()-R.start)+' – das sind im Schnitt '+(Math.round((Date.now()-R.start)/n/100)/10).toString().replace('.',',')+' s je Aufgabe.'):'';
+    var fl=$('kopm-fehlerliste');fl.innerHTML='';
+    R.fehler.forEach(function(f){fl.appendChild(el('li',null,voll(f)));});
+    $('kopm-fehlerteil').hidden=!R.fehler.length;$('kopm-nochmal').hidden=!R.fehler.length;
+    var gross=raum()===100;$('kopm-k100').classList.toggle('kopm-passt',gross);$('kopm-k20').classList.toggle('kopm-passt',!gross);
+    R.letzte=R.fehler.slice();zeigeTeil('kopm-ende');
+  }
+  function rundeAusEinstellungen(seed){
+    R.seed=(seed==null?neuerSeed():seed);
+    starte(baue(raum(),$('kopm-art').value,$('kopm-ueber').value,$('kopm-form').value,+$('kopm-anzahl').value,R.seed));return true;}
+  $('kopm-los').addEventListener('click',function(){rundeAusEinstellungen();});
+  $('kopm-formular').addEventListener('submit',function(ev){ev.preventDefault();antworte();});
+  $('kopm-weiter').addEventListener('click',naechste);
+  $('kopm-tipp').addEventListener('click',function(){if(!R.warte)zeigeWeg(R.aufgaben[R.i]);});
+  $('kopm-abbruch').addEventListener('click',function(){R.aufgaben=R.aufgaben.slice(0,R.i);ende();});
+  $('kopm-nochmal').addEventListener('click',function(){var f=R.letzte||[];if(f.length)starte(reihe(f,f.length,zufall(neuerSeed())));});
+  $('kopm-neu').addEventListener('click',function(){rundeAusEinstellungen();});
+  $('kopm-einstellungen').addEventListener('click',function(){zeigeTeil('kopm-start');});
+  markiere();
+  // nur für automatische Prüfung: Rechenfunktionen und Start mit festem Startwert
+  wurzel.kopmTest={baue:baue,vorrat:vorrat,reihe:reihe,zufall:zufall,pruefe:pruefe,gesucht:gesucht,ergebnis:ergebnis,uebergang:uebergang,weg:weg,text:text,bewertung:bewertung,zustand:R,
+    starteMit:function(seed){R.verzoegerung=0;return rundeAusEinstellungen(seed);}};
+})();
+</script>

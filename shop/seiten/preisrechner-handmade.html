@@ -1,0 +1,267 @@
+<!-- Werkzeug „Preisrechner für Handgemachtes“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kohp{--kohp-a:#8a4b14;--kohp-g:#1f6f43;--kohp-t:#1d1d1f;--kohp-m:#5f6368;--kohp-r:#e2e2e2;--kohp-h:#faf7f2;max-width:760px;margin:0 auto;color:var(--kohp-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kohp *,.kohp *::before,.kohp *::after{box-sizing:border-box}
+.kohp-box{background:var(--kohp-h);border:1px solid var(--kohp-r);border-radius:14px;padding:18px;margin:16px 0}
+.kohp h2{font-size:1.35em;margin:0 0 8px}
+.kohp h3{font-size:1.1em;margin:18px 0 6px}
+.kohp label{display:block;font-weight:600;margin:12px 0 4px}
+.kohp .kohp-hint{font-size:.88em;color:var(--kohp-m);margin:2px 0 0}
+.kohp input,.kohp select{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.kohp input[type=checkbox]{width:auto;margin:0 8px 0 0;vertical-align:middle;transform:scale(1.2)}
+.kohp .kohp-check{font-weight:600;display:flex;align-items:center;margin:16px 0 4px}
+.kohp-zwei{display:grid;grid-template-columns:1fr;gap:0 14px}
+@media (min-width:620px){.kohp-zwei{grid-template-columns:1fr 1fr}}
+.kohp-btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--kohp-a);color:#fff;margin:14px 8px 0 0}
+.kohp-btn:focus-visible,.kohp input:focus-visible,.kohp select:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.kohp-msg{margin-top:12px;padding:10px 12px;border-radius:10px;display:none}
+.kohp-msg.kohp-fehler{display:block;background:#fdecea;color:#7a1b14}
+.kohp-erg{display:none}
+.kohp-erg.kohp-an{display:block}
+.kohp-preis{font-size:2.1em;font-weight:800;color:var(--kohp-a);margin:4px 0}
+.kohp-kenn{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.kohp-kenn div{background:#fff;border:1px solid var(--kohp-r);border-radius:10px;padding:10px}
+.kohp-kenn span{display:block;font-size:.82em;color:var(--kohp-m)}
+.kohp-kenn strong{font-size:1.15em}
+.kohp-tab{width:100%;border-collapse:collapse;margin-top:8px;font-size:.95em}
+.kohp-tab td{padding:7px 6px;border-top:1px solid var(--kohp-r);text-align:right}
+.kohp-tab td:first-child{text-align:left}
+.kohp-tab tr.kohp-sum td{font-weight:700;border-top:2px solid var(--kohp-t)}
+.kohp-minus{color:#b3261e;font-weight:700}
+.kohp-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+@media (min-width:620px){.kohp-karten{grid-template-columns:1fr 1fr}}
+.kohp-karte{display:block;border:1px solid var(--kohp-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.kohp-karte:hover{border-color:var(--kohp-a)}
+.kohp-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--kohp-m)}
+.kohp-karte strong{display:block;margin:4px 0}
+.kohp-faq details{border-top:1px solid var(--kohp-r);padding:10px 0}
+.kohp-faq summary{cursor:pointer;font-weight:600}
+.kohp-fuss{font-size:.85em;color:var(--kohp-m);margin-top:20px}
+.kohp-fuss a{color:inherit}
+</style>
+
+<div class="kohp" id="kohp">
+  <h2>Preisrechner für Handgemachtes</h2>
+  <p>Was muss dein selbstgemachtes Stück kosten – auf dem Weihnachtsmarkt, im eigenen Shop oder auf einer Verkaufsplattform? Trag Material, Arbeitszeit und deinen Wunsch-Stundenlohn ein. Der Rechner zeigt dir den Preis, bei dem nach Gebühren und Kosten wirklich das übrig bleibt, was du willst – und den Mindestpreis, unter dem du draufzahlst.</p>
+
+  <div class="kohp-box">
+    <div class="kohp-zwei">
+      <div>
+        <label for="kohp-mat">Materialkosten je Stück (€)</label>
+        <input id="kohp-mat" inputmode="decimal" autocomplete="off" placeholder="z. B. 4,20">
+        <p class="kohp-hint">Wolle, Holz, Wachs, Stoff … nur der Anteil für ein Stück.</p>
+      </div>
+      <div>
+        <label for="kohp-sonst">Verpackung &amp; Kleinkram je Stück (€)</label>
+        <input id="kohp-sonst" inputmode="decimal" autocomplete="off" placeholder="z. B. 0,60 (leer = 0)">
+        <p class="kohp-hint">Tüte, Etikett, Schleife, Visitenkarte.</p>
+      </div>
+      <div>
+        <label for="kohp-min">Arbeitszeit je Stück (Minuten)</label>
+        <input id="kohp-min" inputmode="decimal" autocomplete="off" placeholder="z. B. 45">
+      </div>
+      <div>
+        <label for="kohp-lohn">Dein Stundenlohn (€ pro Stunde)</label>
+        <input id="kohp-lohn" inputmode="decimal" autocomplete="off" placeholder="z. B. 15">
+        <p class="kohp-hint">Was dir deine Zeit wert ist – nicht zu bescheiden.</p>
+      </div>
+      <div>
+        <label for="kohp-fix">Feste Kosten insgesamt (€)</label>
+        <input id="kohp-fix" inputmode="decimal" autocomplete="off" placeholder="z. B. 60 Standgebühr (leer = 0)">
+        <p class="kohp-hint">Standgebühr, Werkzeug, Deko für den Stand …</p>
+      </div>
+      <div>
+        <label for="kohp-stk">… verteilt auf so viele Stück</label>
+        <input id="kohp-stk" inputmode="numeric" autocomplete="off" placeholder="z. B. 40" value="1">
+        <p class="kohp-hint">Wie viele Stück willst du verkaufen?</p>
+      </div>
+      <div>
+        <label for="kohp-gew">Gewinnaufschlag (%)</label>
+        <input id="kohp-gew" inputmode="decimal" autocomplete="off" value="20">
+        <p class="kohp-hint">Auf die Kosten oben drauf – für Rücklagen, Ausfälle, Wachstum.</p>
+      </div>
+      <div>
+        <label for="kohp-geb">Gebühren vom Verkaufspreis (%)</label>
+        <input id="kohp-geb" inputmode="decimal" autocomplete="off" value="0">
+        <p class="kohp-hint">Plattform- und Zahlungsgebühren zusammen. Schau in die aktuellen Preise deiner Plattform. Bar am Stand: 0.</p>
+      </div>
+    </div>
+    <label class="kohp-check" for="kohp-ust"><input type="checkbox" id="kohp-ust">Ich muss 19 % Umsatzsteuer aufschlagen</label>
+    <p class="kohp-hint">Nicht anhaken, wenn du als Kleinunternehmer (§ 19 UStG) keine Umsatzsteuer ausweist oder privat verkaufst.</p>
+    <label for="kohp-rund">Preis runden</label>
+    <select id="kohp-rund">
+      <option value="90" selected>auf ,90 aufrunden (z. B. 12,90 €)</option>
+      <option value="50">auf 0,50 € aufrunden</option>
+      <option value="100">auf volle Euro aufrunden</option>
+      <option value="0">nicht runden (auf den Cent genau)</option>
+    </select>
+    <button class="kohp-btn" type="button" id="kohp-los">Preis berechnen</button>
+    <div class="kohp-msg" id="kohp-msg" role="alert"></div>
+  </div>
+
+  <div class="kohp-box kohp-erg" id="kohp-erg" aria-live="polite">
+    <span class="kohp-hint">Dein Verkaufspreis je Stück</span>
+    <div class="kohp-preis" id="kohp-r-preis"></div>
+    <p class="kohp-hint" id="kohp-r-exakt"></p>
+    <div class="kohp-kenn">
+      <div><span>Mindestpreis (ohne Gewinn)</span><strong id="kohp-r-min"></strong></div>
+      <div><span>Dein echter Stundenlohn</span><strong id="kohp-r-std"></strong></div>
+      <div><span>Gewinn je Stück</span><strong id="kohp-r-gew"></strong></div>
+      <div><span id="kohp-r-allel">Für Arbeit + Gewinn bleiben</span><strong id="kohp-r-alle"></strong></div>
+    </div>
+    <h3>So setzt sich der Preis zusammen</h3>
+    <table class="kohp-tab"><tbody id="kohp-r-tab"></tbody></table>
+    <p class="kohp-hint" id="kohp-r-text"></p>
+
+    <h3>Passt dazu</h3>
+    <div class="kohp-karten">
+      <a class="kohp-karte" href="/products/preiskalkulator-handmade">
+        <span class="kohp-werb">Eigenwerbung</span>
+        <strong>Preiskalkulator für Handmade &amp; Kreative (Excel-Vorlage)</strong>
+        Alle deine Produkte in einer Datei: Material, Zeit, Gebühren und Versand – und auf einen Blick, was dir wirklich übrig bleibt.
+      </a>
+      <a class="kohp-karte" href="/products/euer-kleinunternehmer-2027">
+        <span class="kohp-werb">Eigenwerbung</span>
+        <strong>EÜR 2027 für Kleinunternehmer (Excel-Vorlage)</strong>
+        Jede Einnahme und Ausgabe in eine Zeile – die Datei rechnet Überschuss je Monat und fürs Jahr.
+      </a>
+    </div>
+  </div>
+
+  <h3>So rechnet der Rechner</h3>
+  <p>Zuerst die Kosten je Stück: Material + Verpackung + Arbeitszeit × Stundenlohn + dein Anteil an den festen Kosten (feste Kosten ÷ Stückzahl, auf den Cent aufgerundet). Darauf kommt dein Gewinnaufschlag. Das ist der Betrag, der dir am Ende je Stück bleiben soll. Weil Gebühren und Umsatzsteuer vom <em>Verkaufspreis</em> abgehen, rechnet der Rechner rückwärts: Preis = Betrag ÷ (1 − Gebühren-Anteil − Steuer-Anteil). Der Steuer-Anteil im Bruttopreis ist bei 19 % genau 19/119. Zum Schluss wird gerundet – immer nach oben, damit du nie unter deinem Ziel landest. „Echter Stundenlohn“ zeigt, was dir mit dem gerundeten Preis tatsächlich pro Stunde bleibt.</p>
+
+  <div class="kohp-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Wie berechne ich den Preis für selbstgemachte Sachen?</summary><p>Rechne nicht nur das Material. Zum fairen Preis gehören auch deine Arbeitszeit, Verpackung, ein Anteil an Kosten wie Standgebühr oder Werkzeug, Gebühren der Plattform und – falls du sie abführen musst – die Umsatzsteuer. Genau diese Bausteine fragt der Rechner ab.</p></details>
+    <details><summary>Welchen Stundenlohn soll ich ansetzen?</summary><p>Das entscheidest du. Viele setzen sich zu niedrig an und merken es erst am Ende des Marktes. Ein Anhaltspunkt: Was würdest du in einer normalen Arbeit pro Stunde bekommen wollen? Ist der Preis dann zu hoch für deine Kundschaft, kannst du Zeit sparen (z. B. mehrere Stücke auf einmal fertigen) statt deinen Lohn zu kürzen.</p></details>
+    <details><summary>Was ist der Mindestpreis?</summary><p>Der Preis, bei dem alle Kosten inklusive deines Stundenlohns gedeckt sind, aber kein Gewinn übrig bleibt. Darunter arbeitest du für weniger als deinen Wunschlohn – oder zahlst sogar drauf.</p></details>
+    <details><summary>Muss ich Umsatzsteuer aufschlagen?</summary><p>Das hängt von deiner Lage ab (privater Verkauf, Kleinunternehmer nach § 19 UStG oder regelbesteuert). Der Rechner kann beides – ob es für dich gilt, klärst du bitte mit dem Finanzamt oder einer Steuerberatung.</p></details>
+    <details><summary>Werden meine Angaben gespeichert?</summary><p>Nein. Die Rechnung läuft komplett in deinem Browser. Es gibt keine Anmeldung, keine Cookies dieses Rechners und nichts wird an uns geschickt. Lädst du die Seite neu, ist alles weg.</p></details>
+  </div>
+
+  <p class="kohp-fuss kohp-mehr"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a></p>
+  <p class="kohp-fuss">Ein Rechenwerkzeug für deinen Überblick – keine Steuer- oder Rechtsberatung. Steuersatz 19 % nach § 12 Abs. 1 UStG (<a href="https://lxgesetze.de/ustg/12" rel="noopener" target="_blank">Gesetzestext</a>, <a href="https://www.gesetze-im-internet.de/ustg%5F1980/UStG.pdf" rel="noopener" target="_blank">amtliche Fassung</a>); Kleinunternehmer-Regel § 19 UStG. Gebühren-Sätze von Plattformen sind nicht eingebaut, weil sie sich ändern – bitte selbst eintragen. Stand: 14.10.2026 · KI ohne Hype</p>
+</div>
+
+<script>
+(function(){
+  var wurzel=document.getElementById('kohp');
+  if(!wurzel)return;
+  function $(id){return document.getElementById(id);}
+  var MAX_CENT=100000000, MAX_STK=100000;
+
+  // "1.234,50" | "1234.5" | "50" | "50 €" → Cent (Ganzzahl). Leer → null. Ungültig → NaN
+  function leseBetrag(txt){
+    var s=String(txt==null?'':txt).replace(/\s|€|eur/gi,'');
+    if(s==='')return null;
+    if(!/^[0-9.,]+$/.test(s))return NaN;
+    if(s.indexOf(',')>=0){
+      if(s.indexOf(',')!==s.lastIndexOf(','))return NaN;
+      var vorne=s.split(',')[0];
+      if(vorne.indexOf('.')>=0&&!/^\d{1,3}(\.\d{3})+$/.test(vorne))return NaN;
+      s=s.replace(/\./g,'').replace(',','.');
+    }else if(/^\d{1,3}(\.\d{3})+$/.test(s)){
+      s=s.replace(/\./g,'');
+    }
+    if(!/^\d+(\.\d{1,2})?$/.test(s))return NaN;
+    var t=s.split('.');
+    return parseInt(t[0],10)*100+(t[1]?parseInt((t[1]+'0').slice(0,2),10):0);
+  }
+  // Zahl mit höchstens 2 Nachkommastellen (Minuten, Prozent) → Hundertstel als Ganzzahl. Leer → null.
+  function leseZahl(txt){
+    var s=String(txt==null?'':txt).replace(/\s|%/g,'');
+    if(s==='')return null;
+    s=s.replace(',','.');
+    if(!/^\d+(\.\d{1,2})?$/.test(s))return NaN;
+    var t=s.split('.');
+    return parseInt(t[0],10)*100+(t[1]?parseInt((t[1]+'0').slice(0,2),10):0);
+  }
+  function euro(c){
+    var neg=c<0;c=Math.abs(c);
+    var e=Math.floor(c/100),r=c%100;
+    var s=String(e).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+    return (neg?'−':'')+s+','+(r<10?'0':'')+r+' €';
+  }
+  // ganzzahlige Division a/b, aufgerundet (a,b ≥ 0, b > 0)
+  function ceilDiv(a,b){return Math.floor((a+b-1)/b);}
+  function rundeHalb(a,b){return Math.floor((2*a+b)/(2*b));}
+
+  // Eingabe: Cent-Werte und Hundertstel-Werte (alles Ganzzahlen). Rechnet exakt mit ganzen Zahlen.
+  // e = {mat, sonst, minH (Minuten×100), lohn (ct/h), fix, stk, gewH (%×100), gebH (%×100), ust (bool), rund (0|50|90|100)}
+  function rechne(e){
+    var arbeit=rundeHalb(e.minH*e.lohn,6000);            // Minuten/60 × Lohn
+    var fixAnteil=e.fix>0?ceilDiv(e.fix,e.stk):0;
+    var kosten=e.mat+e.sonst+arbeit+fixAnteil;
+    var gewinn=rundeHalb(kosten*e.gewH,10000);
+    var ziel=kosten+gewinn;
+    // Anteil, der dir vom Bruttopreis bleibt, als Bruch Z/N:  1 − geb/100 − (ust?19/119:0)
+    var N=1190000, Z=N-e.gebH*119-(e.ust?190000:0);      // geb%: gebH/10000 → ×1190000 = gebH×119
+    if(Z<=N/10)return {fehler:'Gebühren und Steuer zusammen sind zu hoch – vom Preis bliebe dir fast nichts. Bitte die Gebühren prüfen.'};
+    var exakt=ceilDiv(ziel*N,Z);
+    var minimal=ceilDiv(kosten*N,Z);
+    var preis=exakt;
+    if(e.rund===100)preis=ceilDiv(exakt,100)*100;
+    else if(e.rund===50)preis=ceilDiv(exakt,50)*50;
+    else if(e.rund===90)preis=exakt+((90-exakt%100)+100)%100;
+    var gebuehr=rundeHalb(preis*e.gebH,10000);
+    var steuer=e.ust?rundeHalb(preis*19,119):0;
+    var bleibt=preis-gebuehr-steuer;
+    var gewinnEcht=bleibt-kosten;
+    var fuerArbeit=bleibt-e.mat-e.sonst-fixAnteil;       // Lohn + Gewinn je Stück
+    var stdLohn=e.minH>0?rundeHalb(fuerArbeit*6000,e.minH):null; // ct pro Stunde
+    var alle=e.stk*(bleibt-e.mat-e.sonst)-e.fix;          // bei allen Stück: Arbeit + Gewinn insgesamt
+    return {arbeit:arbeit,fixAnteil:fixAnteil,kosten:kosten,gewinn:gewinn,ziel:ziel,exakt:exakt,minimal:minimal,
+      preis:preis,gebuehr:gebuehr,steuer:steuer,bleibt:bleibt,gewinnEcht:gewinnEcht,stdLohn:stdLohn,alle:alle};
+  }
+  wurzel.kohpRechne=rechne;
+  wurzel.kohpLeseBetrag=leseBetrag;
+  wurzel.kohpLeseZahl=leseZahl;
+
+  function fehler(t){var m=$('kohp-msg');m.textContent=t;m.className='kohp-msg kohp-fehler';$('kohp-erg').className='kohp-box kohp-erg';}
+  function zeile(tb,a,b,kl){var tr=document.createElement('tr');if(kl)tr.className=kl;var x=document.createElement('td');x.textContent=a;var y=document.createElement('td');y.textContent=b;tr.appendChild(x);tr.appendChild(y);tb.appendChild(tr);}
+
+  function los(){
+    var mat=leseBetrag($('kohp-mat').value), sonst=leseBetrag($('kohp-sonst').value),
+        minH=leseZahl($('kohp-min').value), lohn=leseBetrag($('kohp-lohn').value),
+        fix=leseBetrag($('kohp-fix').value), stkT=String($('kohp-stk').value).replace(/\s|\./g,''),
+        gewH=leseZahl($('kohp-gew').value), gebH=leseZahl($('kohp-geb').value);
+    if(mat===null)return fehler('Bitte die Materialkosten je Stück eintragen (z. B. 4,20 – oder 0).');
+    if(isNaN(mat)||mat>MAX_CENT)return fehler('Die Materialkosten sind keine gültige Zahl (z. B. 4,20).');
+    if(sonst===null)sonst=0; if(isNaN(sonst)||sonst>MAX_CENT)return fehler('„Verpackung & Kleinkram“ ist keine gültige Zahl.');
+    if(minH===null)return fehler('Bitte die Arbeitszeit in Minuten eintragen (z. B. 45 – oder 0).');
+    if(isNaN(minH)||minH>6000000)return fehler('Die Arbeitszeit ist keine gültige Zahl (Minuten, z. B. 45 oder 7,5).');
+    if(lohn===null)lohn=0; if(isNaN(lohn)||lohn>100000)return fehler('Der Stundenlohn ist keine gültige Zahl (höchstens 1.000 €).');
+    if(minH>0&&lohn===0)return fehler('Bitte einen Stundenlohn eintragen – sonst ist deine Arbeitszeit nichts wert.');
+    if(fix===null)fix=0; if(isNaN(fix)||fix>MAX_CENT)return fehler('Die festen Kosten sind keine gültige Zahl.');
+    if(!/^\d+$/.test(stkT)||parseInt(stkT,10)<1||parseInt(stkT,10)>MAX_STK)return fehler('Die Stückzahl muss eine ganze Zahl von 1 bis 100.000 sein.');
+    var stk=parseInt(stkT,10);
+    if(gewH===null)gewH=0; if(isNaN(gewH)||gewH>100000)return fehler('Der Gewinnaufschlag muss zwischen 0 und 1.000 % liegen.');
+    if(gebH===null)gebH=0; if(isNaN(gebH)||gebH>6000)return fehler('Die Gebühren müssen zwischen 0 und 60 % liegen.');
+    var r=rechne({mat:mat,sonst:sonst,minH:minH,lohn:lohn,fix:fix,stk:stk,gewH:gewH,gebH:gebH,ust:$('kohp-ust').checked,rund:parseInt($('kohp-rund').value,10)});
+    if(r.fehler)return fehler(r.fehler);
+    if(r.preis===0)return fehler('Alle Kosten sind 0 – da gibt es nichts zu berechnen.');
+    $('kohp-msg').className='kohp-msg';
+    $('kohp-r-preis').textContent=euro(r.preis);
+    $('kohp-r-exakt').textContent=r.preis===r.exakt?'Genau berechnet, nicht gerundet.':'Genau berechnet wären es '+euro(r.exakt)+' – aufgerundet, damit du nicht darunter landest.';
+    $('kohp-r-min').textContent=euro(r.minimal);
+    $('kohp-r-std').textContent=r.stdLohn===null?'–':euro(r.stdLohn);
+    $('kohp-r-gew').textContent=euro(r.gewinnEcht);
+    $('kohp-r-allel').textContent='Bei '+String(stk).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' Stück bleiben für Arbeit + Gewinn';
+    $('kohp-r-alle').textContent=euro(r.alle);
+    var tb=$('kohp-r-tab');tb.innerHTML='';
+    zeile(tb,'Material',euro(mat));
+    if(sonst)zeile(tb,'Verpackung & Kleinkram',euro(sonst));
+    zeile(tb,'Arbeitszeit',euro(r.arbeit));
+    if(fix)zeile(tb,'Anteil feste Kosten',euro(r.fixAnteil));
+    zeile(tb,'Gewinn (inkl. Rundung)',euro(r.gewinnEcht));
+    if(gebH)zeile(tb,'Gebühren',euro(r.gebuehr));
+    if(r.steuer)zeile(tb,'Umsatzsteuer 19 %',euro(r.steuer));
+    zeile(tb,'Verkaufspreis',euro(r.preis),'kohp-sum');
+    $('kohp-r-text').textContent=r.steuer?'Der Preis ist ein Bruttopreis (inkl. 19 % Umsatzsteuer) – so schreibst du ihn ans Preisschild.':'Ohne Umsatzsteuer gerechnet.';
+    $('kohp-erg').className='kohp-box kohp-erg kohp-an';
+  }
+  $('kohp-los').addEventListener('click',los);
+  wurzel.addEventListener('keydown',function(ev){if(ev.key==='Enter'&&ev.target.tagName==='INPUT'&&ev.target.type!=='checkbox')los();});
+})();
+</script>

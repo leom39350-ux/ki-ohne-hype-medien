@@ -1,0 +1,307 @@
+<!-- Werkzeug „Uhr-lesen-Trainer“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.kouh{--kouh-a:#1f5fa8;--kouh-g:#1f6f43;--kouh-f:#b3261e;--kouh-t:#1d1d1f;--kouh-m:#5f6368;--kouh-r:#e2e2e2;--kouh-h:#f5f8fc;max-width:760px;margin:0 auto;color:var(--kouh-t);font-size:16px;line-height:1.55;box-sizing:border-box}
+.kouh *,.kouh *::before,.kouh *::after{box-sizing:border-box}
+.kouh h2{font-size:1.35em;margin:0 0 8px}
+.kouh h3{font-size:1.1em;margin:18px 0 6px}
+.kouh-box{background:var(--kouh-h);border:1px solid var(--kouh-r);border-radius:14px;padding:18px;margin:16px 0}
+.kouh-lab{display:block;font-weight:600;margin:0 0 6px}
+.kouh-hint{font-size:.88em;color:var(--kouh-m);margin:4px 0 0}
+.kouh-zeile{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+@media (min-width:560px){.kouh-zeile{grid-template-columns:1fr 1fr}}
+.kouh select{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.kouh button{font:inherit;border-radius:10px;cursor:pointer;padding:10px 16px;border:1px solid var(--kouh-a);background:#fff;color:var(--kouh-a);font-weight:600}
+.kouh button.kouh-los{background:var(--kouh-a);color:#fff;width:100%;margin-top:16px;padding:12px;font-size:1.05em}
+.kouh button.kouh-klein{padding:5px 10px;font-size:.88em}
+.kouh select:focus-visible,.kouh button:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.kouh-quiz{text-align:center}
+.kouh-stand{display:flex;justify-content:space-between;font-size:.9em;color:var(--kouh-m)}
+.kouh-balken{height:8px;background:#e6e6e6;border-radius:6px;overflow:hidden;margin:6px 0 12px}
+.kouh-balken span{display:block;height:100%;width:0;background:var(--kouh-g);transition:width .2s}
+.kouh-frage{font-size:1.15em;font-weight:700;margin:4px 0 8px}
+.kouh-gross{font-size:2.2em;font-weight:800;line-height:1.2;margin:4px 0 10px}
+.kouh-uhr{display:block;margin:0 auto;width:100%;max-width:230px;height:auto}
+.kouh-wahl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px auto 0;max-width:460px}
+.kouh-wahl button{padding:12px 6px;font-size:1.1em;min-height:52px;color:var(--kouh-t);border-color:#bdbdbd}
+.kouh-wahl button.kouh-bild{padding:6px}
+.kouh-wahl button.kouh-bild svg{width:100%;max-width:140px;height:auto;display:block;margin:0 auto}
+.kouh-wahl button.kouh-richtig{border:3px solid var(--kouh-g);background:#e8f4ec}
+.kouh-wahl button.kouh-daneben{border:3px solid var(--kouh-f);background:#fbeaea}
+.kouh-wahl button:disabled{cursor:default}
+.kouh-rueck{min-height:2.6em;margin:10px 0 0;font-weight:700;font-size:1.05em}
+.kouh-rueck.kouh-ok{color:var(--kouh-g)}
+.kouh-rueck.kouh-falsch{color:var(--kouh-f)}
+.kouh-knoepfe{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+.kouh-ende{text-align:center}
+.kouh-ende .kouh-gross{display:block;color:var(--kouh-g)}
+.kouh-liste{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0;padding:0;list-style:none}
+.kouh-liste li{background:#fff;border:1px solid var(--kouh-r);border-radius:8px;padding:4px 10px}
+.kouh-lern{display:grid;grid-template-columns:1fr;gap:12px;align-items:center}
+@media (min-width:560px){.kouh-lern{grid-template-columns:220px 1fr}}
+.kouh-lern-zeit{font-size:1.8em;font-weight:800;line-height:1.2}
+.kouh-lern-worte{font-size:1.15em;font-weight:600;margin:2px 0 6px}
+.kouh-schritte{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.kouh-schritte button{padding:8px 2px;font-size:.92em}
+.kouh-karten{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;text-align:left}
+@media (min-width:620px){.kouh-karten{grid-template-columns:1fr 1fr}}
+.kouh-karte{display:block;border:1px solid var(--kouh-r);border-radius:12px;padding:14px;background:#fff;color:inherit;text-decoration:none}
+.kouh-karte:hover{border-color:var(--kouh-a)}
+.kouh-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--kouh-m)}
+.kouh-karte strong{display:block;margin:4px 0}
+.kouh-faq details{border-top:1px solid var(--kouh-r);padding:10px 0}
+.kouh-faq summary{cursor:pointer;font-weight:600}
+.kouh-fuss{font-size:.85em;color:var(--kouh-m);margin-top:20px;word-break:break-word}
+.kouh-fuss a{color:inherit}
+.kouh [hidden]{display:none!important}
+</style>
+
+<div class="kouh" id="kouh">
+  <h2>Uhr lesen lernen: online üben mit der Zeigeruhr</h2>
+  <p>Erst die vollen Stunden, dann halb, Viertel, 5-Minuten-Schritte und zum Schluss minutengenau: Such dir die Stufe aus, die gerade dran ist. Das Kind sieht eine Uhr und tippt die passende Uhrzeit an – oder umgekehrt. Nach jeder Aufgabe gibt es sofort Rückmeldung, am Ende lassen sich genau die Fehler noch einmal üben. Kostenlos, ohne Anmeldung – und <strong>nichts wird gespeichert oder verschickt</strong>.</p>
+
+  <div class="kouh-box" id="kouh-start">
+    <div class="kouh-zeile" style="margin-top:0">
+      <div>
+        <label class="kouh-lab" for="kouh-stufe">Stufe</label>
+        <select id="kouh-stufe">
+          <option value="1">1 – volle Stunden (3 Uhr)</option>
+          <option value="2" selected>2 – volle und halbe Stunden (halb vier)</option>
+          <option value="3">3 – mit Viertel nach / Viertel vor</option>
+          <option value="4">4 – Minuten in 5er-Schritten</option>
+          <option value="5">5 – minutengenau</option>
+        </select>
+      </div>
+      <div>
+        <label class="kouh-lab" for="kouh-art">Übung</label>
+        <select id="kouh-art">
+          <option value="ablesen">Uhr ablesen (Uhr → Uhrzeit)</option>
+          <option value="finden">Uhr finden (Uhrzeit → Uhr)</option>
+          <option value="mix">abwechselnd</option>
+        </select>
+      </div>
+      <div>
+        <label class="kouh-lab" for="kouh-form">Uhrzeit zeigen als</label>
+        <select id="kouh-form">
+          <option value="worte">Worte (Viertel nach drei)</option>
+          <option value="digital">Digitalzeit (3:15)</option>
+        </select>
+      </div>
+      <div>
+        <label class="kouh-lab" for="kouh-anzahl">Wie viele Aufgaben?</label>
+        <select id="kouh-anzahl">
+          <option value="10" selected>10 Aufgaben</option>
+          <option value="20">20 Aufgaben</option>
+          <option value="30">30 Aufgaben</option>
+        </select>
+      </div>
+    </div>
+    <p class="kouh-hint">Tipp: Mit Stufe 1 und „Uhr ablesen“ anfangen und erst weitergehen, wenn eine Runde fast fehlerfrei klappt.</p>
+    <button type="button" class="kouh-los" id="kouh-los">Los geht’s</button>
+  </div>
+
+  <div class="kouh-box kouh-quiz" id="kouh-quiz" hidden>
+    <div class="kouh-stand"><span id="kouh-nr">Aufgabe 1 von 10</span><span id="kouh-punkte">0 richtig</span></div>
+    <div class="kouh-balken" aria-hidden="true"><span id="kouh-balken"></span></div>
+    <div class="kouh-frage" id="kouh-frage" aria-live="polite">Wie spät ist es?</div>
+    <div id="kouh-zeige"></div>
+    <div class="kouh-wahl" id="kouh-wahl" role="group" aria-labelledby="kouh-frage"></div>
+    <div class="kouh-rueck" id="kouh-rueck" role="status"></div>
+    <button type="button" id="kouh-weiter" hidden>Weiter</button>
+    <div class="kouh-knoepfe"><button type="button" class="kouh-klein" id="kouh-abbruch">Runde beenden</button></div>
+  </div>
+
+  <div class="kouh-box kouh-ende" id="kouh-ende" hidden>
+    <span class="kouh-gross" id="kouh-ergebnis">8 von 10 richtig</span>
+    <p id="kouh-lob"></p>
+    <div id="kouh-fehlerteil">
+      <h3>Das üben wir noch:</h3>
+      <ul class="kouh-liste" id="kouh-fehlerliste"></ul>
+    </div>
+    <div class="kouh-knoepfe">
+      <button type="button" id="kouh-nochmal">Fehler noch einmal üben</button>
+      <button type="button" id="kouh-neu">Neue Runde</button>
+      <button type="button" id="kouh-einstellungen">Andere Stufe wählen</button>
+    </div>
+
+    <h3>Passend zum Üben auf Papier</h3>
+    <div class="kouh-karten">
+      <a class="kouh-karte" href="/products/uhr-lesen-lernen">
+        <span class="kouh-werb">Eigenwerbung</span>
+        <strong>Uhr lesen lernen – Übungsheft Klasse 1–3 (PDF)</strong>
+        In 8 Stufen vom Zifferblatt bis zu Minuten, Digitaluhr und Zeitspannen – jede Stufe zum Ablesen und Einzeichnen, mit Bastel-Lernuhr und Uhren-Memory.
+      </a>
+      <a class="kouh-karte" href="/products/geld-rechnen">
+        <span class="kouh-werb">Eigenwerbung</span>
+        <strong>Rechnen mit Geld – Übungsheft Klasse 1–3 + Spielgeld (PDF)</strong>
+        Euro und Cent in 7 Stufen bis zum Einkaufen mit Rückgeld – mit Spielgeld und Kaufladen zum Ausschneiden.
+      </a>
+    </div>
+  </div>
+
+  <h3>Die Lernuhr zum Ausprobieren</h3>
+  <p>Zum gemeinsamen Erklären: Zeiger mit den Knöpfen verstellen und zusehen, wie sich die Uhrzeit in Worten ändert.</p>
+  <div class="kouh-box kouh-lern">
+    <div id="kouh-lernuhr"></div>
+    <div>
+      <div class="kouh-lern-zeit" id="kouh-lern-zeit">3:00</div>
+      <div class="kouh-lern-worte" id="kouh-lern-worte">drei Uhr</div>
+      <div class="kouh-hint" id="kouh-lern-tag">morgens 3:00 Uhr oder nachmittags 15:00 Uhr</div>
+      <div class="kouh-schritte">
+        <button type="button" data-kouh-schritt="-60">− 1 Stunde</button>
+        <button type="button" data-kouh-schritt="-5">− 5 Min.</button>
+        <button type="button" data-kouh-schritt="-1">− 1 Min.</button>
+        <button type="button" data-kouh-schritt="60">+ 1 Stunde</button>
+        <button type="button" data-kouh-schritt="5">+ 5 Min.</button>
+        <button type="button" data-kouh-schritt="1">+ 1 Min.</button>
+      </div>
+    </div>
+  </div>
+
+  <h3>So klappt das Uhrlesen leichter</h3>
+  <ul>
+    <li><strong>Kurz zeigt die Stunde, lang die Minuten:</strong> Der kurze, dicke Zeiger ist der Stundenzeiger, der lange, dünne der Minutenzeiger.</li>
+    <li><strong>Erst nur den kurzen Zeiger:</strong> Bei vollen Stunden zeigt der lange Zeiger immer nach oben auf die 12 – das Kind muss nur den kurzen ablesen.</li>
+    <li><strong>„Halb vier“ ist vor vier:</strong> Der häufigste Fehler. Bei „halb“ steht der kurze Zeiger zwischen drei und vier – gemeint ist die halbe Stunde <em>auf dem Weg zu</em> vier, also 3:30.</li>
+    <li><strong>Die Uhr als Kuchen:</strong> Viertel, halb, dreiviertel – wie ein Kuchen in vier Stücke. Viertel nach = ein Stück geschafft, Viertel vor = noch ein Stück bis zur vollen Stunde.</li>
+    <li><strong>Fünferreihe hilft:</strong> Jede Zahl auf dem Zifferblatt bedeutet für den langen Zeiger 5 Minuten mehr: 1 = 5, 2 = 10, 3 = 15 … Wer die 5er-Reihe kann, kann die Minuten.</li>
+    <li><strong>Im Alltag fragen:</strong> „Wie spät ist es?“ beim Frühstück oder vor dem Abendessen bringt oft mehr als eine lange Übungsstunde.</li>
+  </ul>
+
+  <div class="kouh-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>In welcher Klasse lernt man die Uhr?</summary><p>Meist in Klasse 1 und 2 (volle, halbe und Viertelstunden), minutengenau oft in Klasse 2 oder 3 – je nach Bundesland und Schulbuch. Viele Kinder fangen schon vor der Schule mit vollen Stunden an.</p></details>
+    <details><summary>Warum „Viertel nach drei“ und nicht „viertel vier“?</summary><p>Beides ist richtig – es kommt auf die Gegend an. In vielen Teilen Ost- und Süddeutschlands sagt man „viertel vier“ für 3:15 und „dreiviertel vier“ für 3:45. Der Trainer nutzt die in Schulbüchern verbreitete Form „Viertel nach drei“ und „Viertel vor vier“. Wenn ihr zu Hause anders sprecht, sagt es dem Kind einfach dazu.</p></details>
+    <details><summary>Wie werden die anderen Minuten gesagt?</summary><p>Die Worte richten sich nach dem nächsten bekannten Punkt: 3:20 heißt „zwanzig nach drei“, 3:25 „fünf vor halb vier“, 3:35 „fünf nach halb vier“, 3:40 „zwanzig vor vier“. Bei Minuten außerhalb der 5er-Schritte zeigt der Trainer zum Beispiel „drei Minuten nach halb vier“ (3:33). Auch hier sind andere Sprechweisen genauso richtig.</p></details>
+    <details><summary>Warum gibt es keine 24-Stunden-Zeit in den Aufgaben?</summary><p>Eine Zeigeruhr zeigt nur 12 Stunden. Ob 3:15 morgens oder 15:15 nachmittags gemeint ist, sieht man an der Uhr nicht. Die Lernuhr unten zeigt deshalb beides an.</p></details>
+    <details><summary>Werden Ergebnisse gespeichert?</summary><p>Nein. Alles läuft nur in deinem Browser. Es gibt keine Anmeldung, keine Cookies dieses Trainers, und nichts wird an uns geschickt. Wenn du die Seite neu lädst, ist alles wieder leer.</p></details>
+  </div>
+
+  <p class="kouh-fuss"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a> · <a href="/pages/einmaleins-trainer">Einmaleins-Trainer →</a></p>
+  <p class="kouh-fuss">Uhrzeiten und Zeigerstellungen rechnet der Trainer selbst aus (12-Stunden-Zifferblatt; der Stundenzeiger wandert mit den Minuten mit). Ersetzt keinen Unterricht. Stand: 16.10.2026 · KI ohne Hype</p>
+</div>
+
+<script>
+(function(){
+  var wurzel=document.getElementById('kouh');if(!wurzel)return;
+  function $(id){return document.getElementById(id);}
+  function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+  var NS='http://www.w3.org/2000/svg';
+  function sv(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+
+  // Zufall mit Startwert (mulberry32) – damit die Prüfung jede Runde nachrechnen kann.
+  function zufall(seed){var s=seed>>>0;return function(){s=(s+0x6D2B79F5)>>>0;var t=s;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296;};}
+  function mische(liste,rng){var a=liste.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rng()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+
+  // Zeit = {h:1…12, m:0…59}
+  var MIN={1:[0],2:[0,30],3:[0,15,30,45],4:[0,5,10,15,20,25,30,35,40,45,50,55]};
+  function minuten(stufe){if(stufe==5){var a=[];for(var i=0;i<60;i++)a.push(i);return a;}return MIN[stufe];}
+  function vorrat(stufe){var p=[],ms=minuten(stufe);for(var h=1;h<=12;h++)ms.forEach(function(m){p.push({h:h,m:m});});return p;}
+  function key(z){return z.h+':'+z.m;}
+  function plusStunde(h,d){return ((h-1+d)%12+12)%12+1;}
+  function digital(z){return z.h+':'+(z.m<10?'0':'')+z.m;}
+  var ZW=['','eins','zwei','drei','vier','fünf','sechs','sieben','acht','neun','zehn','elf','zwölf','dreizehn','vierzehn','fünfzehn','sechzehn','siebzehn','achtzehn','neunzehn','zwanzig'];
+  var EIN=['','ein','zwei','drei','vier','fünf','sechs','sieben','acht','neun'];
+  function zahl(n){if(n<=20)return ZW[n];return EIN[n%10]+(n%10?'und':'')+'zwanzig';}
+  function min(n){return (n===1?'eine Minute':zahl(n)+' Minuten');}
+  function worte(z){var h=ZW[z.h],n=ZW[plusStunde(z.h,1)],m=z.m;
+    if(m===0)return (z.h===1?'ein':h)+' Uhr';
+    if(m===5)return 'fünf nach '+h; if(m===10)return 'zehn nach '+h; if(m===15)return 'Viertel nach '+h; if(m===20)return 'zwanzig nach '+h;
+    if(m===25)return 'fünf vor halb '+n; if(m===30)return 'halb '+n; if(m===35)return 'fünf nach halb '+n;
+    if(m===40)return 'zwanzig vor '+n; if(m===45)return 'Viertel vor '+n; if(m===50)return 'zehn vor '+n; if(m===55)return 'fünf vor '+n;
+    if(m<20)return min(m)+' nach '+h; if(m<30)return min(30-m)+' vor halb '+n; if(m<40)return min(m-30)+' nach halb '+n;
+    return min(60-m)+' vor '+n;}
+  function zeitText(z,form){return form==='digital'?digital(z):worte(z);}
+  function winkel(z){return {stunde:(z.h%12)*30+z.m*0.5,minute:z.m*6};}
+
+  // Typische Verwechslungen zuerst: Stunde daneben (halb drei/halb vier), Minuten gespiegelt (Viertel nach/vor), Zeiger vertauscht.
+  function falsche(z,stufe,rng){var pool=vorrat(stufe),inPool={};pool.forEach(function(p){inPool[key(p)]=1;});
+    var c=[{h:plusStunde(z.h,1),m:z.m},{h:plusStunde(z.h,-1),m:z.m},{h:z.h,m:(60-z.m)%60}];
+    if(z.m%5===0)c.push({h:(z.m/5)||12,m:(z.h%12)*5});
+    var ges={},typ=[];ges[key(z)]=1;
+    c.forEach(function(x){if(inPool[key(x)]&&!ges[key(x)]){ges[key(x)]=1;typ.push(x);}});
+    var out=mische(typ,rng).slice(0,2);var gew={};gew[key(z)]=1;out.forEach(function(x){gew[key(x)]=1;});
+    var rest=mische(pool,rng);for(var i=0;i<rest.length&&out.length<3;i++){if(!gew[key(rest[i])]){gew[key(rest[i])]=1;out.push(rest[i]);}}
+    return out;}
+  function folge(pool,n,rng){var out=[];while(out.length<n){var s=mische(pool,rng);
+      if(out.length&&s.length>1&&key(s[0])===key(out[out.length-1])){var x=s[0];s[0]=s[1];s[1]=x;}
+      for(var i=0;i<s.length&&out.length<n;i++)out.push(s[i]);}return out;}
+  function artVon(art,i){return art==='mix'?(i%2===0?'ablesen':'finden'):art;}
+  // Ganze Runde: Aufgaben, je Aufgabe drei falsche Antworten und gemischte Reihenfolge der vier Knöpfe.
+  function runde(stufe,art,n,seed,eigene){var rng=zufall(seed);var zs=eigene?folge(eigene,eigene.length,rng):folge(vorrat(stufe),n,rng);
+    return zs.map(function(z,i){var f=falsche(z,stufe,rng);return {zeit:z,art:artVon(art,i),wahl:mische([z].concat(f),rng)};});}
+  function bewertung(r,g){var p=g?Math.round(r*100/g):0;
+    var lob=p===100?'Alles richtig – super gemacht!':p>=90?'Fast alles richtig – stark!':p>=70?'Gut gemacht! Die Uhrzeiten unten schaffst du auch noch.':p>=50?'Schon mehr als die Hälfte – üb die Uhrzeiten unten noch einmal.':'Kein Problem, Übung macht den Meister: Nimm dir erst eine leichtere Stufe vor.';
+    return {prozent:p,lob:lob};}
+
+  function uhr(z,gross){var s=sv('svg',{viewBox:'0 0 200 200',class:gross?'kouh-uhr':'','role':'img','aria-label':'Zeigeruhr'});
+    s.appendChild(sv('circle',{cx:100,cy:100,r:95,fill:'#fff',stroke:'#1d1d1f','stroke-width':4}));
+    for(var i=0;i<60;i++){var a=i*6*Math.PI/180,l=i%5===0?12:5,r1=91,r2=91-l;
+      s.appendChild(sv('line',{x1:(100+r1*Math.sin(a)).toFixed(2),y1:(100-r1*Math.cos(a)).toFixed(2),x2:(100+r2*Math.sin(a)).toFixed(2),y2:(100-r2*Math.cos(a)).toFixed(2),stroke:'#1d1d1f','stroke-width':i%5===0?3:1.2}));}
+    for(var k=1;k<=12;k++){var b=k*30*Math.PI/180;var t=sv('text',{x:(100+64*Math.sin(b)).toFixed(2),y:(100-64*Math.cos(b)+7).toFixed(2),'text-anchor':'middle','font-size':20,'font-weight':700,'font-family':'Arial,sans-serif',fill:'#1d1d1f'});t.textContent=String(k);s.appendChild(t);}
+    var w=winkel(z);
+    s.appendChild(sv('line',{x1:100,y1:100,x2:100,y2:56,stroke:'#1f5fa8','stroke-width':9,'stroke-linecap':'round',transform:'rotate('+w.stunde+' 100 100)','data-kouh':'stunde'}));
+    s.appendChild(sv('line',{x1:100,y1:100,x2:100,y2:22,stroke:'#b3261e','stroke-width':4,'stroke-linecap':'round',transform:'rotate('+w.minute+' 100 100)','data-kouh':'minute'}));
+    s.appendChild(sv('circle',{cx:100,cy:100,r:6,fill:'#1d1d1f'}));
+    return s;}
+
+  var R={aufgaben:[],i:0,richtig:0,fehler:[],warte:false,letzte:null,verzoegerung:800,stufe:2,form:'worte',art:'ablesen'};
+  function zeigeTeil(id){['kouh-start','kouh-quiz','kouh-ende'].forEach(function(x){$(x).hidden=(x!==id);});}
+  function neuerSeed(){return (Math.random()*4294967296)>>>0;}
+  function starte(aufg){R.aufgaben=aufg;R.i=0;R.richtig=0;R.fehler=[];R.warte=false;zeigeTeil('kouh-quiz');naechste();}
+  function naechste(){
+    if(R.i>=R.aufgaben.length){ende();return;}
+    var a=R.aufgaben[R.i],zb=$('kouh-zeige'),wb=$('kouh-wahl');R.warte=false;
+    $('kouh-nr').textContent='Aufgabe '+(R.i+1)+' von '+R.aufgaben.length;
+    $('kouh-punkte').textContent=R.richtig+' richtig';
+    $('kouh-balken').style.width=Math.round(R.i*100/R.aufgaben.length)+'%';
+    zb.innerHTML='';wb.innerHTML='';
+    if(a.art==='ablesen'){$('kouh-frage').textContent='Wie spät ist es?';zb.appendChild(uhr(a.zeit,true));}
+    else{$('kouh-frage').textContent='Welche Uhr zeigt diese Uhrzeit?';zb.appendChild(el('div','kouh-gross',zeitText(a.zeit,R.form)));}
+    a.wahl.forEach(function(z,idx){var b=el('button');b.type='button';b.setAttribute('data-kouh-wahl',String(idx));
+      if(a.art==='ablesen')b.textContent=zeitText(z,R.form);
+      else{b.className='kouh-bild';b.setAttribute('aria-label','Uhr '+(idx+1));b.appendChild(uhr(z,false));}
+      b.addEventListener('click',function(){antworte(idx);});wb.appendChild(b);});
+    $('kouh-rueck').textContent='';$('kouh-rueck').className='kouh-rueck';$('kouh-weiter').hidden=true;
+  }
+  function antworte(idx){
+    if(R.warte)return;R.warte=true;
+    var a=R.aufgaben[R.i],z=a.wahl[idx],ok=key(z)===key(a.zeit),rk=$('kouh-rueck'),bs=$('kouh-wahl').querySelectorAll('button');
+    Array.prototype.forEach.call(bs,function(b,j){b.disabled=true;if(key(a.wahl[j])===key(a.zeit))b.classList.add('kouh-richtig');else if(j===idx)b.classList.add('kouh-daneben');});
+    var loesTxt=worte(a.zeit)+' ('+digital(a.zeit)+')';
+    if(ok){R.richtig++;rk.className='kouh-rueck kouh-ok';rk.textContent='Richtig! '+loesTxt;$('kouh-punkte').textContent=R.richtig+' richtig';
+      R.i++;if(R.verzoegerung>0)setTimeout(naechste,R.verzoegerung);else naechste();}
+    else{if(!R.fehler.some(function(f){return key(f)===key(a.zeit);}))R.fehler.push(a.zeit);
+      rk.className='kouh-rueck kouh-falsch';rk.textContent='Nicht ganz – richtig ist: '+loesTxt;
+      R.i++;var w=$('kouh-weiter');w.hidden=false;try{w.focus({preventScroll:true});}catch(x){w.focus();}}
+  }
+  function ende(){var n=R.aufgaben.length,b=bewertung(R.richtig,n);
+    $('kouh-ergebnis').textContent=R.richtig+' von '+n+' richtig';
+    $('kouh-lob').textContent=b.lob+' ('+b.prozent+' %)';
+    var fl=$('kouh-fehlerliste');fl.innerHTML='';
+    R.fehler.forEach(function(f){fl.appendChild(el('li',null,digital(f)+' = '+worte(f)));});
+    $('kouh-fehlerteil').hidden=!R.fehler.length;$('kouh-nochmal').hidden=!R.fehler.length;
+    R.letzte=R.fehler.slice();zeigeTeil('kouh-ende');}
+  function rundeAusEinstellungen(seed){R.stufe=+$('kouh-stufe').value;R.form=$('kouh-form').value;R.art=$('kouh-art').value;
+    starte(runde(R.stufe,R.art,+$('kouh-anzahl').value,seed==null?neuerSeed():seed));}
+  $('kouh-los').addEventListener('click',function(){rundeAusEinstellungen();});
+  $('kouh-weiter').addEventListener('click',naechste);
+  $('kouh-abbruch').addEventListener('click',function(){R.aufgaben=R.aufgaben.slice(0,R.i);ende();});
+  $('kouh-nochmal').addEventListener('click',function(){var f=R.letzte||[];if(f.length)starte(runde(R.stufe,R.art,f.length,neuerSeed(),f));});
+  $('kouh-neu').addEventListener('click',function(){rundeAusEinstellungen();});
+  $('kouh-einstellungen').addEventListener('click',function(){zeigeTeil('kouh-start');});
+
+  // Lernuhr
+  var L={min:180};
+  function lernZeit(){var t=((L.min%720)+720)%720,h=Math.floor(t/60),m=t%60;return {h:h===0?12:h,m:m};}
+  function zeigeLern(){var z=lernZeit(),box=$('kouh-lernuhr');box.innerHTML='';box.appendChild(uhr(z,true));
+    $('kouh-lern-zeit').textContent=digital(z);$('kouh-lern-worte').textContent=worte(z);
+    var nach=(z.h%12+12)+':'+(z.m<10?'0':'')+z.m,vor=(z.h===12?'0':String(z.h))+':'+(z.m<10?'0':'')+z.m;
+    $('kouh-lern-tag').textContent=(z.h===12?'nachts '+vor+' Uhr oder mittags '+nach:'morgens '+vor+' Uhr oder '+(z.h>=6?'abends ':'nachmittags ')+nach)+' Uhr';}
+  Array.prototype.forEach.call(wurzel.querySelectorAll('[data-kouh-schritt]'),function(b){b.addEventListener('click',function(){L.min+= +b.getAttribute('data-kouh-schritt');zeigeLern();});});
+  zeigeLern();
+
+  // nur für automatische Prüfung
+  wurzel.kouhTest={vorrat:vorrat,worte:worte,digital:digital,winkel:winkel,falsche:falsche,runde:runde,zufall:zufall,bewertung:bewertung,zustand:R,lern:L,zeigeLern:zeigeLern,
+    starteMit:function(seed){R.verzoegerung=0;rundeAusEinstellungen(seed);}};
+})();
+</script>

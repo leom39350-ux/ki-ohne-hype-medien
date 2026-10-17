@@ -1,0 +1,218 @@
+<!-- Werkzeug „Raclette- & Fondue-Rechner“ – KI ohne Hype. Alles läuft im Browser, nichts wird gespeichert oder gesendet. -->
+<style>
+.korr{--korr-a:#a8471f;--korr-g:#1f6f43;--korr-f:#b3261e;--korr-t:#1d1d1f;--korr-m:#5f6368;--korr-r:#e2e2e2;--korr-h:#fdf7f2;max-width:760px;margin:0 auto;color:var(--korr-t);font-size:16px;line-height:1.5}
+.korr *,.korr *::before,.korr *::after{box-sizing:border-box}
+.korr h2{font-size:1.35em;margin:0 0 8px}
+.korr h3{font-size:1.1em;margin:18px 0 6px}
+.korr-box{background:var(--korr-h);border:1px solid var(--korr-r);border-radius:14px;padding:18px;margin:16px 0}
+.korr-lab{display:block;font-weight:600;margin:0 0 6px}
+.korr-hint{font-size:.88em;color:var(--korr-m);margin:4px 0 0}
+.korr-zeile{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+@media (min-width:560px){.korr-zeile{grid-template-columns:1fr 1fr}}
+.korr select,.korr input.korr-ein{width:100%;padding:10px;border:1px solid #bdbdbd;border-radius:10px;font:inherit;background:#fff;color:inherit;min-width:0}
+.korr button{font:inherit;border-radius:10px;cursor:pointer;padding:10px 16px;border:1px solid var(--korr-a);background:#fff;color:var(--korr-a);font-weight:600}
+.korr button.korr-los{background:var(--korr-a);color:#fff;width:100%;margin-top:16px;padding:12px;font-size:1.05em}
+.korr select:focus-visible,.korr input:focus-visible,.korr button:focus-visible{outline:3px solid #f2b705;outline-offset:2px}
+.korr-fehler{color:var(--korr-f);font-weight:600;margin:8px 0 0}
+.korr-kopf{text-align:center;margin:0 0 10px}
+.korr-kopf .korr-gross{display:block;font-size:1.6em;font-weight:800;line-height:1.2;color:var(--korr-a)}
+.korr-liste{list-style:none;margin:0;padding:0}
+.korr-liste li{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--korr-r);border-radius:10px;padding:9px 10px;margin:6px 0}
+.korr-liste li.korr-erl{opacity:.6}
+.korr-liste li.korr-erl .korr-txt{text-decoration:line-through}
+.korr-liste input{width:22px;height:22px;margin:1px 0 0;flex:0 0 auto;accent-color:var(--korr-g)}
+.korr-txt{display:block;flex:1 1 auto;min-width:0}
+.korr-menge{display:block;font-weight:800;color:var(--korr-a)}
+.korr-mehr{display:block;font-size:.88em;color:var(--korr-m)}
+.korr-ideen{margin:6px 0 0;padding-left:20px}
+.korr-ideen li{margin:3px 0}
+.korr-knoepfe{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.korr-karten{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:560px){.korr-karten{grid-template-columns:1fr 1fr}}
+.korr-karte{display:block;border:1px solid var(--korr-r);border-radius:12px;padding:12px;background:#fff;color:inherit;text-decoration:none}
+.korr-karte:hover{border-color:var(--korr-a)}
+.korr-karte strong{display:block;color:var(--korr-a);margin:2px 0 4px}
+.korr-werb{font-size:.75em;text-transform:uppercase;letter-spacing:.05em;color:var(--korr-m)}
+.korr details{border:1px solid var(--korr-r);border-radius:10px;padding:10px 12px;margin:8px 0;background:#fff}
+.korr summary{cursor:pointer;font-weight:600}
+.korr-fuss{font-size:.85em;color:var(--korr-m);margin:14px 0 0;overflow-wrap:anywhere}
+@media print{.korr-form,.korr-karten,.korr-knoepfe,.korr-faq,.korr-nichtdruck{display:none!important}.korr-liste li{break-inside:avoid}}
+</style>
+
+<div class="korr" id="korr">
+  <h2>Raclette- &amp; Fondue-Rechner</h2>
+  <p>Wie viel Käse, Fleisch und Kartoffeln brauchst du für deinen Raclette- oder Fondue-Abend? Gib ein, wie viele Erwachsene und Kinder kommen und wie groß der Hunger ist – der Rechner macht daraus eine <strong>Einkaufsliste in Gramm</strong> zum Abhaken und Drucken. Ideal für Silvester, Weihnachten oder den Spieleabend.</p>
+
+  <form class="korr-box korr-form" id="korr-form" novalidate>
+    <label class="korr-lab" for="korr-art">Was gibt es?</label>
+    <select id="korr-art">
+      <option value="raclette">Raclette mit Fleisch &amp; Fisch</option>
+      <option value="raclette-veg">Raclette vegetarisch</option>
+      <option value="fondue-fleisch">Fondue mit Fleisch (in Öl oder Brühe)</option>
+      <option value="fondue-kaese">Käsefondue</option>
+    </select>
+    <div class="korr-zeile">
+      <div>
+        <label class="korr-lab" for="korr-erw">Erwachsene</label>
+        <input class="korr-ein" type="number" id="korr-erw" min="0" max="60" step="1" value="4" inputmode="numeric">
+      </div>
+      <div>
+        <label class="korr-lab" for="korr-kind">Kinder (unter 12)</label>
+        <input class="korr-ein" type="number" id="korr-kind" min="0" max="60" step="1" value="0" inputmode="numeric">
+        <p class="korr-hint">Ein Kind zählt als halbe Portion (eigene Annahme).</p>
+      </div>
+    </div>
+    <div class="korr-zeile">
+      <div>
+        <label class="korr-lab" for="korr-hunger">Wie groß ist der Hunger?</label>
+        <select id="korr-hunger">
+          <option value="0">wenig – es gibt noch viel anderes</option>
+          <option value="1" selected>normal</option>
+          <option value="2">groß – das ist das Hauptessen</option>
+        </select>
+      </div>
+    </div>
+    <p class="korr-fehler" id="korr-fehler" role="alert" hidden></p>
+    <button type="submit" class="korr-los">Einkaufsliste berechnen</button>
+  </form>
+
+  <div id="korr-erg" hidden>
+    <div class="korr-box">
+      <p class="korr-kopf"><span class="korr-gross" id="korr-titel"></span><span id="korr-unter"></span></p>
+      <h3>Einkaufsliste</h3>
+      <ul class="korr-liste" id="korr-liste"></ul>
+      <p class="korr-hint">Mengen sind auf 50 g aufgerundet. Richtwerte aus Ratgebern (Quellen unten) – keine Garantie, dass es genau reicht.</p>
+      <h3>Dazu nach Geschmack</h3>
+      <ul class="korr-liste" id="korr-dazu"></ul>
+      <div id="korr-ideenbox">
+        <h3>12 Pfännchen-Ideen</h3>
+        <ol class="korr-ideen" id="korr-ideen"></ol>
+      </div>
+      <div class="korr-knoepfe">
+        <button type="button" id="korr-druck">Liste drucken</button>
+        <button type="button" id="korr-neu">Neu berechnen</button>
+      </div>
+    </div>
+
+    <h3 class="korr-nichtdruck">Passt zu deinem Abend</h3>
+    <div class="korr-karten">
+      <a class="korr-karte" href="/products/krimidinner-silvester">
+        <span class="korr-werb">Eigenwerbung</span>
+        <strong>Silvester-Krimidinner „Countdown auf der Aurelia“</strong>
+        <span>Krimi zum Ausdrucken für den Abend am Tisch – während das Raclette brutzelt, wird ermittelt.</span>
+      </a>
+      <a class="korr-karte" href="/products/silvester-partyspiele">
+        <span class="korr-werb">Eigenwerbung</span>
+        <strong>Silvester-Partyspiele zum Ausdrucken</strong>
+        <span>Quiz, Karten und Minutenspiele bis Mitternacht – für Familie und Freunde.</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="korr-faq">
+    <h3>Häufige Fragen</h3>
+    <details><summary>Wie viel Käse rechnet man beim Raclette pro Person?</summary><p>Meist etwa 200 g pro Erwachsenem. Gibt es viele Beilagen, reichen rund 150 g, ist Raclette das einzige Essen, eher 250 g (Stuttgarter Zeitung, 22.12.2025). Der Rechner nimmt diese drei Werte für „wenig“, „normal“ und „groß“.</p></details>
+    <details><summary>Wie viel Fleisch brauche ich für Raclette?</summary><p>Ratgeber nennen 100 bis 200 g Fleisch und Fisch zusammen pro Person. Der Rechner nimmt 100, 150 oder 200 g – je nach Hunger.</p></details>
+    <details><summary>Und beim Fondue?</summary><p>Fleischfondue: 150 bis 200 g Fleisch und etwa 100 bis 150 g Gemüse pro Person. Käsefondue: 250 bis 300 g Käse und rund 200 g Brot (oder Brot, Obst und kleine Kartoffeln gemischt) pro Person. Für Öl oder Brühe rechnet ein gängiges Rezept mit 1 Liter für vier Personen – der Rechner plant deshalb einen Topf je vier Gäste.</p></details>
+    <details><summary>Warum zählen Kinder als halbe Portion?</summary><p>Für Kinder haben wir in den Ratgebern keine eigene Menge gefunden. Die halbe Portion ist unsere Annahme. Isst dein Kind wie ein Erwachsener, trag es einfach als Erwachsenen ein.</p></details>
+    <details><summary>Wird etwas gespeichert?</summary><p>Nein. Der Rechner läuft nur in deinem Browser. Es werden keine Eingaben gespeichert oder verschickt, und es gibt keine Cookies.</p></details>
+  </div>
+
+  <p class="korr-fuss"><strong>Mehr kostenlose Werkzeuge:</strong> <a href="/pages/gratis-werkzeuge">alle Gratis-Werkzeuge im Überblick →</a> · <a href="/pages/weihnachts-countdown">Wie viele Tage bis Weihnachten? →</a></p>
+  <p class="korr-fuss">Quellen der Richtwerte (abgerufen 17.10.2026): <a href="https://www.stuttgarter-zeitung.de/wissen/wie-viel-raclette-kaese-pro-person-richtige-menge-mhsd-78980130.html" rel="noopener">Stuttgarter Zeitung: Wie viel Raclette-Käse pro Person? (22.12.2025)</a> · <a href="https://testundtipps.de/kueche-lifestyle/kochen-backen/raclette/raclette-menge-pro-person" rel="noopener">testundtipps.de: Raclette-Menge pro Person (u. a. TÜV SÜD, Raclette Suisse)</a> · <a href="https://www.lecker.de/fondue-zutaten-der-praktische-einkaufsguide-130522.html" rel="noopener">lecker.de: Fondue-Zutaten – Mengen-Guide</a> · <a href="https://www.t-online.de/leben/essen-und-trinken/id_71972678/kaesefondue-zubereiten-klassisches-rezept-beilagen-und-zutaten.html" rel="noopener">t-online: Käsefondue (16.12.2025)</a> · <a href="https://www.herold.at/blog/fleischfondue-fondue-oel/" rel="noopener">herold.at: Fleischfondue</a>. Brot zum Raclette: dafür nennt keine der Quellen eine Menge. Alle Angaben sind Richtwerte ohne Gewähr.</p>
+</div>
+
+<script>
+(function(){
+  var W = {
+    raclette: {name:'Raclette mit Fleisch & Fisch', ideen:true, posten:[
+      {k:'kaese', t:'Raclette-Käse', g:[150,200,250]},
+      {k:'fleisch', t:'Fleisch & Fisch (z. B. Schinken, Hähnchen, Garnelen)', g:[100,150,200]},
+      {k:'kartoffeln', t:'Kleine Kartoffeln (Pellkartoffeln)', g:[175,200,250]},
+      {k:'gemuese', t:'Gemüse & Obst (z. B. Paprika, Champignons, Ananas)', g:[300,300,300]}],
+      dazu:['Gewürzgurken und Silberzwiebeln','Pfeffer, Paprikapulver, Kräuter','Baguette (nach Wunsch)','Soßen oder Dips']},
+    'raclette-veg': {name:'Raclette vegetarisch', ideen:true, posten:[
+      {k:'kaese', t:'Raclette-Käse', g:[200,225,250]},
+      {k:'kartoffeln', t:'Kleine Kartoffeln (Pellkartoffeln)', g:[175,200,250]},
+      {k:'gemuese', t:'Gemüse & Obst (z. B. Paprika, Champignons, Zucchini, Birne)', g:[300,300,300]}],
+      dazu:['Gewürzgurken und Silberzwiebeln','Pfeffer, Paprikapulver, Kräuter','Baguette (nach Wunsch)','Soßen oder Dips']},
+    'fondue-fleisch': {name:'Fondue mit Fleisch', ideen:false, topf:true, posten:[
+      {k:'fleisch', t:'Fleisch (gemischt, in Würfeln)', g:[150,175,200]},
+      {k:'gemuese', t:'Gemüse (z. B. Brokkoli, Champignons, Paprika)', g:[100,125,150]}],
+      dazu:['Soßen und Dips (z. B. Knoblauch, Curry, Cocktail)','Baguette','Salat','Fondue-Gabeln zählen: eine je Gast']},
+    'fondue-kaese': {name:'Käsefondue', ideen:false, posten:[
+      {k:'kaese', t:'Käse (gerieben, für Fondue)', g:[250,275,300]},
+      {k:'brot', t:'Brot in Würfeln (oder Brot, Obst und kleine Kartoffeln gemischt)', g:[200,200,200]}],
+      dazu:['Weitere Zutaten laut deinem Rezept (z. B. Knoblauch, Speisestärke, Flüssigkeit)','Gewürzgurken und Silberzwiebeln','Obst zum Eintauchen (z. B. Trauben, Birne)']}
+  };
+  var IDEEN = {
+    alle:['Kartoffel, Champignons und Kräuterkäse','Ananas mit Schinken und Käse (Hawaii)','Birne, Walnuss und Käse','Paprika, Mais und eine Prise Chili','Tomate, Mozzarella und Basilikum','Spinat mit Knoblauch und Käse','Zucchini, Feta und Oliven','Hähnchen mit Curry und Ananas','Garnelen mit Knoblauch und Zitrone','Speck, Zwiebel und Kartoffel','Apfel, Zimt und ein Klecks Frischkäse','Brokkoli mit Käse und Pfeffer'],
+    veg:['Kartoffel, Champignons und Kräuterkäse','Birne, Walnuss und Käse','Paprika, Mais und eine Prise Chili','Tomate, Mozzarella und Basilikum','Spinat mit Knoblauch und Käse','Zucchini, Feta und Oliven','Ananas mit Paprika und Käse','Apfel, Zimt und ein Klecks Frischkäse','Brokkoli mit Käse und Pfeffer','Lauch, Kartoffel und Käse','Süßkartoffel mit Chili','Banane mit Schokolade (zum Nachtisch)']
+  };
+  function aufrunden(gramm2){ return Math.ceil(gramm2 / 100) * 50; } /* gramm2 = doppelte Menge (ganzzahlig) */
+  function menge(g){
+    if (g < 1000) return g + ' g';
+    var s = (g / 1000).toFixed(2).replace(/0+$/,'').replace(/\.$/,'');
+    return s.replace('.', ',') + ' kg';
+  }
+  function zahl(v){
+    v = String(v == null ? '' : v).trim();
+    if (!/^\d{1,3}$/.test(v)) return null;
+    return parseInt(v, 10);
+  }
+  function pruefe(erw, kind){
+    var e = zahl(erw), k = zahl(kind);
+    if (e === null || k === null) return {fehler:'Bitte ganze Zahlen ab 0 eintragen.'};
+    if (e > 60 || k > 60) return {fehler:'Bitte höchstens 60 Erwachsene und 60 Kinder eintragen.'};
+    if (e + k === 0) return {fehler:'Bitte mindestens eine Person eintragen.'};
+    return {erw:e, kind:k};
+  }
+  function berechne(art, erw, kind, hunger){
+    var w = W[art]; if (!w) return null;
+    var h = Math.max(0, Math.min(2, hunger|0));
+    var halbe = 2 * erw + kind;
+    var r = {art:art, name:w.name, posten:[], dazu:w.dazu.slice(), ideen:null, toepfe:0};
+    w.posten.forEach(function(p){ r.posten.push({k:p.k, t:p.t, proPerson:p.g[h], gesamt:aufrunden(p.g[h] * halbe)}); });
+    if (w.topf) r.toepfe = Math.ceil((erw + kind) / 4);
+    if (w.ideen) r.ideen = (art === 'raclette-veg' ? IDEEN.veg : IDEEN.alle).slice();
+    return r;
+  }
+  window.korrRechner = {berechne:berechne, menge:menge, pruefe:pruefe, aufrunden:aufrunden};
+
+  var $ = function(id){ return document.getElementById(id); };
+  function eintrag(ul, haupt, unter, mitMenge){
+    var li = document.createElement('li');
+    var cb = document.createElement('input'); cb.type = 'checkbox'; cb.setAttribute('aria-label', 'abgehakt');
+    cb.addEventListener('change', function(){ li.classList.toggle('korr-erl', cb.checked); });
+    var sp = document.createElement('span'); sp.className = 'korr-txt';
+    if (mitMenge){ var m = document.createElement('span'); m.className = 'korr-menge'; m.textContent = mitMenge; sp.appendChild(m); }
+    sp.appendChild(document.createTextNode(haupt));
+    if (unter){ var u = document.createElement('span'); u.className = 'korr-mehr'; u.textContent = unter; sp.appendChild(u); }
+    li.appendChild(cb); li.appendChild(sp); ul.appendChild(li);
+  }
+  function zeige(){
+    var f = $('korr-fehler');
+    var p = pruefe($('korr-erw').value, $('korr-kind').value);
+    if (p.fehler){ f.textContent = p.fehler; f.hidden = false; $('korr-erg').hidden = true; return; }
+    f.hidden = true;
+    var r = berechne($('korr-art').value, p.erw, p.kind, parseInt($('korr-hunger').value, 10));
+    var pers = [];
+    if (p.erw) pers.push(p.erw + (p.erw === 1 ? ' Erwachsener' : ' Erwachsene'));
+    if (p.kind) pers.push(p.kind + (p.kind === 1 ? ' Kind' : ' Kinder'));
+    $('korr-titel').textContent = r.name;
+    $('korr-unter').textContent = 'für ' + pers.join(' und ') + ' · Hunger: ' + ['wenig','normal','groß'][parseInt($('korr-hunger').value,10)];
+    var ul = $('korr-liste'); ul.innerHTML = '';
+    r.posten.forEach(function(x){ eintrag(ul, x.t, 'Richtwert ' + x.proPerson + ' g pro Erwachsenem', menge(x.gesamt)); });
+    if (r.toepfe) eintrag(ul, 'Öl oder Brühe für ' + r.toepfe + (r.toepfe === 1 ? ' Fondue-Topf' : ' Fondue-Töpfe'), 'Richtwert: 1 Liter für vier Personen', r.toepfe + ' l');
+    var dz = $('korr-dazu'); dz.innerHTML = '';
+    r.dazu.forEach(function(t){ eintrag(dz, t, '', ''); });
+    var ib = $('korr-ideenbox'), ol = $('korr-ideen'); ol.innerHTML = '';
+    if (r.ideen){ r.ideen.forEach(function(t){ var li = document.createElement('li'); li.textContent = t; ol.appendChild(li); }); ib.hidden = false; } else ib.hidden = true;
+    $('korr-erg').hidden = false;
+    $('korr-erg').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  $('korr-form').addEventListener('submit', function(e){ e.preventDefault(); zeige(); });
+  $('korr-druck').addEventListener('click', function(){ window.print(); });
+  $('korr-neu').addEventListener('click', function(){ $('korr-erg').hidden = true; $('korr-form').scrollIntoView({behavior:'smooth', block:'start'}); });
+})();
+</script>
