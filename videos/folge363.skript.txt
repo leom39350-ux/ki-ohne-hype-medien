@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.2 s) HOOK: Ein Freund schreibt: Leih mir schnell Geld!
+[2] ab 2.2 s (1.8 s) : Echt? Von seiner Nummer?
+[3] ab 4.1 s (2.6 s) : Ja. Sein Bild, sein Name.
+[4] ab 6.7 s (2.1 s) : Rate mal: Ist das wirklich dein Freund?
+[5] ab 8.8 s (3.0 s) : Nein, Betrüger hatten ihr eigenes Gerät verknüpft.
+[6] ab 11.8 s (1.6 s) : Wie kommen die da rein?
+[7] ab 13.4 s (1.9 s) : Über einen falschen Link oder Code.
+[8] ab 15.3 s (2.4 s) : Prüf in WhatsApp die verknüpften Geräte.
+[9] ab 17.7 s (1.6 s) : Ich ruf ihn lieber an.
+[10] ab 19.3 s (3.9 s) SCHLUSS: Hast du schon nachgeschaut? Ja oder nein? Schick das deinem besten Freund.
+{"dauer": 23.167, "sprechzeit": 19.7, "woerter_pro_minute": 195, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.1, "lufs": -14.1, "tp": -1.7, "stimme_rohspitze": 1.014, "begrenzer_max_db": -0.5, "sync": {"pausen": 13, "abstand_median_s": 0.04, "abstand_max_s": 0.136}, "zonen": "OK", "zonen_geprueft": 4398, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 1.1, "hell_bild0": 105, "hell_mittel": 102, "bewegung_mittel": 4.78}, "einstellungen": 10, "schnitt_s": {"min": 1.6, "max": 3.9, "mittel": 2.32}}

@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.7 s) HOOK: Oma soll 7.000 € in die Hecke legen.
+[2] ab 2.7 s (1.6 s) : Wer sagt denn sowas?
+[3] ab 4.3 s (2.8 s) : Ein Polizist am Telefon, es gehe um Falschgeld.
+[4] ab 7.1 s (2.0 s) : Rate mal: Holt das die echte Polizei?
+[5] ab 9.1 s (4.4 s) : Nein, ein Fremder holte es, so passiert im Mai 2026.
+[6] ab 13.5 s (1.6 s) : Und das Geld ist weg?
+[7] ab 15.1 s (1.8 s) : Bis heute nicht wieder aufgetaucht.
+[8] ab 17.0 s (2.6 s) : Auflegen und selbst die 110 wählen.
+[9] ab 19.5 s (1.6 s) : Ich ruf Oma gleich an.
+[10] ab 21.2 s (3.5 s) SCHLUSS: Würde deine Oma auflegen? Ja oder nein? Schick ihr das heute.
+{"dauer": 24.633, "sprechzeit": 21.2, "woerter_pro_minute": 201, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.4, "lufs": -14.2, "tp": -1.7, "stimme_rohspitze": 0.95, "begrenzer_max_db": -0.4, "sync": {"pausen": 11, "abstand_median_s": 0.015, "abstand_max_s": 0.057}, "zonen": "OK", "zonen_geprueft": 4502, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.1, "hell_bild0": 92, "hell_mittel": 91, "bewegung_mittel": 4.75}, "einstellungen": 11, "schnitt_s": {"min": 1.6, "max": 3.47, "mittel": 2.24}}
