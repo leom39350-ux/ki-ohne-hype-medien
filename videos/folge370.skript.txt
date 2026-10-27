@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.6 s) HOOK: Eine Kanzlei holt mein verlorenes Geld zurück!
+[2] ab 2.6 s (2.1 s) : Moment. Und was kostet das?
+[3] ab 4.7 s (2.7 s) : Erst eine Gebühr. Dann kommt alles zurück.
+[4] ab 7.4 s (2.0 s) : Rate mal: Kommt das Geld zurück?
+[5] ab 9.4 s (3.8 s) : Nein. Wirklich passiert in Zwickau: Er zahlte noch mal.
+[6] ab 13.2 s (1.7 s) : Die Kanzlei war auch Betrug?
+[7] ab 14.8 s (3.9 s) : Ja. Die Polizei sagt: Vorsicht vor falschen Helfern.
+[8] ab 18.7 s (3.0 s) : Nie zahlen, um dein Geld zurückzubekommen.
+[9] ab 21.7 s (2.3 s) : Okay. Ich ruf erst meine Bank an.
+[10] ab 24.0 s (3.3 s) SCHLUSS: Hättest du gezahlt? Ja oder nein? Schick es weiter.
+{"dauer": 27.333, "sprechzeit": 24.3, "woerter_pro_minute": 171, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.9, "lufs": -14.1, "tp": -1.7, "stimme_rohspitze": 0.871, "begrenzer_max_db": -0.4, "sync": {"pausen": 16, "abstand_median_s": 0.024, "abstand_max_s": 0.122}, "zonen": "OK", "zonen_geprueft": 5837, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.5, "hell_bild0": 103, "hell_mittel": 104, "bewegung_mittel": 4.5}, "einstellungen": 12, "schnitt_s": {"min": 1.39, "max": 3.3, "mittel": 2.28}}

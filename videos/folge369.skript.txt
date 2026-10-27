@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (3.9 s) HOOK: Papa will Geld anlegen. Ein Politiker empfiehlt das im Video!
+[2] ab 3.9 s (2.6 s) : Ein Politiker? Für eine Geldanlage?
+[3] ab 6.5 s (3.9 s) : Ja! Mit Nachrichten-Logo. Sieht total echt aus.
+[4] ab 10.4 s (1.9 s) : Rate mal: Ist das Video echt?
+[5] ab 12.3 s (3.7 s) : Nein. Gefälscht. Wirklich passiert im Rhein-Sieg-Kreis.
+[6] ab 16.0 s (1.6 s) : Und hat er bezahlt?
+[7] ab 17.6 s (3.5 s) : Ja. Fünfstellig. Danach war die Seite weg.
+[8] ab 21.1 s (2.6 s) : Politiker werben nie für Geldanlagen im Netz.
+[9] ab 23.7 s (1.8 s) : Ich schick das sofort Papa.
+[10] ab 25.5 s (3.3 s) SCHLUSS: Hättest du es geglaubt? Ja oder nein? Schick es deinem Papa.
+{"dauer": 28.867, "sprechzeit": 25.8, "woerter_pro_minute": 158, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 6.3, "lufs": -14.1, "tp": -1.7, "stimme_rohspitze": 0.911, "begrenzer_max_db": -0.3, "sync": {"pausen": 19, "abstand_median_s": 0.03, "abstand_max_s": 0.279}, "zonen": "OK", "zonen_geprueft": 6184, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.2, "hell_bild0": 92, "hell_mittel": 92, "bewegung_mittel": 4.68}, "einstellungen": 13, "schnitt_s": {"min": 1.54, "max": 3.87, "mittel": 2.22}}
