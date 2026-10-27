@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (3.3 s) HOOK: Die Polizei sagt Oma: Pack deinen Schmuck in einen Kochtopf.
+[2] ab 3.3 s (1.8 s) : Ein Kochtopf? Warum?
+[3] ab 5.1 s (3.4 s) : Angeblich Strahlung in der Wohnung. Und: Erzähl es niemandem.
+[4] ab 8.5 s (2.3 s) : Rate mal: Was macht Oma jetzt?
+[5] ab 10.8 s (3.0 s) : Sie merkt es. Und sagt heimlich ihrem Sohn Bescheid.
+[6] ab 13.8 s (1.9 s) : Und was passiert mit dem Topf?
+[7] ab 15.7 s (4.0 s) : Zwei Männer holen ihn ab. Kurz danach stoppt die echte Polizei das Auto.
+[8] ab 19.7 s (3.4 s) : Echte Polizei will nie deinen Schmuck. Ruf die Familie an.
+[9] ab 23.1 s (3.1 s) : Ich sag Oma heute: Ruf mich an. Immer.
+[10] ab 26.2 s (4.1 s) SCHLUSS: Würde deine Oma heimlich dich anrufen? Ja oder nein? Schick ihr das.
+{"dauer": 30.3, "sprechzeit": 27.3, "woerter_pro_minute": 189, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 6.6, "lufs": -14.1, "tp": -1.7, "stimme_rohspitze": 0.897, "begrenzer_max_db": -0.3, "sync": {"pausen": 17, "abstand_median_s": 0.033, "abstand_max_s": 0.179}, "zonen": "OK", "zonen_geprueft": 5720, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.3, "hell_bild0": 90, "hell_mittel": 92, "bewegung_mittel": 4.69}, "einstellungen": 13, "schnitt_s": {"min": 1.45, "max": 4.07, "mittel": 2.33}}
