@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.7 s) HOOK: Oma kriegt einen Anruf: Einbrecher in der Gegend!
+[2] ab 2.7 s (1.6 s) : Und wer ruft da an?
+[3] ab 4.3 s (3.3 s) : Die Polizei. Sie will Omas Schmuck sicher abholen.
+[4] ab 7.6 s (2.8 s) : Rate mal: Holt die echte Polizei Schmuck ab?
+[5] ab 10.3 s (4.2 s) : Nein. Wirklich passiert in Nordhessen. Alles erfunden.
+[6] ab 14.5 s (1.8 s) : Und die standen einfach vor der Tür?
+[7] ab 16.3 s (3.4 s) : Ja. Und alles kam in ein Hundekörbchen.
+[8] ab 19.7 s (3.6 s) : Sofort auflegen. Die echte Polizei holt nie Schmuck ab.
+[9] ab 23.3 s (1.7 s) : Ich sag's Oma heute noch.
+[10] ab 25.0 s (3.4 s) SCHLUSS: Weiß deine Oma das? Ja oder nein? Schick es ihr.
+{"dauer": 28.4, "sprechzeit": 25.0, "woerter_pro_minute": 178, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 6.1, "lufs": -14.1, "tp": -1.6, "stimme_rohspitze": 0.769, "begrenzer_max_db": -0.4, "sync": {"pausen": 16, "abstand_median_s": 0.019, "abstand_max_s": 0.144}, "zonen": "OK", "zonen_geprueft": 5166, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.4, "hell_bild0": 93, "hell_mittel": 91, "bewegung_mittel": 4.28}, "einstellungen": 12, "schnitt_s": {"min": 1.27, "max": 3.4, "mittel": 2.37}}

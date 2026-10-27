@@ -1,0 +1,14 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (3.1 s) HOOK: Oma hat angeblich 48.000 € gewonnen!
+[2] ab 3.1 s (1.6 s) : Bei welchem Gewinnspiel denn?
+[3] ab 4.7 s (3.7 s) : Egal. Sie soll vorher Zahlkarten kaufen. Für die Gebühr.
+[4] ab 8.4 s (2.1 s) : Rate mal: Kommt das Geld jemals an?
+[5] ab 10.5 s (4.7 s) : Nein. Wirklich passiert in Mittelfranken. Oma hat's sofort gemerkt.
+[6] ab 15.2 s (1.6 s) : Was hat sie gemacht?
+[7] ab 16.8 s (3.4 s) : Sie hat ihren Sohn angerufen. Und die Polizei.
+[8] ab 20.2 s (1.6 s) : Und die Betrüger?
+[9] ab 21.8 s (4.2 s) : Beim nächsten Anruf sofort aufgelegt. Oma hat kein Geld verloren.
+[10] ab 26.0 s (2.8 s) : Gewinn mit Gebühr? Dann ist es Betrug.
+[11] ab 28.8 s (1.6 s) : Ich ruf Oma gleich an.
+[12] ab 30.4 s (3.4 s) SCHLUSS: Hätte deine Oma bezahlt? Ja oder nein? Schick es ihr.
+{"dauer": 33.767, "sprechzeit": 29.5, "woerter_pro_minute": 167, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 7.1, "lufs": -14.1, "tp": -1.7, "stimme_rohspitze": 0.849, "begrenzer_max_db": -0.6, "sync": {"pausen": 20, "abstand_median_s": 0.023, "abstand_max_s": 0.072}, "zonen": "OK", "zonen_geprueft": 6271, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.4, "hell_bild0": 105, "hell_mittel": 105, "bewegung_mittel": 4.4}, "einstellungen": 14, "schnitt_s": {"min": 1.6, "max": 3.7, "mittel": 2.41}}
