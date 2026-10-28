@@ -1,0 +1,13 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.6 s) HOOK: Eine Frau bringt Bargeld zur Bushaltestelle.
+[2] ab 2.6 s (2.1 s) : Zur Bushaltestelle? Warum?
+[3] ab 4.7 s (2.9 s) : Ein Anrufer fragt erst: Wie viel Bargeld haben Sie?
+[4] ab 7.6 s (2.5 s) : Dann sagt er: Ihre Tochter hatte einen Unfall.
+[5] ab 10.1 s (2.1 s) : Rate mal: Ist die Tochter verletzt?
+[6] ab 12.2 s (4.1 s) : Nein. Alles erfunden. Ein Fremder nimmt das Geld mit.
+[7] ab 16.3 s (2.2 s) : Und er sagt: Erzählen Sie das niemandem.
+[8] ab 18.6 s (2.7 s) : Erst Stunden später ruft sie ihre Tochter an.
+[9] ab 21.3 s (2.7 s) : Auflegen. Und zuerst die Tochter anrufen.
+[10] ab 23.9 s (1.7 s) : Ich sag das heute noch Mama.
+[11] ab 25.6 s (4.4 s) SCHLUSS: Hätte deine Mama zuerst die Tochter angerufen? Ja oder nein? Schick das deiner Mama.
+{"dauer": 30.0, "sprechzeit": 26.7, "woerter_pro_minute": 184, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 6.4, "lufs": -14.0, "tp": -1.6, "stimme_rohspitze": 0.81, "begrenzer_max_db": -0.1, "sync": {"pausen": 16, "abstand_median_s": 0.034, "abstand_max_s": 0.15}, "zonen": "OK", "zonen_geprueft": 5420, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 1.3, "hell_bild0": 91, "hell_mittel": 91, "bewegung_mittel": 4.47}, "einstellungen": 12, "schnitt_s": {"min": 1.7, "max": 4.37, "mittel": 2.5}}
