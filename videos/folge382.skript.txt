@@ -1,0 +1,11 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.4 s) HOOK: Einer bietet mir einen Goldring für Spritgeld.
+[2] ab 2.4 s (2.6 s) : Die Leute haben einen Notfall. Ich helf doch gern.
+[3] ab 5.0 s (2.9 s) : Stopp! Rate mal, was der Ring wert ist.
+[4] ab 8.0 s (3.1 s) : Bei Freistadt gab ein junger Mann 400 € her.
+[5] ab 11.1 s (2.2 s) : Und das Gold? Ist doch was wert.
+[6] ab 13.3 s (3.1 s) : Meist billiger Modeschmuck. Er glänzt nur.
+[7] ab 16.4 s (3.7 s) : Nie Bargeld gegen Schmuck tauschen. Lieber Hilfe rufen.
+[8] ab 20.1 s (2.9 s) : Okay. Ich ruf die Polizei statt zu zahlen.
+[9] ab 23.0 s (3.8 s) SCHLUSS: Hättest du angehalten? Ja oder nein? Schick es deinem Bruder.
+{"dauer": 26.8, "sprechzeit": 24.1, "woerter_pro_minute": 179, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.6, "lufs": -14.1, "tp": -1.7, "stimme_rohspitze": 0.877, "begrenzer_max_db": -0.5, "sync": {"pausen": 17, "abstand_median_s": 0.037, "abstand_max_s": 0.144}, "zonen": "OK", "zonen_geprueft": 4872, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.4, "hell_bild0": 106, "hell_mittel": 103, "bewegung_mittel": 4.03}, "einstellungen": 10, "schnitt_s": {"min": 1.62, "max": 3.77, "mittel": 2.68}}

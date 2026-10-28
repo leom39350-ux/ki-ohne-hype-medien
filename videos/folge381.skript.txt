@@ -1,0 +1,11 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (1.9 s) HOOK: Oma soll ihr Geld vor die Tür stellen?
+[2] ab 1.9 s (2.9 s) : Die Polizei hat angerufen. Die holt es ab.
+[3] ab 4.9 s (3.4 s) : Echte Polizei? Rate mal, wer den Beutel holt.
+[4] ab 8.2 s (2.8 s) : In Wahlstedt hat ein Fremder den Beutel mitgenommen.
+[5] ab 11.0 s (2.4 s) : Gold und Münzen? Einfach so weg?
+[6] ab 13.4 s (3.6 s) : Eine Nachbarin hat den falschen Polizisten nicht reingelassen.
+[7] ab 17.0 s (4.4 s) : Die Polizei will nie Geld. Auflegen. Selbst den Notruf wählen.
+[8] ab 21.4 s (1.7 s) : Ich ruf Oma sofort an.
+[9] ab 23.1 s (3.7 s) SCHLUSS: Würde Oma ihn vor die Tür stellen? Ja oder nein? Schick es ihr.
+{"dauer": 26.8, "sprechzeit": 24.2, "woerter_pro_minute": 184, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.8, "lufs": -14.0, "tp": -1.6, "stimme_rohspitze": 0.784, "begrenzer_max_db": 0.0, "sync": {"pausen": 15, "abstand_median_s": 0.043, "abstand_max_s": 0.193}, "zonen": "OK", "zonen_geprueft": 4932, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.3, "hell_bild0": 92, "hell_mittel": 91, "bewegung_mittel": 4.82}, "einstellungen": 11, "schnitt_s": {"min": 1.37, "max": 3.7, "mittel": 2.44}}
