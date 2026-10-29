@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.5 s) HOOK: Mitternacht. Bei Oma klingelt es.
+[2] ab 2.5 s (2.0 s) : So spät? Wer ruft da an?
+[3] ab 4.5 s (3.7 s) : Angeblich die Polizei. Sie soll ihre Wertsachen rausgeben.
+[4] ab 8.3 s (1.7 s) : Rate mal: Wer hört das Telefon?
+[5] ab 10.0 s (3.2 s) : Der Nachbar von oben. Er geht in den Flur.
+[6] ab 13.2 s (1.6 s) : Und der falsche Polizist?
+[7] ab 14.8 s (3.2 s) : Der Nachbar macht die Tür zu. Alles noch da.
+[8] ab 18.0 s (4.0 s) : Sofort auflegen. Dann selbst die 110 anrufen.
+[9] ab 22.0 s (1.8 s) : Zum Glück war der Nachbar wach.
+[10] ab 23.9 s (4.0 s) SCHLUSS: Kennt dein Nachbar diese Masche? Ja oder nein? Schick ihm das.
+{"dauer": 27.833, "sprechzeit": 24.7, "woerter_pro_minute": 177, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.8, "lufs": -14.0, "tp": -1.7, "stimme_rohspitze": 0.844, "begrenzer_max_db": -0.4, "sync": {"pausen": 17, "abstand_median_s": 0.037, "abstand_max_s": 0.123}, "zonen": "OK", "zonen_geprueft": 5121, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 1.2, "hell_bild0": 91, "hell_mittel": 90, "bewegung_mittel": 4.52}, "einstellungen": 12, "schnitt_s": {"min": 1.6, "max": 3.97, "mittel": 2.32}}

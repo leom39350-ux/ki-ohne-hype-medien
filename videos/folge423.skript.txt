@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.5 s) HOOK: 2.500 € fürs Ungeziefer?
+[2] ab 2.5 s (3.5 s) : Eine Firma kommt. Zwei Männer machen kurz was.
+[3] ab 6.1 s (1.6 s) : Und wie zahlt man das?
+[4] ab 7.7 s (3.5 s) : Gleich vor Ort. Mit Karte, am mobilen Gerät.
+[5] ab 11.2 s (1.6 s) : Rate mal: Echte Firma?
+[6] ab 12.8 s (3.0 s) : Nein! Die Polizei ermittelt wegen Betrug.
+[7] ab 15.8 s (1.6 s) : Und wie merk ich das vorher?
+[8] ab 17.4 s (4.3 s) : Erst die Firma prüfen. Preis schriftlich. Rechnung verlangen.
+[9] ab 21.6 s (2.4 s) : Merk ich mir. Erst Rechnung, dann zahlen.
+[10] ab 24.0 s (4.5 s) SCHLUSS: Fragst du vorher nach dem Preis? Ja oder nein? Schick das deinen Eltern.
+{"dauer": 28.567, "sprechzeit": 25.0, "woerter_pro_minute": 165, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.9, "lufs": -14.1, "tp": -1.7, "stimme_rohspitze": 1.008, "begrenzer_max_db": -0.3, "sync": {"pausen": 17, "abstand_median_s": 0.027, "abstand_max_s": 0.174}, "zonen": "OK", "zonen_geprueft": 5225, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.3, "hell_bild0": 106, "hell_mittel": 102, "bewegung_mittel": 4.28}, "einstellungen": 11, "schnitt_s": {"min": 1.6, "max": 4.53, "mittel": 2.6}}
