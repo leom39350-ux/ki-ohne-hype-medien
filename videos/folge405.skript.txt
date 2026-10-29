@@ -1,0 +1,11 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.5 s) HOOK: Ich hab meinen Anrufbeantworter neu besprochen!
+[2] ab 2.5 s (3.8 s) : Rate mal: Wie viele Sekunden braucht so eine KI für deine Stimme?
+[3] ab 6.3 s (1.9 s) : Hm. Eine Stunde?
+[4] ab 8.1 s (3.6 s) : Zwanzig Sekunden. Von so einem Anrufbeantworter.
+[5] ab 11.7 s (3.1 s) : Dann ruft die KI mit meiner Stimme Mama an und will Geld?
+[6] ab 14.8 s (3.3 s) : Laut Polizei bisher selten. Aber möglich.
+[7] ab 18.2 s (2.4 s) : Auflegen. Dann selbst zurückrufen.
+[8] ab 20.6 s (1.6 s) : Das sag ich heute noch Mama.
+[9] ab 22.2 s (5.1 s) SCHLUSS: Habt ihr die Rückruf-Regel in deiner Familie? Ja oder nein? Schick das deiner Mama.
+{"dauer": 27.333, "sprechzeit": 24.6, "woerter_pro_minute": 168, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.7, "lufs": -14.2, "tp": -1.7, "stimme_rohspitze": 0.817, "begrenzer_max_db": -0.6, "sync": {"pausen": 14, "abstand_median_s": 0.024, "abstand_max_s": 0.26}, "zonen": "OK", "zonen_geprueft": 4917, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 1.5, "hell_bild0": 91, "hell_mittel": 90, "bewegung_mittel": 4.42}, "einstellungen": 12, "schnitt_s": {"min": 1.46, "max": 5.13, "mittel": 2.28}}
