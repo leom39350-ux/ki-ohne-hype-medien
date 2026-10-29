@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.6 s) HOOK: Geschenk bestellt. Total billig!
+[2] ab 2.6 s (2.1 s) : Mit Kreditkarte? Wo denn?
+[3] ab 4.7 s (2.1 s) : Ein Shop, den ich nicht kannte.
+[4] ab 6.9 s (2.1 s) : Rate mal: Was passiert mit der Karte?
+[5] ab 9.0 s (3.5 s) : Der Shop war falsch. Vierstellig abgebucht.
+[6] ab 12.5 s (1.6 s) : Wie erkenn ich so einen Shop?
+[7] ab 14.1 s (2.6 s) : Shop-Namen mit dem Wort Betrug suchen.
+[8] ab 16.7 s (2.0 s) : Und lieber auf Rechnung zahlen.
+[9] ab 18.7 s (1.7 s) : Erst prüfen, dann kaufen.
+[10] ab 20.4 s (3.6 s) SCHLUSS: Hättest du den Shop geprüft? Ja oder nein? Schick das deiner Schwester.
+{"dauer": 23.967, "sprechzeit": 20.9, "woerter_pro_minute": 172, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.2, "lufs": -14.2, "tp": -1.7, "stimme_rohspitze": 0.874, "begrenzer_max_db": -0.9, "sync": {"pausen": 14, "abstand_median_s": 0.049, "abstand_max_s": 0.213}, "zonen": "OK", "zonen_geprueft": 4373, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.8, "hell_bild0": 107, "hell_mittel": 102, "bewegung_mittel": 4.59}, "einstellungen": 10, "schnitt_s": {"min": 1.6, "max": 3.6, "mittel": 2.4}}

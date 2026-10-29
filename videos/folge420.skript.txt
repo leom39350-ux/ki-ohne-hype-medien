@@ -1,0 +1,12 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (3.1 s) HOOK: Die Bank ruft Oma an. Sie soll Geld abheben.
+[2] ab 3.1 s (1.6 s) : Und wohin damit?
+[3] ab 4.7 s (3.1 s) : Ablegen. Den Ort sagen sie ihr später.
+[4] ab 7.7 s (1.6 s) : Rate mal: Was macht Oma?
+[5] ab 9.3 s (3.2 s) : Sie fragt den Nachbarn. Der holt die Polizei.
+[6] ab 12.6 s (1.6 s) : Und der Abholer?
+[7] ab 14.2 s (3.0 s) : Bei der Übergabe gefasst. Kein Geld weg.
+[8] ab 17.2 s (2.6 s) : Auflegen. Die Bank selbst anrufen.
+[9] ab 19.8 s (1.6 s) : Gut, dass sie gefragt hat.
+[10] ab 21.4 s (4.1 s) SCHLUSS: Würde deine Oma erst jemanden fragen? Ja oder nein? Schick ihr das.
+{"dauer": 25.5, "sprechzeit": 21.6, "woerter_pro_minute": 178, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.5, "lufs": -14.0, "tp": -1.7, "stimme_rohspitze": 0.916, "begrenzer_max_db": -0.3, "sync": {"pausen": 16, "abstand_median_s": 0.052, "abstand_max_s": 0.223}, "zonen": "OK", "zonen_geprueft": 4846, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.8, "hell_bild0": 92, "hell_mittel": 90, "bewegung_mittel": 4.57}, "einstellungen": 10, "schnitt_s": {"min": 1.6, "max": 4.13, "mittel": 2.55}}
