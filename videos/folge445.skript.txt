@@ -1,0 +1,11 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (1.9 s) HOOK: Die Bundesbank ruft bei deiner Oma an?
+[2] ab 1.9 s (1.6 s) : Klingt doch seriös, oder?
+[3] ab 3.5 s (4.6 s) : Angeblich gibt es Probleme mit ihrem Kredit. Dann geht es per Messenger weiter.
+[4] ab 8.1 s (1.6 s) : Und was wollen die?
+[5] ab 9.7 s (4.9 s) : Ihr Vermögen soll geprüft werden. Abends klingelt ein Abholer. Rate mal.
+[6] ab 14.5 s (2.9 s) : Sie gibt ihm Bargeld und Goldschmuck. Alles weg.
+[7] ab 17.4 s (2.6 s) : Die Bundesbank warnt selbst vor solchen Anrufen.
+[8] ab 20.1 s (2.3 s) : Merke: Keine Bank holt Geld zu Hause ab.
+[9] ab 22.4 s (3.2 s) SCHLUSS: Schick das deinem Opa. Keine Bank holt Geld zu Hause ab.
+{"dauer": 25.6, "sprechzeit": 22.5, "woerter_pro_minute": 195, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.6, "lufs": -14.0, "tp": -1.5, "stimme_rohspitze": 0.849, "begrenzer_max_db": 0.0, "sync": {"pausen": 13, "abstand_median_s": 0.021, "abstand_max_s": 0.131}, "zonen": "OK", "zonen_geprueft": 4708, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.4, "hell_bild0": 105, "hell_mittel": 103, "bewegung_mittel": 4.43}, "einstellungen": 11, "schnitt_s": {"min": 1.6, "max": 3.23, "mittel": 2.33}}

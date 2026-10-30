@@ -1,0 +1,11 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.8 s) HOOK: Der Zoll findet Omas Gold im Auto eines Fremden!
+[2] ab 2.8 s (1.6 s) : Wie kommt denn ihr Gold da hin?
+[3] ab 4.4 s (4.6 s) : Ein falscher Polizist ruft an. Ihre Tochter habe einen tödlichen Unfall gebaut.
+[4] ab 9.0 s (2.5 s) : Und sie soll Kaution zahlen. Kenn ich.
+[5] ab 11.5 s (4.6 s) : Sie gibt Uhren, Schmuck und Goldmünzen ab. Rate mal, was dann passiert.
+[6] ab 16.1 s (3.5 s) : Zufällig kontrolliert der Zoll den Abholer. Festnahme!
+[7] ab 19.6 s (2.5 s) : Auf dem Kaufbeleg der Münzen stand ihr Name.
+[8] ab 22.1 s (3.8 s) : Merke: Bei so einem Anruf auflegen. Selbst 110 wählen.
+[9] ab 25.9 s (3.4 s) SCHLUSS: Schick das deiner Mama. Bei so einem Anruf: sofort dich anrufen.
+{"dauer": 29.333, "sprechzeit": 26.6, "woerter_pro_minute": 185, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 6.3, "lufs": -14.2, "tp": -1.7, "stimme_rohspitze": 1.27, "begrenzer_max_db": -0.8, "sync": {"pausen": 14, "abstand_median_s": 0.031, "abstand_max_s": 0.154}, "zonen": "OK", "zonen_geprueft": 5386, "notizen": [], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.9, "hell_bild0": 94, "hell_mittel": 92, "bewegung_mittel": 4.62}, "einstellungen": 12, "schnitt_s": {"min": 1.6, "max": 3.5, "mittel": 2.44}}
