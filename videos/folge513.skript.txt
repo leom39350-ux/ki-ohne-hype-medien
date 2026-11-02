@@ -1,0 +1,13 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.6 s) HOOK: Papa kriegt eine Mail: Gutschrift von der Telekom.
+[2] ab 2.6 s (2.5 s) : Super! Einfach auf den Link, oder?
+[3] ab 5.1 s (3.2 s) : Die Seite fragt: Bei welcher Bank bist du? Dann: Passwort.
+[4] ab 8.3 s (1.6 s) : Rate mal: Was kommt danach?
+[5] ab 9.9 s (1.6 s) : Kommt dann das Geld?
+[6] ab 11.5 s (2.5 s) : Nein. Ein Anruf von der „Sparkasse“.
+[7] ab 14.0 s (2.1 s) : Mit der echten Nummer im Display?
+[8] ab 16.1 s (2.5 s) : Ja. Die Nummer kann gefälscht sein.
+[9] ab 18.7 s (3.1 s) : Merke: Nur bestätigen, was du selbst gestartet hast.
+[10] ab 21.8 s (4.7 s) SCHLUSS: Schick das deinem Papa, bevor er auf so einen Link tippt. Hätte er getippt? Ja oder nein?
+! Hinweis: Inhalt von „“ ist 1086 px hoch (Platz 825)
+{"dauer": 26.5, "sprechzeit": 23.0, "woerter_pro_minute": 198, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 5.6, "lufs": -14.2, "tp": -1.7, "stimme_rohspitze": 0.911, "begrenzer_max_db": -0.5, "sync": {"pausen": 15, "abstand_median_s": 0.027, "abstand_max_s": 0.137}, "zonen": "OK", "zonen_geprueft": 4682, "notizen": ["Hinweis: Inhalt von „“ ist 1086 px hoch (Platz 825)"], "stil": "v3-dialog", "v5": {"stillstand_max_s": 1.0, "hell_bild0": 103, "hell_mittel": 102, "bewegung_mittel": 4.17}, "einstellungen": 10, "schnitt_s": {"min": 1.6, "max": 4.73, "mittel": 2.65}}
