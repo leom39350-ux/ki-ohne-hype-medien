@@ -1,0 +1,48 @@
+# Eigener KMT-Code SHA-256: f275f9ee298661eee827c48dbeaf351599c65bc1b351c957f3fff7a556e58023
+# Standardrunner im oeffentlichen Repository; keine Artefakte, Caches oder Geheimnisse.
+name: KMT - Externe Erreichbarkeit
+on:
+  schedule:
+    - cron: '7,17,27,37,47,57 * * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/kmt-extern.yml'
+permissions:
+  contents: read
+concurrency:
+  group: kmt-externe-erreichbarkeit
+  cancel-in-progress: false
+jobs:
+  pruefen:
+    if: github.repository == 'leom39350-ux/ki-ohne-hype-medien' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6, am 02.11.2026 gelesen
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Eigene oeffentliche Seiten zweimal bestaetigen
+        shell: bash
+        run: |
+          node <<'KMT_NODE'
+          'use strict';
+          // Eigenstaendig und ohne Zugangsdaten: nur oeffentliche HTTPS-Erreichbarkeit eigener KMT-Seiten.
+          const ZIELE=Object.freeze([
+           {name:'Angebotsseite',url:'https://kmt.2-31-10-247.sslip.io/neu?ref=karte-vorschau'},
+           {name:'Steuerseite-Anwendungsdatei',url:'https://team.2-31-10-247.sslip.io/manifest.webmanifest'}
+          ]);
+          async function lese(r){let text='';if(!r.body)throw Error('Kein Antwortkoerper');for await(const teil of r.body){text+=Buffer.from(teil).toString('utf8');if(Buffer.byteLength(text)>128*1024)throw Error('Antwort zu gross');}return text;}
+          async function pruefen(io={}){
+           const abrufen=io.abrufen||fetch,pause=io.pause||(ms=>new Promise(r=>setTimeout(r,ms))),jetzt=io.jetzt||Date.now;
+           const ergebnisse=await Promise.all(ZIELE.map(async ziel=>{let ok=false,versuche=0;for(let i=0;i<2;i++){
+            versuche++;try{const r=await abrufen(ziel.url,{method:'GET',redirect:'error',headers:{'user-agent':'KMT-Preview Externe-Erreichbarkeitspruefung'},signal:AbortSignal.timeout(10000)});const text=await lese(r);ok=r.status===200&&/KI ohne Hype/i.test(text);}catch{ok=false;}
+            if(ok)break;if(i===0)await pause(10000);
+           }return{ziel:ziel.name,ok,versuche};}));
+           return{zeit:new Date(jetzt()).toISOString(),ok:ergebnisse.every(r=>r.ok),ergebnisse,umfang:'Nur oeffentliches HTTPS, keine vollstaendige Dienst-/Datenbankpruefung und kein Empfangsnachweis aufs Handy.'};
+          }
+          module.exports={pruefen};
+          
+          pruefen().then(r=>{console.log(JSON.stringify(r));process.exitCode=r.ok?0:1;}).catch(()=>{console.error('Externe KMT-Pruefung nicht vollstaendig.');process.exitCode=1;});
+          KMT_NODE
