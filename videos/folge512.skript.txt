@@ -1,0 +1,13 @@
+# v2 Reichweite – Sprechtext und Zeiten
+[1] ab 0.0 s (2.5 s) HOOK: Oma bekommt einen Anruf. Auf Russisch.
+[2] ab 2.5 s (2.5 s) : Na und? Sie spricht doch Russisch.
+[3] ab 5.0 s (3.3 s) : Eben. Die „Polizei“ sagt: Deine Tochter hatte einen Unfall.
+[4] ab 8.3 s (1.9 s) : Rate mal: Wie oft kam der Abholer?
+[5] ab 10.2 s (2.4 s) : Einmal? Oder gar nicht?
+[6] ab 12.6 s (3.8 s) : Zweimal. In 20 Minuten. Und jedes Mal gibt sie Geld.
+[7] ab 16.4 s (1.7 s) : Warum gerade auf Russisch?
+[8] ab 18.2 s (3.6 s) : Die Polizei sagt: Solche Anrufe in der Muttersprache häufen sich.
+[9] ab 21.8 s (3.4 s) : Merke: In jeder Sprache auflegen und 110 wählen.
+[10] ab 25.2 s (4.3 s) SCHLUSS: Schick das deiner Oma, die Russisch spricht. Hätte sie aufgelegt? Ja oder nein?
+! Hinweis: Inhalt von „“ ist 918 px hoch (Platz 825)
+{"dauer": 29.5, "sprechzeit": 26.5, "woerter_pro_minute": 175, "tempo": 0.73, "wortzeiten": "Piper-Lautdauern, per DTW auf Supertonic übertragen", "stimme": "Supertonic 3 F3 (Tempo 0.95)", "groesse_mb": 6.2, "lufs": -14.1, "tp": -1.7, "stimme_rohspitze": 0.866, "begrenzer_max_db": -0.4, "sync": {"pausen": 18, "abstand_median_s": 0.027, "abstand_max_s": 0.187}, "zonen": "OK", "zonen_geprueft": 5335, "notizen": ["Hinweis: Inhalt von „“ ist 918 px hoch (Platz 825)"], "stil": "v3-dialog", "v5": {"stillstand_max_s": 0.6, "hell_bild0": 93, "hell_mittel": 92, "bewegung_mittel": 4.22}, "einstellungen": 11, "schnitt_s": {"min": 1.64, "max": 4.33, "mittel": 2.68}}
